@@ -16,12 +16,10 @@ class Beranda extends CI_Controller {
 	{
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
-			$this->load->view('header', $data);
-			$this->load->view('masuk/beranda_login', $data);
+			$this->registeredUser;
 			// redirect('index.php/beranda/master','refresh');
 		} else {
-			$this->load->view('header');
-			$this->load->view('beranda_view');
+			$this->nonUser;
 		}
 	}
 
@@ -33,7 +31,7 @@ class Beranda extends CI_Controller {
 			$this->load->helper(array('form'));
 			$this->load->view('login_view');
 		}
-		
+
 	}
 
 	function keluar()
@@ -48,6 +46,18 @@ class Beranda extends CI_Controller {
 		redirect('beranda');
 	}
 
+	function registeredUser()
+	{
+		$this->load->view('header', $data);
+		$this->load->view('masuk/beranda_login', $data);
+	}
+
+	function nonUser()
+	{
+		$this->load->view('header');
+		$this->load->view('beranda_view');
+	}
+
 	/*function master()
 	{
 		if (!$this->session->userdata('logged_in')) {
@@ -56,7 +66,7 @@ class Beranda extends CI_Controller {
 			$data = $this->session->userdata('logged_in');
 			$this->load->view('masuk/beranda_login');
 		}
-		
+
 	}*/
 
 }
