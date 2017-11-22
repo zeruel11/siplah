@@ -26,5 +26,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-workspace
 *.sublime-project
 
-##SyncToy config files
+## Atom project files
+.ftpconfig
+.ftpignore
+
+## SyncToy config files
 SyncToy*.dat
