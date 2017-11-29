@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Beranda_model extends CI_Model {
-	function Beranda_model()
+	function __construct()
 	{
 		parent::__construct();
 	}
@@ -12,7 +12,12 @@ class Beranda_model extends CI_Model {
 		$this->db->get('gedung');
 	}
 
-	
+	function getListRuang()
+	{
+		# code...
+	}
+
+
 
 }
 

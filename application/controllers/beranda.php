@@ -3,10 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Beranda extends CI_Controller {
 
-	function beranda() {
+	function __construct() {
         parent::__construct();
         $this->load->model('beranda_model');
-        $this->load->model('login_model');
         $this->load->library('Encryption');
         // $this->load->library('breadcrumb');
         $this->load->library('pagination');
@@ -16,10 +15,12 @@ class Beranda extends CI_Controller {
 	{
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
-			$this->registeredUser;
+			$this->load->view('header', $data);
+			$this->load->view('masuk/beranda_login', $data);
 			// redirect('index.php/beranda/master','refresh');
 		} else {
-			$this->nonUser;
+			$this->load->view('header');
+			$this->load->view('beranda_view');
 		}
 	}
 
@@ -46,18 +47,6 @@ class Beranda extends CI_Controller {
 		redirect('beranda');
 	}
 
-	function registeredUser()
-	{
-		$this->load->view('header', $data);
-		$this->load->view('masuk/beranda_login', $data);
-	}
-
-	function nonUser()
-	{
-		$this->load->view('header');
-		$this->load->view('beranda_view');
-	}
-
 	/*function master()
 	{
 		if (!$this->session->userdata('logged_in')) {
@@ -68,6 +57,11 @@ class Beranda extends CI_Controller {
 		}
 
 	}*/
+
+	function dataGedung()
+	{
+
+	}
 
 }
 

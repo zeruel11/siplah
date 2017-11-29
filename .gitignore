@@ -18,6 +18,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #-------------------------
 /nbproject/
 .idea/*
+.notes/*
+\#composer.json#
 
 ## Sublime Text cache files
 *.tmlanguage.cache
@@ -29,6 +31,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 ## Atom project files
 .ftpconfig
 .ftpignore
+
+## emacs temp files
+*.php~
 
 ## SyncToy config files
 SyncToy*.dat
