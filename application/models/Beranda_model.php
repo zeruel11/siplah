@@ -32,7 +32,5 @@ class Beranda_model extends CI_Model {
 
 
 
-}
-
 /* End of file beranda_model.php */
 /* Location: ./application/models/beranda_model.php */
