@@ -15,14 +15,27 @@ class Beranda extends CI_Controller {
 	{
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
-			// $data['nama'] = $this->session->userdata('namaLengkap');
+			if ($data['userLevel']==1) {
+				$data['userAuth'] = "Admin";
+			} elseif ($data['userLevel']==2) {
+				$data['userAuth'] = "Pegawai";
+			} else {
+				$data['userAuth'] = "Pengguna Lain";
+			}
+			
+			/*$data['testing'] = $this->session->userdata['logged_in']['uid'];
+			$data['isi'] = "ini test";
+			$data['nama'] = $this->session->userdata('namaLengkap');*/
 			$this->load->view('header', $data);
+			// $this->load->view('testpage', $data);
 			$this->load->view('masuk/beranda_login', $data);
+			$this->load->view('footer', $data);
 			// redirect('index.php/beranda/master','refresh');
 		} else {
 			// $list = $this->model->getListGedung();
 			$this->load->view('header');
 			$this->load->view('beranda_view');
+			$this->load->view('footer');
 		}
 	}
 

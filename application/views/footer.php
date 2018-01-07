@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-</body>
+<footer>
+	<p>Copyright: SIMRI ITS</p>
+</footer>
 </html>
