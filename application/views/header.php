@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<?php if ($this->session->userdata('logged_in')) {
-		?><title>Web SIPLAH - Selamat Datang <?php echo $username; ?></title><?php
+		?><title>Web SIPLAH - Selamat Datang <?php echo $namaLengkap; ?></title><?php
 	} else {
 		?><title>Web SIPLAH - Selamat Datang</title><?php
 	}

@@ -5,7 +5,7 @@ class Beranda extends CI_Controller {
 
 	function __construct() {
         parent::__construct();
-        $this->load->model('beranda_model');
+        $this->load->model('Beranda_model');
         $this->load->library('Encryption');
         // $this->load->library('breadcrumb');
         $this->load->library('pagination');
@@ -15,10 +15,12 @@ class Beranda extends CI_Controller {
 	{
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
+			// $data['nama'] = $this->session->userdata('namaLengkap');
 			$this->load->view('header', $data);
 			$this->load->view('masuk/beranda_login', $data);
 			// redirect('index.php/beranda/master','refresh');
 		} else {
+			// $list = $this->model->getListGedung();
 			$this->load->view('header');
 			$this->load->view('beranda_view');
 		}
@@ -58,10 +60,10 @@ class Beranda extends CI_Controller {
 
 	}*/
 
-	function dataGedung()
+	/*function dataGedung()
 	{
 
-	}
+	}*/
 
 }
 

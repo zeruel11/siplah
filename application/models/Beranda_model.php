@@ -9,7 +9,13 @@ class Beranda_model extends CI_Model {
 
 	function getListGedung()
 	{
-		$this->db->get('gedung');
+		$query = $this->db->get('gedung');
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return null;
+		}
+		
 	}
 
 	function getDataGedung($ged)
