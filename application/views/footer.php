@@ -2,7 +2,7 @@
 </body>
 
 <footer>
-	<p>Copyright: SIMRI ITS</p>
+	<p align="center">Copyright: SIMRI ITS 2017</p>
 </footer>
 
 </html>

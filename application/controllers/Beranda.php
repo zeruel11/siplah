@@ -35,6 +35,7 @@ class Beranda extends CI_Controller {
 			$data['userLogin'] = "false";
 			// $list = $this->model->getListGedung();
 			$this->load->view('header', $data);
+			$this->load->view('navigation', $data);
 			$this->load->view('beranda_view', $data);
 			$this->load->view('footer', $data);
 		}

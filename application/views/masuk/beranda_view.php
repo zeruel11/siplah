@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <body>
 	<!-- <h1>SIPLAH login</h1> -->
-	<h2>Anda masuk sebagai: <?php echo $userAuth." ".$namaLengkap; ?></h2>
+	<h2>Selamat datang <?php echo $userAuth." ".$namaLengkap; ?></h2>
 
 	<!-- <img src="<?php echo base_url(); ?>assets/img/allits.png"> -->
 

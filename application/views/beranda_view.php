@@ -1,20 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<body>
-	<h1>Selamat Datang di Website SIPLAH</h1>
+	<!-- <h1><span class="label label-default">Selamat Datang di Website SIPLAH ITS</span></h1> -->
 
-	<div class="divTable">
+	<!-- <div class="divTable">
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell" id="image-map"></div>
 				<div class="divTableCell"><a class="btn btn-primary" href="<?php echo base_url(); ?>index.php/login" role="button">Login</a></div>
 			</div>
 		</div>
+	</div> -->
+	<div class="wrapper">
+		<div class="peta" id="image-map"></div>
 	</div>
-
-	<!-- <script src="<?php echo base_url(); ?>assets/js/leaflet.js"></script>
-		<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script> -->
 
 		<script>
 			var map = L.map('image-map', {
