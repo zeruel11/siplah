@@ -32,10 +32,11 @@ class Beranda extends CI_Controller {
 			$this->load->view('footer', $data);
 			// redirect('index.php/beranda/master','refresh');
 		} else {
+			$data['userLogin'] = "false";
 			// $list = $this->model->getListGedung();
-			$this->load->view('header');
-			$this->load->view('beranda_view');
-			$this->load->view('footer');
+			$this->load->view('header', $data);
+			$this->load->view('beranda_view', $data);
+			$this->load->view('footer', $data);
 		}
 	}
 

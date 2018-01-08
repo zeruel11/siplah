@@ -8,15 +8,50 @@
 		?><title>Web SIPLAH - Selamat Datang</title><?php
 	}
 	?>
-	<link rel="stylesheet" href="assets/css/leaflet.css">
-    <style>
-    #image-map {
-      width: 50%;
-      height: 300px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-    </style>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/leaflet.css" />
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
 
-    
+	<script src="<?php echo base_url(); ?>assets/js/leaflet.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<style>
+	#image-map {
+		width: 40%;
+		height: 500px;
+		border: 3px solid #ccc;
+		margin-bottom: 10px;
+	}
+
+	.divTable{
+		display: table;
+		width: 100%;
+	}
+	.divTableRow {
+		display: table-row;
+	}
+	.divTableHeading {
+		background-color: #00ffffff;
+		display: table-header-group;
+	}
+	.divTableCell, .divTableHead {
+		/*border: 1px solid #999999;*/
+		display: table-cell;
+		padding: 3px 10px;
+	}
+	.divTableHeading {
+		background-color: #00ffffff;
+		display: table-header-group;
+		font-weight: bold;
+	}
+	.divTableFoot {
+		background-color: #00ffffff;
+		display: table-footer-group;
+		font-weight: bold;
+	}
+	.divTableBody {
+		display: table-row-group;
+	}
+</style>
+
+
 </head>

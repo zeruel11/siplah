@@ -17,7 +17,7 @@ class Manage extends CI_Controller {
 
 	function createUser()
 	{
-		# code...
+		$this->Manage_model->
 	}
 
 	function updateUser()
