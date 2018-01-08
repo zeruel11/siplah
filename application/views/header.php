@@ -8,5 +8,15 @@
 		?><title>Web SIPLAH - Selamat Datang</title><?php
 	}
 	?>
+	<link rel="stylesheet" href="assets/css/leaflet.css">
+    <style>
+    #image-map {
+      width: 50%;
+      height: 300px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    </style>
+
+    
 </head>
-</html>
