@@ -7,13 +7,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<!-- <img src="<?php echo base_url(); ?>assets/img/allits.png"> -->
 
-  <div class="divTable">
+  <!-- <div class="divTable">
     <div class="divTableBody">
       <div class="divTableRow">
         <div class="divTableCell" id="image-map"></div>
         <div class="divTableCell"><a class="btn btn-primary" href="<?php echo base_url(); ?>index.php/beranda/keluar" role="button">Logout</a></div>
       </div>
     </div>
+  </div> -->
+
+  <div class="wrapper">
+    <div class="peta" id="image-map"></div>
   </div>
 
 	<script>

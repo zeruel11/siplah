@@ -27,6 +27,7 @@ class Beranda extends CI_Controller {
 			$data['isi'] = "ini test";
 			$data['nama'] = $this->session->userdata('namaLengkap');*/
 			$this->load->view('header', $data);
+			$this->load->view('navigation', $data);
 			// $this->load->view('testpage', $data);
 			$this->load->view('masuk/beranda_login', $data);
 			$this->load->view('footer', $data);
