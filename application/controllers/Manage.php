@@ -1,4 +1,3 @@
-<?php 
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -17,7 +16,7 @@ class Manage extends CI_Controller {
 
 	function createUser()
 	{
-		$this->Manage_model->
+		// $this->Manage_model->
 	}
 
 	function updateUser()

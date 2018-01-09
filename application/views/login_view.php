@@ -1,29 +1,83 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Login - SIPLAH</title>
+    <!-- Standard Meta -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Site Properties -->
+    <title>SIPLAH - Login</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
 </head>
 <body>
-	<!-- <h1>login here</h1> -->
-	<section id="login">
-		<div class="row">
-			<div class="login-holder col-md-6 col-md-offset-3">
-				<form method="POST" role="form" action="<?php echo base_url().'index.php/ver_login'; ?>" novalidate="novalidate">
-					<div class="form-group">
-						<input type="text" class="required form-control form-cascade-control input-small" id="username" name="username" placeholder="Username">
-					</div>
-					<div class="form-group">
-						<input type="password" class="required form-control form-cascade-control input-small" id="password" name="password" placeholder="********">
-					</div>
-					<div class="form-footer">
-						<button style="width: 200px;" type="submit" class="btn bg-primary text-white btn-lg">Login</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</section>
+        <div class="container">
+					<!-- <div class="card card-container"> -->
+					  <form class="form-horizontal" role="form" method="POST" action="<?php echo base_url().'index.php/ver_login'; ?>">
+			            <div class="row">
+			                <!-- <div class="col-md-3"></div>
+			                <div class="col-md-6"> -->
+			                    <h2 class='login_title text-center'>Masukkan Login Anda</h2>
+			                    <hr>
+			                </div>
+			            <div class="row">
+			                <!-- <div class="col-md-3"></div>
+			                <div class="col-md-6"> -->
+			                    <div class="form-group has-danger">
+			                        <label class="sr-only" for="username">Username</label>
+			                        <div class="input-group">
+			                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+			                            <input type="text" name="username" class="form-control" id="username" required autofocus title="Harap masukkan username" />
+			                        </div>
+			                    </div>
+			                </div>
+			                <!-- <div class="col-md-3">
+			                    <div class="form-control-feedback">
+			                        <span class="text-danger align-middle">
+			                            <i class="fa fa-close"></i> Example error message
+			                        </span>
+			                    </div>
+			                </div> -->
+			            <div class="row">
+			                <!-- <div class="col-md-3"></div>
+			                <div class="col-md-6"> -->
+			                    <div class="form-group">
+			                        <label class="sr-only" for="password">Password</label>
+			                        <div class="input-group">
+			                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+			                            <input type="password" name="password" class="form-control" id="password" placeholder="******" required title="Harap masukkan password" />
+			                        </div>
+			                    </div>
+			                </div>
+			                <!-- <div class="col-md-3"> -->
+			                    <div class="form-control-feedback">
+			                        <span class="text-danger align-middle">
+			                        <!-- Put password error message here -->
+			                        </span>
+			                    </div>
+			            <!-- <div class="row">
+			                <div class="col-md-3"></div>
+			                <div class="col-md-6" style="padding-top: .35rem">
+			                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
+			                        <label class="form-check-label">
+			                            <input class="form-check-input" name="remember"
+			                                   type="checkbox" >
+			                            <span style="padding-bottom: .15rem">Remember me</span>
+			                        </label>
+			                    </div>
+			                </div>
+			            </div> -->
+			            <div class="row">
+			                <!-- <div class="col-md-3"></div>
+			                <div class="col-md-6"> -->
+			                    <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
+			                    <!-- <a class="btn btn-link" href="/password/reset">Forgot Your Password?</a> -->
+			                </div>
+			        </form>
+							<!-- </div> -->
+					  </div>
 </body>
 </html>
