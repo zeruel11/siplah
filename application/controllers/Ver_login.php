@@ -20,6 +20,10 @@ class Ver_login extends CI_Controller {
 
 	function index()
 	{
+		// Check flashdata
+		// $validLogin=$this->session->flashdata('validUser');
+		// var_dump($validLogin);
+
 		// Validation variable
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
@@ -32,7 +36,7 @@ class Ver_login extends CI_Controller {
 			foreach ($result as $row) {
 				$sess_array = array(
 					'uid' => $row->uid,
-					'username' => $row->username,
+					// 'username' => $row->username,
 					'userLevel' => $row->user_level,
 					'namaLengkap' => $row->namaLengkap
 				);
@@ -43,7 +47,8 @@ class Ver_login extends CI_Controller {
 			redirect('beranda', 'refresh');
 		} else {
 			// return false;
-			redirect('beranda', 'refresh');
+			$this->session->set_flashdata('validUser', 'false');
+			redirect('Beranda/masuk', 'refresh');
 		}
 		
 	}

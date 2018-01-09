@@ -9,7 +9,11 @@ class Beranda_model extends CI_Model {
 
 	function getListGedung()
 	{
-		$query = $this->db->get('gedung');
+		$this->db->select('*');
+		$this->db->from('gedung');
+		$this->db->join('koordinat', 'koordinat.idKoord = gedung.idKoord', 'left');
+
+		$query=$this->db->get();
 		if ($query->num_rows() > 0) {
 			return $query->result_array();
 		} else {

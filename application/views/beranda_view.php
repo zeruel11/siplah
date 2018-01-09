@@ -12,6 +12,7 @@
 	<div class="wrapper">
 		<div class="peta" id="image-map"></div>
 	</div>
+	<?php var_dump($gedung); ?>
 
 		<script>
 			var map = L.map('image-map', {

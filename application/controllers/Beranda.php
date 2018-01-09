@@ -13,6 +13,8 @@ class Beranda extends CI_Controller {
 
 	function index()
 	{
+		$data['gedung'] = $this->Beranda_model->getListGedung();
+
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
 			if ($data['userLevel']==1) {
@@ -45,8 +47,9 @@ class Beranda extends CI_Controller {
 		if ($this->session->userdata('logged_in')) {
 			redirect('beranda','refresh');
 		} else {
-			$this->load->helper(array('form'));
-			$this->load->view('login_view');
+			$data['validLogin']=$this->session->flashdata('validUser');
+			// $this->load->helper(array('form'));
+			$this->load->view('login_view', $data);
 		}
 
 	}
