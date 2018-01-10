@@ -13,7 +13,17 @@ class Beranda extends CI_Controller {
 
 	function index()
 	{
-		$data['gedung'] = $this->Beranda_model->getListGedung();
+		 $data['listGedung'] = $this->Beranda_model->getListGedung();
+
+		//  if ($list) {
+		//  	foreach ($list as $row) {
+		//  		$data['listGedung'] = array(
+		// 			'gedungId' => $row->idGedung,
+		// 		'namaGedung' => $row->namaGedung,
+		// 	'x' => $row->x,
+		// 'y' => $row->y );
+		//  	}
+		//  }
 
 		if ($this->session->userdata('logged_in')) {
 			$data = $this->session->userdata('logged_in');
@@ -33,8 +43,7 @@ class Beranda extends CI_Controller {
 			$this->load->view('footer', $data);
 			// redirect('index.php/beranda/master','refresh');
 		} else {
-			$data['userLogin'] = "false";
-			// $list = $this->model->getListGedung();
+			// $data['userLogin'] = "false";
 			$this->load->view('header', $data);
 			$this->load->view('navigation', $data);
 			$this->load->view('beranda_view', $data);

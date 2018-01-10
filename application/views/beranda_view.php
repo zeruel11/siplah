@@ -1,18 +1,17 @@
 <body>
-	<!-- <h1><span class="label label-default">Selamat Datang di Website SIPLAH ITS</span></h1> -->
 
-	<!-- <div class="divTable">
-		<div class="divTableBody">
-			<div class="divTableRow">
-				<div class="divTableCell" id="image-map"></div>
-				<div class="divTableCell"><a class="btn btn-primary" href="<?php echo base_url(); ?>index.php/login" role="button">Login</a></div>
-			</div>
-		</div>
-	</div> -->
 	<div class="wrapper">
 		<div class="peta" id="image-map"></div>
+		<div class="list">
+			<?php for ($g=0; $g < count($listGedung); $g++) {
+				echo $listGedung[$g]['namaGedung'];	?>
+				<a href="<?php echo "beranda/".$listGedung[$g]['idGedung'];?>"> Ubah data gedung </a>
+				<br>
+				<?php
+			} ?>
+
+		</div>
 	</div>
-	<?php var_dump($gedung); ?>
 
 		<script>
 			var map = L.map('image-map', {
