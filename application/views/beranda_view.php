@@ -3,12 +3,19 @@
 	<div class="wrapper">
 		<div class="peta" id="image-map"></div>
 		<div class="list">
-			<?php for ($g=0; $g < count($listGedung); $g++) {
-				echo $listGedung[$g]['namaGedung'];	?>
-				<a href="<?php echo "beranda/".$listGedung[$g]['idGedung'];?>"> Ubah data gedung </a>
+			<?php $g=0;
+			foreach ($listGedung as $row) {
+				// echo "".$row['idGedung']."<br>"; 
+				// echo "Nama: ".$row['namaGedung']."<br>";
+				// echo "Luasan: ".$row['luasGedung']."<br>";
+				// echo "Lantai: ".$row['jumlahLantai']."<br>";
+				// echo "".$row['x']."<br>";
+				// echo "".$row['y']."<br>";
+				// echo "".$row['label']."<br>";
+				// echo $row;?>
+				<a href="<?php echo base_url()."index.php/gedung/".$listGedung[$g]['idGedung'];	$g++;?>"> Detail data gedung </a>
 				<br>
-				<?php
-			} ?>
+				<?php } ?>
 
 		</div>
 	</div>

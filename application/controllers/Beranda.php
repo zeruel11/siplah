@@ -51,6 +51,21 @@ class Beranda extends CI_Controller {
 		}
 	}
 
+	function detailGedung($ged)
+	{
+		$result = $this->Beranda_model->getDataGedung($ged);
+
+		if ($result) {
+			$data['detailGedung'] = array();
+			foreach ($result as $row) {
+				$data['detailGedung'] = array(
+					'idGedung' => $row->idGedung,
+					'namaGedung' => $row->namaGedung);
+			}
+		}
+		$this->load->view('data_gedung', $data);
+	}
+
 	function masuk()
 	{
 		if ($this->session->userdata('logged_in')) {

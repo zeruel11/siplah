@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'beranda/masuk';
 $route['logout'] = 'beranda/keluar';
+$route['gedung/(:any)'] = 'beranda/detailGedung/$1';

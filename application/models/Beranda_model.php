@@ -24,13 +24,16 @@ class Beranda_model extends CI_Model {
 
 	function getDataGedung($ged)
 	{
-		$sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-            {
-                return $query->result_array();
-            }
-            else
+		// $sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";
+		$this->db->select('*');
+		$this->db->from('gedung');
+		$this->db->where('idGedung', $ged);
+		// $this->db->order_by('title', 'desc');
+		// $query = $this->db->query($sql);
+		$query = $this->db->get();
+		if($query->num_rows() > 0) {
+                return $query->result();
+            } else {
             return null;
        }
 	}
@@ -40,7 +43,7 @@ class Beranda_model extends CI_Model {
 		# code...
 	}*/
 
-
+}
 
 /* End of file beranda_model.php */
 /* Location: ./application/models/beranda_model.php */
