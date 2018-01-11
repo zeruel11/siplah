@@ -19,6 +19,7 @@ before_script:
 # Install and run Composer
 - curl -sS https://getcomposer.org/installer | php
 - php composer.phar install
+# - php vendor/kenjis/ci-phpunit-test/install.php
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
@@ -35,4 +36,6 @@ variables:
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 test:
   script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  - cd application/tests/
+  - ../../vendor/bin/phpunit

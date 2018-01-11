@@ -37,3 +37,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 ## SyncToy config files
 SyncToy*.dat
+
+## PHPunit files
+application/tests/
