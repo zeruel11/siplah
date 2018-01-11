@@ -7,6 +7,10 @@ class Beranda_model extends CI_Model {
 		parent::__construct();
 	}
 
+/**
+ * model ambil data semua gedung
+ * @return array ambil data dan koordinat gedung
+ */
 	function getListGedung()
 	{
 		$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
@@ -22,6 +26,11 @@ class Beranda_model extends CI_Model {
 
 	}
 
+/**
+ * model ambil data gedung tertentu
+ * @param  int $ged idGedung
+ * @return array      data gedung by id
+ */
 	function getDataGedung($ged)
 	{
 		// $sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";

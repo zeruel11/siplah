@@ -42,7 +42,12 @@ class Beranda extends CI_Controller
         }
     }
 
-    public function detailGedung($ged)
+/**
+ * fungsi view data Gedung
+ * @param  int $ged idGedung
+ * @return array      array(namaGedung,luasGedung,jumlahLantai)
+ */
+    function detailGedung($ged)
     {
         $result = $this->Beranda_model->getDataGedung($ged);
 
@@ -62,6 +67,10 @@ class Beranda extends CI_Controller
         $this->load->view('footer', $data);
     }
 
+/**
+ * fungsi login
+ * @return array data_login
+ */
     public function masuk()
     {
         if ($this->session->userdata('logged_in')) {
@@ -73,6 +82,10 @@ class Beranda extends CI_Controller
         }
     }
 
+/**
+ * fungsi logout
+ * @return [type] destroy session
+ */
     public function keluar()
     {
         $user_data = $this->session->all_userdata();
@@ -85,21 +98,6 @@ class Beranda extends CI_Controller
         redirect('beranda');
     }
 
-    /*function master()
-    {
-        if (!$this->session->userdata('logged_in')) {
-            redirect('index.php/beranda','refresh');
-        } else {
-            $data = $this->session->userdata('logged_in');
-            $this->load->view('masuk/beranda_login');
-        }
-
-    }*/
-
-    /*function dataGedung()
-    {
-
-    }*/
 }
 
 /* End of file beranda.php */
