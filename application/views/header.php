@@ -20,6 +20,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 	<style>
+	body {
+    padding-top: 70px;
+  }
+
 	#image-map {
 		width: 100%;
 		height: 500px;
@@ -27,35 +31,6 @@
 		/*margin-bottom: 10px;*/
 	}
 
-	.divTable{
-		display: table;
-		width: 100%;
-	}
-	.divTableRow {
-		display: table-row;
-	}
-	.divTableHeading {
-		background-color: #00ffffff;
-		display: table-header-group;
-	}
-	.divTableCell, .divTableHead {
-		/*border: 1px solid #999999;*/
-		display: table-cell;
-		padding: 3px 10px;
-	}
-	.divTableHeading {
-		background-color: #00ffffff;
-		display: table-header-group;
-		font-weight: bold;
-	}
-	.divTableFoot {
-		background-color: #00ffffff;
-		display: table-footer-group;
-		font-weight: bold;
-	}
-	.divTableBody {
-		display: table-row-group;
-	}
 </style>
 
 
