@@ -25,6 +25,36 @@ class Beranda_test extends TestCase
     $this->assertContains($expected, $output);
   }
 
+  public function test_index_logged_in_admin()
+  {
+    $this->request->setCallable(
+      function ($CI) {
+        $CI->session->logged_in = array(
+          'uid'=>'1',
+          'userLevel'=>'1',
+          'namaLengkap'=>'w sakti');
+      }
+    );
+    $output = $this->request('GET', 'beranda/index');
+    $expected = 'class="d-inline-block align-center" width="35" height="35">Selamat datang Admin w sakti';
+    $this->assertContains($expected, $output);
+  }
+
+  public function test_index_logged_in_pegawai()
+  {
+    $this->request->setCallable(
+      function ($CI) {
+        $CI->session->logged_in = array(
+          'uid'=>'1',
+          'userLevel'=>'2',
+          'namaLengkap'=>'w sakti');
+      }
+    );
+    $output = $this->request('GET', 'beranda/index');
+    $expected = 'class="d-inline-block align-center" width="35" height="35">Selamat datang Pegawai w sakti';
+    $this->assertContains($expected, $output);
+  }
+
   public function test_valid_detail_gedung()
   {
     $output = $this->request('GET', 'gedung/7');

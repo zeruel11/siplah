@@ -37,7 +37,20 @@ variables:
 
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - cd \(siplah\)
+    - db_input=$(ls -tp | grep -v /$ | head -1)
+    - gunzip -c $db_input > data_input.sql
+    - mysql -uroot -pzeruel13 < data_input.sql
+
 test:
+  stage: script
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
   # - php -v

@@ -19,7 +19,7 @@ class Ver_login_test extends TestCase
 
 	}
 
-	public function test_index_invalid_cred($value='')
+	public function test_index_invalid_cred()
 	{
 		$creds = ['username'=>'zeruel', 'password'=>'13the.zero'];
 		$method = ['Ver_login', 'index'];

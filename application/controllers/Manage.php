@@ -12,21 +12,23 @@ class Manage extends CI_Controller {
 	function index()
 	{
 		$this->load->view('admin');
+		return true;
 	}
 
 	function createUser()
 	{
 		// $this->Manage_model->
+		return true;
 	}
 
 	function updateUser()
 	{
-		# code...
+		return true;
 	}
 
 	function deleteUser()
 	{
-		# code...
+		return true;
 	}
 
 }
