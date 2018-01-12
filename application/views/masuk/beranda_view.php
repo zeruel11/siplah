@@ -1,20 +1,8 @@
 <body>
-	<!-- <h1>SIPLAH login</h1> -->
-	<!-- <h2>Selamat datang <?php echo $userAuth." ".$namaLengkap; ?></h2> -->
-
-	<!-- <img src="<?php echo base_url(); ?>assets/img/allits.png"> -->
-
-  <!-- <div class="divTable">
-    <div class="divTableBody">
-      <div class="divTableRow">
-        <div class="divTableCell" id="image-map"></div>
-        <div class="divTableCell"><a class="btn btn-primary" href="<?php echo base_url(); ?>index.php/beranda/keluar" role="button">Logout</a></div>
-      </div>
-    </div>
-  </div> -->
 
   <div class="wrapper">
     <div class="peta" id="image-map"></div>
+    <div class="col-lg-4"></div>
   </div>
 
 	<script>

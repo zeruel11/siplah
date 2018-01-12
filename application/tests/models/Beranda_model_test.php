@@ -11,7 +11,7 @@ class Beranda_model_test extends TestCase
         $this->obj = $this->newModel('Beranda_model');
     }
 
-  public function test_valid_get_data_gedung()
+  public function test_get_data_gedung_valid()
   {
     $actual = $this->obj->getDataGedung(7);
     $this->assertInternalType('array', $actual);
@@ -34,14 +34,14 @@ class Beranda_model_test extends TestCase
     // }
   }
 
-  public function test_invalid_get_data_gedung()
+  public function test_get_data_gedung_invalid()
   {
     $actual = $this->obj->getDataGedung(1);
 
     $this->assertNull($actual);
   }
 
-  public function test_valid_get_list_gedung()
+  public function test_get_list_gedung_valid()
   {
     $actual = $this->obj->getListGedung();
     $this->assertInternalType('array', $actual);

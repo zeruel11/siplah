@@ -17,7 +17,7 @@
 				<a href="<?php echo base_url()."gedung/".$listGedung[$g]['idGedung'];	$g++;?>"> Detail data gedung </a>
 				<br>
 				<?php } 
-				var_dump($listGedung)?>
+				var_dump($data)?>
 
 		</div>
 	</div>

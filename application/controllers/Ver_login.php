@@ -48,7 +48,7 @@ class Ver_login extends CI_Controller {
 		} else {
 			// return false;
 			$this->session->set_flashdata('validUser', 'false');
-			redirect('Beranda/masuk', 'refresh');
+			redirect('beranda/masuk', 'refresh');
 		}
 		
 	}
