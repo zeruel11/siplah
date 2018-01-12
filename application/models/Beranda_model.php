@@ -34,13 +34,13 @@ class Beranda_model extends CI_Model {
 	function getDataGedung($ged)
 	{
 		// $sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";
-		$this->db->select('*');
+		$this->db->select('idGedung, namaGedung, luasGedung, jumlahLantai');
 		$this->db->from('gedung');
 		$this->db->where('idGedung', $ged);
 		// $this->db->order_by('title', 'desc');
 		// $query = $this->db->query($sql);
 		$query = $this->db->get();
-		if($query->num_rows() > 0) {
+		if($query->num_rows() == 1) {
                 return $query->result();
             } else {
             return null;

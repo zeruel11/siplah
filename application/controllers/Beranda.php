@@ -3,6 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Beranda extends CI_Controller
 {
+	/**
+	 * load default model dan library CI
+	 * @method __construct
+	 */
     public function __construct()
     {
         parent::__construct();
@@ -27,18 +31,18 @@ class Beranda extends CI_Controller
             }
 
             // $data['testing'] = $this->session->userdata['logged_in']['uid'];
-            $this->load->view('header', $data);
-            $this->load->view('navigation', $data);
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
             // $this->load->view('testpage', $data);
             $this->load->view('masuk/beranda_view', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('template/footer', $data);
             // redirect('index.php/beranda/master','refresh');
         } else {
             // $data['userLogin'] = "false";
-            $this->load->view('header', $data);
-            $this->load->view('navigation', $data);
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
             $this->load->view('beranda_view', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('template/footer', $data);
         }
     }
 
@@ -53,6 +57,7 @@ class Beranda extends CI_Controller
 
         if ($result) {
             $data['detailGedung'] = array();
+            $data['test'] = $result;
             foreach ($result as $row) {
                 $data['detailGedung'] = array(
 									'idGedung' => $row->idGedung,
@@ -60,11 +65,13 @@ class Beranda extends CI_Controller
 									'luasGedung' =>$row->luasGedung,
 									'jumlahLantai' => $row->jumlahLantai);
             }
+        }else {
+          $data['detailGedung'] = 'null';
         }
-        $this->load->view('header', $data);
-        $this->load->view('navigation', $data);
-        $this->load->view('data_gedung', $data);
-        $this->load->view('footer', $data);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/navigation', $data);
+        $this->load->view('data_gedung_view', $data);
+        $this->load->view('template/footer', $data);
     }
 
 /**
