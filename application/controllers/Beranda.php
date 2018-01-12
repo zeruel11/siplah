@@ -56,17 +56,17 @@ class Beranda extends CI_Controller
         $result = $this->Beranda_model->getDataGedung($ged);
 
         if ($result) {
-            $data['detailGedung'] = array();
-            $data['test'] = $result;
-            foreach ($result as $row) {
-                $data['detailGedung'] = array(
-									'idGedung' => $row->idGedung,
-									'namaGedung' => $row->namaGedung,
-									'luasGedung' =>$row->luasGedung,
-									'jumlahLantai' => $row->jumlahLantai);
-            }
+            $data['detailGedung'] = $result;
+            // $data['test'] = $result;
+         //    foreach ($result as $row) {
+         //        $data['detailGedung'] = array(
+									// 'idGedung' => $row->idGedung,
+									// 'namaGedung' => $row->namaGedung,
+									// 'luasGedung' =>$row->luasGedung,
+									// 'jumlahLantai' => $row->jumlahLantai);
+            // }
         }else {
-          $data['detailGedung'] = 'null';
+          $data['detailGedung'] = null;
         }
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);

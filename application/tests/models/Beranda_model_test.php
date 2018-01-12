@@ -20,9 +20,14 @@ class Beranda_model_test extends TestCase
     $expectedIndex = ['idGedung', 'namaGedung', 'luasGedung', 'jumlahLantai'];
     $expectedValue = ['7','fasor','22','1'];
     for ($g=0; $g < count($expectedIndex); $g++) {
-      $this->assertAttributeSame($expectedValue[$g], $expectedIndex[$g], $actual[0]);
+      // $this->assertAttributeSame($expectedValue[$g], $expectedIndex[$g], $actual[0]);
     }
-
+    $expected = ['idGedung'=>'7',
+    'namaGedung'=>'fasor',
+    'luasGedung'=>'22',
+    'jumlahLantai'=>'1'];
+    
+    $this->assertEquals($expected,$actual[0]);
   }
 
   public function test_invalid_get_data_gedung()
@@ -30,5 +35,12 @@ class Beranda_model_test extends TestCase
     $actual = $this->obj->getDataGedung(1);
 
     $this->assertNull($actual);
+  }
+
+  public function test_valid_get_list_gedung()
+  {
+    $actual = $this->obj->getListGedung();
+    $this->assertInternalType('array', $actual);
+
   }
 }
