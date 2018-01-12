@@ -46,5 +46,16 @@ class Beranda_model_test extends TestCase
     $actual = $this->obj->getListGedung();
     $this->assertInternalType('array', $actual);
 
+    $g=0;
+    foreach ($actual as $key) {
+     $this->assertArrayHasKey('namaGedung', $actual[$g]);
+     $g++;
+    }
   }
+
+  // public function test_invalid_get_data_gedung($value='')
+  // {
+  //   # code...
+  // }
+
 }

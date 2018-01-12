@@ -1,6 +1,6 @@
 # This file is a template, and might need editing before it works on your project.
 # Select image from https://hub.docker.com/_/php/
-image: php:7.1.1
+image: php:7.0.22
 
 # Select what we should cache between builds
 cache:
@@ -22,7 +22,7 @@ before_script:
 # Install and run Composer
 - curl -sS https://getcomposer.org/installer | php
 - php composer.phar install
-# - php vendor/kenjis/ci-phpunit-test/install.php
+- php vendor/kenjis/ci-phpunit-test/install.php
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
@@ -40,4 +40,20 @@ variables:
 test:
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  # - php -v
   - cd application/tests && ../../vendor/bin/phpunit
+
+# stages:
+#   - test
+#   - build
+
+# deploy_testing:
+#   stage: test
+#   script:
+#     - echo "Deploy to staging server"
+#     - phpunit
+#   environment:
+#     name: staging
+#     # url: https://staging.example.com
+#   only:
+#   - master
