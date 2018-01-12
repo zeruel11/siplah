@@ -40,4 +40,4 @@ variables:
 test:
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
-  - cd application/tests && ../../vendor/bin/phpunit --bootstrap Bootstrap.php --configuration phpunit.xml
+  - cd application/tests && ../../vendor/bin/phpunit

@@ -17,17 +17,21 @@ class Beranda_model_test extends TestCase
     $this->assertInternalType('array', $actual);
     $this->assertEquals(1,count($actual));
 
-    $expectedIndex = ['idGedung', 'namaGedung', 'luasGedung', 'jumlahLantai'];
-    $expectedValue = ['7','fasor','22','1'];
-    for ($g=0; $g < count($expectedIndex); $g++) {
-      // $this->assertAttributeSame($expectedValue[$g], $expectedIndex[$g], $actual[0]);
-    }
     $expected = ['idGedung'=>'7',
     'namaGedung'=>'fasor',
     'luasGedung'=>'22',
     'jumlahLantai'=>'1'];
     
     $this->assertEquals($expected,$actual[0]);
+
+    ////////////////////////////////////////////////////////////////////
+    // leftover method from using object array instead of array array //
+    ////////////////////////////////////////////////////////////////////
+    // $expectedIndex = ['idGedung', 'namaGedung', 'luasGedung', 'jumlahLantai'];
+    // $expectedValue = ['7','fasor','22','1'];
+    // for ($g=0; $g < count($expectedIndex); $g++) {
+      // $this->assertAttributeSame($expectedValue[$g], $expectedIndex[$g], $actual[0]);
+    // }
   }
 
   public function test_invalid_get_data_gedung()

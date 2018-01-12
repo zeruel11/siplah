@@ -57,14 +57,6 @@ class Beranda extends CI_Controller
 
         if ($result) {
             $data['detailGedung'] = $result;
-            // $data['test'] = $result;
-         //    foreach ($result as $row) {
-         //        $data['detailGedung'] = array(
-									// 'idGedung' => $row->idGedung,
-									// 'namaGedung' => $row->namaGedung,
-									// 'luasGedung' =>$row->luasGedung,
-									// 'jumlahLantai' => $row->jumlahLantai);
-            // }
         }else {
           $data['detailGedung'] = null;
         }
