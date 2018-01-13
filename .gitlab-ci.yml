@@ -45,7 +45,7 @@ setup:
   stage: setup
   script:
     - cd \(siplah\)
-    - sql_input=$(ls -tp | grep -v /$ | head -1)
+    - sql_input=$(ls -tp | grep full | head -1)
     - gunzip -c $sql_input > ../data_input.sql
     - cd ~
     # - mysql -uroot -pzeruel13 < data_input.sql
