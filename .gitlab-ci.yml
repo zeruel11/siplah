@@ -58,12 +58,10 @@ setup:
 
 test:
   stage: test
-  image:
-    - mysql
-    - php:7.1.8
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
   # - php -v
+  - apt-get install -yqq mysql-client
   - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
   - cd application/tests && ../../vendor/bin/phpunit
   dependencies:
