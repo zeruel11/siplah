@@ -10,19 +10,9 @@ cache:
 
 before_script:
 - apt-get update -yqq
-- apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev
-# Install PHP extensions
-- docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
 # Activate PHP modrewrite
 #- a2enmod rewrite
 #- systemctl restart apache2
-# Install & enable Xdebug for code coverage reports
-- pecl install xdebug
-- docker-php-ext-enable xdebug
-# Install and run Composer
-- curl -sS https://getcomposer.org/installer | php
-- php composer.phar install
-- php vendor/kenjis/ci-phpunit-test/install.php
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
@@ -40,33 +30,58 @@ variables:
 stages:
   - setup
   - test
+  - deploy
 
 setup:
   stage: setup
   script:
+    # Extract mysql dump and store it as sql
+    - apt-get install -yqq gzip
     - cd \(siplah\)
     - sql_input=$(ls -tp | grep full | head -1)
     - gunzip -c $sql_input > ../data_input.sql
-    - cd ~
-    # - mysql -uroot -pzeruel13 < data_input.sql
   allow_failure: false
   artifacts:
     when: on_success
     paths:
       - ./data_input.sql
+    expire_in: 2 days
 
 
-test:
+testing:
   stage: test
   script:
-  # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
-  # - php -v
-  - apt-get install -yqq mysql-client
-  - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
-  - cd application/tests && ../../vendor/bin/phpunit
+    # Install PHP extensions
+    - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client
+    - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
+    # Install & enable Xdebug for code coverage reports
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
+    # Install and satisfy Composer dependency
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install
+    # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
+    - php vendor/kenjis/ci-phpunit-test/install.php
+    - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
+    - cd application/tests && ../../vendor/bin/phpunit
   dependencies:
     - setup
-  when: on_success
+  artifacts:
+    when: on_success
+    paths:
+      - application/tests/build
+
+pages:
+  stage: deploy
+  dependencies:
+    - testing
+  script:
+    - mv application/tests/build public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only: master
 
 # deploy_testing:
 #   stage: test

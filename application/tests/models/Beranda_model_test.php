@@ -6,23 +6,23 @@
 class Beranda_model_test extends TestCase
 {
 
-  public function setUp()
-    {
-        $this->obj = $this->newModel('Beranda_model');
-    }
+	public function setUp()
+	{
+		$this->obj = $this->newModel('Beranda_model');
+	}
 
-  public function test_get_data_gedung_valid()
-  {
-    $actual = $this->obj->getDataGedung(7);
-    $this->assertInternalType('array', $actual);
-    $this->assertEquals(1,count($actual));
+	public function test_get_data_gedung_valid()
+	{
+		$actual = $this->obj->getDataGedung(7);
+		$this->assertInternalType('array', $actual);
+		$this->assertEquals(1,count($actual));
 
-    $expected = ['idGedung'=>'7',
-    'namaGedung'=>'fasor',
-    'luasGedung'=>'22',
-    'jumlahLantai'=>'1'];
+		$expected = ['idGedung'=>'7',
+		'namaGedung'=>'fasor',
+		'luasGedung'=>'22',
+		'jumlahLantai'=>'1'];
 
-    $this->assertEquals($expected,$actual[0]);
+		$this->assertEquals($expected,$actual[0]);
 
     ////////////////////////////////////////////////////////////////////
     // leftover method from using object array instead of array array //
@@ -32,28 +32,32 @@ class Beranda_model_test extends TestCase
     // for ($g=0; $g < count($expectedIndex); $g++) {
       // $this->assertAttributeSame($expectedValue[$g], $expectedIndex[$g], $actual[0]);
     // }
-  }
+	}
 
-  public function test_get_data_gedung_invalid()
-  {
-    $actual = $this->obj->getDataGedung(1);
+	public function test_get_data_gedung_invalid()
+	{
+		$actual = $this->obj->getDataGedung(1);
 
-    $this->assertNull($actual);
-  }
+		$this->assertNull($actual);
+	}
 
-  public function test_get_list_gedung_valid()
-  {
-    $actual = $this->obj->getListGedung();
-    $this->assertInternalType('array', $actual);
+	public function test_get_list_gedung_valid()
+	{
+		$actual = $this->obj->getListGedung();
+		$this->assertInternalType('array', $actual);
 
-    $g=0;
-    foreach ($actual as $key) {
-     $this->assertArrayHasKey('namaGedung', $actual[$g]);
-     $g++;
-    }
-  }
+		$g=0;
+		foreach ($actual as $key) {
+			$this->assertArrayHasKey('namaGedung', $actual[$g]);
+			$g++;
+		}
+	}
 
-  // public function test_get_list_gedung_empty()
+/**
+ * test with mock for non empty model - unused for now
+ * @return bool assertTrue
+ */
+	// public function test_get_list_gedung_empty()
 	// {
 	// 	// Create mock objects for CI_DB_pdo_result and CI_DB_pdo_sqlite_driver
 	// 	$return = [
@@ -62,21 +66,21 @@ class Beranda_model_test extends TestCase
 	// 		// 2 => (array) ['id' => '3', 'name' => 'DVD'],
 	// 	];
 	// 	$db_result = $this->getMockBuilder('CI_DB_pdo_result')
-	// 		->disableOriginalConstructor()
-	// 		->getMock();
+	// 	->disableOriginalConstructor()
+	// 	->getMock();
 	// 	$db_result->method('result_array')->willReturn($return);
 	// 	$db = $this->getMockBuilder('CI_DB_pdo_mysql_driver')
-	// 		->disableOriginalConstructor()
-	// 		->getMock();
+	// 	->disableOriginalConstructor()
+	// 	->getMock();
 	// 	$db->method('get')->willReturn($db_result);
-  //
+
 	// 	// Verify invocations
 	// 	$this->verifyInvokedOnce(
 	// 		$db_result,
 	// 		'result_array',
 	// 		[]
 	// 	);
-  //   $this->verifyInvokedOnce(
+	// 	$this->verifyInvokedOnce(
 	// 		$db,
 	// 		'select',
 	// 		['idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label']
@@ -86,7 +90,7 @@ class Beranda_model_test extends TestCase
 	// 		'from',
 	// 		['gedung']
 	// 	);
-  //   $this->verifyInvokedOnce(
+	// 	$this->verifyInvokedOnce(
 	// 		$db,
 	// 		'join',
 	// 		['koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left']
@@ -94,7 +98,7 @@ class Beranda_model_test extends TestCase
 	// 	$this->verifyInvokedOnce(
 	// 		$db,
 	// 		'get',
-  //     []
+	// 		[]
 	// 	);
 	// 	// Replace property db with mock object
 	// 	$this->obj->db = $db;
@@ -104,46 +108,60 @@ class Beranda_model_test extends TestCase
 	// 	// 	3 => 'DVD',
 	// 	// ];
 	// 	$actual = $this->obj->getListGedung();
-  //   $g=0;
-  //   foreach ($actual as $key) {
-  //    $this->assertArrayHasKey('namaGedung', $actual[$g]);
-  //    $g++;
-  //  }
+	// 	$g=0;
+	// 	foreach ($actual as $key) {
+	// 		$this->assertArrayHasKey('namaGedung', $actual[$g]);
+	// 		$g++;
+	// 	}
 	// }
-
-  public function test_get_category_list()
+/**
+ * test if gedung empty with mock data
+ * @return bool assertTrue
+ */
+	public function test_get_list_gedung_empty()
 	{
 		// Create mock objects for CI_DB_pdo_result and CI_DB_pdo_sqlite_driver
 		$return = [];
 		$db_result = $this->getMockBuilder('CI_DB_pdo_result')
-			->disableOriginalConstructor()
-			->getMock();
+		->disableOriginalConstructor()
+		->getMock();
 		$db_result->method('result_array')->willReturn($return);
 		$db = $this->getMockBuilder('CI_DB_pdo_mysql_driver')
-			->disableOriginalConstructor()
-			->getMock();
+		->disableOriginalConstructor()
+		->getMock();
 		$db->method('get')->willReturn($db_result);
 
 		// Verify invocations
-		// $this->verifyInvokedOnce(
-		// 	$db_result,
-		// 	'result_array',
-		// 	[]
-		// );
+		$this->verifyNeverInvoked(
+			$db_result,
+			'result_array',
+			[]
+		);
 		$this->verifyInvokedOnce(
 			$db,
-			'order_by',
-			['id']
+			'select',
+			['idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label']
+		);
+		$this->verifyInvokedOnce(
+			$db,
+			'from',
+			['gedung']
+		);
+		$this->verifyInvokedOnce(
+			$db,
+			'join',
+			['koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left']
 		);
 		$this->verifyInvokedOnce(
 			$db,
 			'get',
-			['category']
+			[]
 		);
+
 		// Replace property db with mock object
 		$this->obj->db = $db;
 		$expected = null;
-		$list = $this->obj->get_category_list();
+		$list = $this->obj->getListGedung();
 		// foreach ($list as $category) {
 		// 	$this->assertEquals($expected[$category->id], $category->name);
 		// }
