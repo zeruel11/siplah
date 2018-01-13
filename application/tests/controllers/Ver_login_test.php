@@ -1,10 +1,10 @@
 <?php
 /**
-* 
+*
 */
 class Ver_login_test extends TestCase
 {
-	
+
 	public function test_index_valid_cred()
 	{
 		$creds = ['username'=>'admin', 'password'=>'13the.zero'];
@@ -15,7 +15,7 @@ class Ver_login_test extends TestCase
 			$creds
 		);
 
-		$this->assertRedirect('beranda');
+		$this->assertRedirect('beranda', 200);
 
 	}
 
@@ -29,7 +29,7 @@ class Ver_login_test extends TestCase
 			$creds
 		);
 
-		$this->assertRedirect('beranda/masuk');
+		$this->assertRedirect('beranda/masuk', 200);
 
 	}
 

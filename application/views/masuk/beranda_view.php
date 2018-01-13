@@ -1,9 +1,27 @@
 <body>
 
-  <div class="wrapper">
-    <div class="peta" id="image-map"></div>
-    <div class="col-lg-4"></div>
-  </div>
+  <div class="container-fluid">
+		<div class="row">
+		<div class="col-lg-8" id="image-map"></div>
+		<div class="col-lg-4">
+			<?php $g=0;
+			foreach ($listGedung as $row) {
+				// echo "".$row['idGedung']."<br>";
+				// echo "Nama: ".$row['namaGedung']."<br>";
+				// echo "Luasan: ".$row['luasGedung']."<br>";
+				// echo "Lantai: ".$row['jumlahLantai']."<br>";
+				// echo "".$row['x']."<br>";
+				// echo "".$row['y']."<br>";
+				// echo "".$row['label']."<br>";
+				// echo $row;?>
+				<a href="<?php echo base_url()."gedung/".$listGedung[$g]['idGedung'];	$g++;?>"> Detail data gedung </a>
+				<br>
+				<?php }
+				// var_dump($userAuth); ?>
+
+		</div>
+	</div>
+</div>
 
 	<script>
     var map = L.map('image-map', {

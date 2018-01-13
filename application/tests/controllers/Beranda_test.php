@@ -88,13 +88,20 @@ class Beranda_test extends TestCase
     );
     $output = $this->request('GET', 'login');
 
-    $this->assertRedirect('beranda');
+    $this->assertRedirect('beranda', 200);
   }
 
   public function test_keluar()
   {
-    $this->request('GET', 'logout');
-    $this->assertRedirect('beranda');
+    $this->request->setCallable(
+      function ($CI) {
+        $CI->session->logged_in = 'true';
+      }
+    );
+    $output = $this->request('GET', 'logout');
+    $expected = null;
+    $this->assertEquals($expected, $output);
+    $this->assertRedirect('beranda', 302);
   }
 
 }

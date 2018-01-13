@@ -38,27 +38,35 @@ variables:
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 stages:
-  - build
+  - setup
   - test
 
-build:
-  stage: build
+setup:
+  stage: setup
   script:
     - cd \(siplah\)
-    - db_input=$(ls -tp | grep -v /$ | head -1)
-    - gunzip -c $db_input > data_input.sql
-    - mysql -uroot -pzeruel13 < data_input.sql
+    - sql_input=$(ls -tp | grep -v /$ | head -1)
+    - gunzip -c $sql_input > ../data_input.sql
+    - cd ~
+    # - mysql -uroot -pzeruel13 < data_input.sql
+  allow_failure: false
+  artifacts:
+    when: on_success
+    paths:
+      - ./data_input.sql
+
 
 test:
-  stage: script
+  stage: test
+  image: mysql
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
   # - php -v
+  - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
   - cd application/tests && ../../vendor/bin/phpunit
-
-# stages:
-#   - test
-#   - build
+  dependencies:
+    - setup
+  when: on_success
 
 # deploy_testing:
 #   stage: test

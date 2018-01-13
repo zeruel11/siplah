@@ -21,10 +21,10 @@ class Beranda extends CI_Controller
         $data['listGedung'] = $this->Beranda_model->getListGedung();
 
         if ($this->session->userdata('logged_in')) {
-            $data = $this->session->userdata('logged_in');
-            if ($data['userLevel']==1) {
+            $data['userLogin'] = $this->session->userdata('logged_in');
+            if ($data['userLogin']['userLevel']==1) {
                 $data['userAuth'] = "Admin";
-            } elseif ($data['userLevel']==2) {
+            } elseif ($data['userLogin']['userLevel']==2) {
                 $data['userAuth'] = "Pegawai";
             } else {
                 $data['userAuth'] = "Pengguna Lain";
@@ -94,6 +94,7 @@ class Beranda extends CI_Controller
             }
         }
         $this->session->sess_destroy();
+        $this->session->userdata('logged_in');
         redirect('beranda');
     }
 
