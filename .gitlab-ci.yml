@@ -27,7 +27,7 @@ before_script:
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
 services:
-  - mysql:5.7
+  - mysql:14.14
 
 # Set any variables we need
 variables:
@@ -58,7 +58,9 @@ setup:
 
 test:
   stage: test
-  image: mysql
+  image:
+    - mysql
+    - php:7.1.8
   script:
   # - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
   # - php -v

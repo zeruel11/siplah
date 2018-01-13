@@ -47,6 +47,17 @@ class Beranda_model extends CI_Model {
        }
 	}
 
+	public function get_category_list()
+	{
+		$this->db->order_by('id');
+		$query = $this->db->get('category');
+		if ($query->num_rows() > 0){
+			return $query->result_array();
+		}else {
+			return null;
+		}
+	}
+
 	/*function getListRuang()
 	{
 		# code...
