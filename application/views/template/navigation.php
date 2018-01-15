@@ -1,14 +1,31 @@
 <nav class="navbar fixed-top navbar-dark" style="background-color: rgba(1, 56, 128, 0.9);">
-	<?php if ($this->session->userdata('logged_in')) {
-    ?>
-	<a class="navbar-brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/img/logo-its.png" alt="" class="d-inline-block align-center" width="35" height="35">Selamat datang <?php echo $userAuth." ".$userLogin['namaLengkap']; ?></a>
+	<?php if (isset($userLogin)) {
+		if ($userLogin['userLevel']==1) {
+			$userAccess = "Admin";
+		} elseif ($userLogin['userLevel']==2) {
+			$userAccess = "Pegawai";
+		} else {
+			$userAccess = "Pengguna Lain";
+		}
+	}
+	?>
+	<a class="navbar-brand <?php if(isset($userLogin['userLevel'])!=1) echo('mr-auto') ?>" href="<?php echo base_url(); ?>"><img style="margin-right: 10px" src="<?php echo base_url(); ?>assets/img/logo-its.png" alt="" class="d-inline-block align-center" width="35" height="35"><?php if (isset($userAccess)) {
+		echo "Selamat datang ".$userAccess." ".$userLogin['namaLengkap'];
+	} else {
+		echo " Selamat Datang di Website SIPLAH ";
+	} ?></a>
+	<?php if (isset($userLogin['userLevel'])==1) {
+		echo '<a class="btn btn-primary mr-auto" href="#" role="button"></a>';
+	} ?>
+	<form class="form-inline" role="form" method="POST" action="<?php echo base_url(); ?>search/">
+		<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+			<input class="form-control" type="search" id="gedung" name="gedung" placeholder="Cari gedung...">
+			<span class="input-group-btn"><button type="submit" class="btn btn-secondary">Search</button></span>
+		</div>
+	</form>
+	<?php if (isset($userLogin)) { ?>
 	<a class="btn btn-primary" href="<?php echo base_url(); ?>logout" role="button">Logout</a>
-	<?php
-} else {
-        ?>
-				<a class="navbar-brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/img/logo-its.png" alt="" class="d-inline-block align-center" width="35" height="35"> Selamat Datang di Website SIPLAH ITS</a>
-		<!-- <span class="navbar-brand"></span> -->
-		<a class="btn btn-primary" href="<?php echo base_url(); ?>login" role="button">Login</a>
-		<?php
-    } ?>
+	<?php } else { ?>
+	<a class="btn btn-primary" href="<?php echo base_url(); ?>login" role="button">Login</a>
+	<?php } ?>
 </nav>

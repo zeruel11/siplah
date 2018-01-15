@@ -104,4 +104,9 @@ class Beranda_test extends TestCase
     $this->assertRedirect('beranda', 302);
   }
 
+  // public function test_search_gedung()
+  // {
+    
+  // }
+
 }

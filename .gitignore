@@ -26,6 +26,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+sftp-config*.json
 
 ## Atom project files
 .ftpconfig

@@ -16,6 +16,8 @@ class Beranda_model extends CI_Model {
 		$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
 		$this->db->from('gedung');
 		$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
+		$this->db->order_by('idGedung', 'desc');
+		$this->db->limit(10);
 
 		$query=$this->db->get();
 		if ($query->num_rows() > 0) {
@@ -24,6 +26,22 @@ class Beranda_model extends CI_Model {
 			return null;
 		}
 
+	}
+
+	function searchListGedungByName($ged)
+	{
+		$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
+		$this->db->from('gedung');
+		$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
+		$this->db->order_by('idGedung', 'desc');
+		$this->db->where("MATCH(namaGedung) AGAINST ('$ged' IN NATURAL LANGUAGE MODE)", NULL, FALSE);
+
+		$query=$this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		}else{
+			return null;
+		}
 	}
 
 /**

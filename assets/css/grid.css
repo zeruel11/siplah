@@ -1,4 +1,4 @@
-.wrapper{
+/*.wrapper{
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 10px;
@@ -13,7 +13,7 @@
 .list{
 	grid-column: 3;
 	grid-row: 1 /3;
-}
+}*/
 
 .vertical-center {
 	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
@@ -21,4 +21,12 @@
 
 	display: flex;
 	align-items: center;
+}
+
+body {
+    padding-top: 70px;
+  }
+
+footer {
+	padding-top: 10px;
 }

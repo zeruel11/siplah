@@ -10,18 +10,18 @@
 	<title>SIPLAH - Login</title>
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/grid.css">
 </head>
 <body>
 	<div class="container vertical-center">
 		<!-- <div class="card card-container"> -->
-			<form class="form-horizontal" role="form" method="POST" action="<?php echo base_url().'index.php/ver_login'; ?>">
+			<form class="form-horizontal mx-auto" role="form" method="POST" action="<?php echo base_url().'index.php/ver_login'; ?>">
 				<div class="row">
 					<!-- <div class="col-md-3"></div> -->
 					<!-- <div class="col-lg-6"> -->
-						<h2 class='login_title text-center'>Masukkan Login Anda</h2>
+						<h2 class='login_title text-center'>Masukkan Login</h2>
 						<hr>
 						<!-- </div> -->
 					</div>

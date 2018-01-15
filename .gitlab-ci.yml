@@ -45,8 +45,7 @@ setup:
     when: on_success
     paths:
       - ./data_input.sql
-    expire_in: 2 days
-
+    expire_in: 2 hrs
 
 testing:
   stage: test
@@ -70,13 +69,14 @@ testing:
     when: on_success
     paths:
       - application/tests/build
+    expire_in: 15 days
 
 pages:
   stage: deploy
   dependencies:
     - testing
   script:
-    - mv application/tests/build public/
+    - mv application/tests/build/coverage public/
   artifacts:
     paths:
       - public
