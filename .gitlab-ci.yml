@@ -9,10 +9,19 @@ cache:
   - assets/
 
 before_script:
-- apt-get update -yqq
-# Activate PHP modrewrite
-#- a2enmod rewrite
-#- systemctl restart apache2
+  - apt-get update -yqq
+  # Activate PHP modrewrite
+  #- a2enmod rewrite
+  #- systemctl restart apache2
+  # Install PHP extensions
+  - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client
+  - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
+  # Install & enable Xdebug for code coverage reports
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  # Install and satisfy Composer dependency
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
@@ -28,47 +37,36 @@ variables:
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 stages:
-  - setup
+  # - setup
   - test
   - deploy
 
-setup:
-  stage: setup
-  script:
-    # Extract mysql dump and store it as sql
-    - apt-get install -yqq gzip
-    - cd \(siplah\)
-    - sql_input=$(ls -tp | grep full | head -1)
-    - gunzip -c $sql_input > ../data_input.sql
-  allow_failure: false
-  artifacts:
-    when: on_success
-    paths:
-      - ./data_input.sql
-    expire_in: 2 hrs
+# setup:
+#   stage: setup
+#   script:
+#     # Extract mysql dump and store it as sql
+#     - apt-get install -yqq gzip
+#     - cd \(siplah\)
+#     - sql_input=$(ls -tp | grep full | head -1)
+#     - gunzip -c $sql_input > ../data_input.sql
+#   allow_failure: false
+#   artifacts:
+#     when: on_success
+#     paths:
+#       - ./data_input.sql
+#     expire_in: 2 hrs
 
 testing:
   stage: test
   script:
-    # Install PHP extensions
-    - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client
-    - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
-    # Install & enable Xdebug for code coverage reports
-    - pecl install xdebug
-    - docker-php-ext-enable xdebug
-    # Install and satisfy Composer dependency
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install
     # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
     - php vendor/kenjis/ci-phpunit-test/install.php
-    - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
+    - (cd \(siplah\) && mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < *.sql && cd ~)
     - cd application/tests && ../../vendor/bin/phpunit
-  dependencies:
-    - setup
   artifacts:
     when: on_success
     paths:
-      - application/tests/build
+    - application/tests/build
     expire_in: 15 days
 
 pages:
@@ -82,7 +80,7 @@ pages:
       - public
     expire_in: 30 days
   only:
-    - master
+  - master
 
 # deploy_testing:
 #   stage: test

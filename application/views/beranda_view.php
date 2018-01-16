@@ -4,20 +4,23 @@
 		<div class="row">
 		<div class="col-lg-8"><div id="image-map"></div></div>
 		<div class="col-lg-4">
+			<div class="card">
+			<ul class="list-group list-group-flush">
 			<?php $g=0;
-			foreach ($listGedung as $row) {
-				// echo "".$row['idGedung']."<br>";
-				echo $row['namaGedung'];
+			foreach ($listGedung as $row) { ?>
+				<a href="<?php echo base_url()."gedung/".$listGedung[$g]['idGedung'];	$g++;?>" class="list-group-item list-group-item-action"><?php echo $row['namaGedung']; ?></a>
+				<!-- class="btn btn-outline-info btn-sm float-right" -->
+				<?php 
 				// echo "Luasan: ".$row['luasGedung']."<br>";
 				// echo "Lantai: ".$row['jumlahLantai']."<br>";
 				// echo "".$row['x']."<br>";
 				// echo "".$row['y']."<br>";
 				// echo "".$row['label']."<br>";
-				// echo $row;?>
-				<a href="<?php echo base_url()."gedung/".$listGedung[$g]['idGedung'];	$g++;?>"> Detail data gedung </a>
-				<br>
-				<?php }
+				// echo $row;
+			}
 				// var_dump($listGedung)?>
+				</ul>
+				</div>
 		</div>
 	</div>
 </div>

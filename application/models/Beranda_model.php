@@ -16,7 +16,7 @@ class Beranda_model extends CI_Model {
 		$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
 		$this->db->from('gedung');
 		$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
-		$this->db->order_by('idGedung', 'desc');
+		$this->db->order_by('idGedung', 'asc');
 		$this->db->limit(10);
 
 		$query=$this->db->get();
