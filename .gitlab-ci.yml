@@ -14,7 +14,7 @@ before_script:
   #- a2enmod rewrite
   #- systemctl restart apache2
   # Install PHP extensions
-  - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client
+  - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client gzip
   - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
   # Install & enable Xdebug for code coverage reports
   - pecl install xdebug
@@ -59,9 +59,14 @@ stages:
 testing:
   stage: test
   script:
+    # Extract mysql dump and store it as sql
+    # - cd \(siplah\)
+    - sql_input=$(ls -tp \(siplah\) | grep full | head -1)
+    - sql_input="(siplah)/$sql_input"
+    - gunzip -c $sql_input > data_input.sql
     # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
     - php vendor/kenjis/ci-phpunit-test/install.php
-    - (cd \(siplah\) && mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < *.sql && cd ~)
+    - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
     - cd application/tests && ../../vendor/bin/phpunit
   artifacts:
     when: on_success
