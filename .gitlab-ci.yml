@@ -61,7 +61,7 @@ testing:
   script:
     # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
     - php vendor/kenjis/ci-phpunit-test/install.php
-    - (cd \(siplah\) && mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < *.sql && cd ~)
+    - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < \(siplah\)/dataInput.sql
     - cd application/tests && ../../vendor/bin/phpunit
   artifacts:
     when: on_success

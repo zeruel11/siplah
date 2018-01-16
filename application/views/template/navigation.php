@@ -17,15 +17,15 @@
 	<?php if (isset($userLogin['userLevel'])==1) {
 		echo '<a class="btn btn-primary mr-auto" href="#" role="button"></a>';
 	} ?>
-	<form class="form-inline" role="form" method="POST" action="<?php echo base_url(); ?>search/">
-		<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-			<input class="form-control" type="search" id="gedung" name="gedung" placeholder="Cari gedung...">
-			<span class="input-group-btn"><button type="submit" class="btn btn-secondary">Search</button></span>
-		</div>
-	</form>
 	<?php if (isset($userLogin)) { ?>
 	<a class="btn btn-primary" href="<?php echo base_url(); ?>logout" role="button">Logout</a>
 	<?php } else { ?>
 	<a class="btn btn-primary" href="<?php echo base_url(); ?>login" role="button">Login</a>
 	<?php } ?>
+	<form class="form-inline" role="form" method="POST" action="<?php echo base_url(); ?>search/">
+		<div class="input-group mb-2 mb-sm-0 ml-sm-2">
+			<input class="form-control" type="search" id="gedung" name="gedung" placeholder="Cari gedung...">
+			<span class="input-group-btn"><button type="submit" class="btn btn-secondary">Search</button></span>
+		</div>
+	</form>
 </nav>
