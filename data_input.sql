@@ -252,7 +252,7 @@ CREATE TABLE `proposal` (
   PRIMARY KEY (`idProposal`),
   KEY `fk_idGedung` (`idGedung`),
   FULLTEXT KEY `ft_deskripsiPekerjaan` (`deskripsiProposal`),
-  CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE UPDATE
+  CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -280,7 +280,7 @@ CREATE TABLE `ruang` (
   `inventarisRuang` int(11) NOT NULL,
   PRIMARY KEY (`idRuang`),
   KEY `fk_idGedung` (`idGedung`),
-  CONSTRAINT `ruang_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`)
+  CONSTRAINT `ruang_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -337,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-17  9:29:03
+-- Dump completed on 2018-01-17  9:43:45
