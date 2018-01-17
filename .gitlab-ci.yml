@@ -61,9 +61,9 @@ testing:
   script:
     # Extract mysql dump and store it as sql
     # - cd \(siplah\)
-    - sql_input=$(ls -tp \(siplah\) | grep full | head -1)
-    - sql_input="(siplah)/$sql_input"
-    - gunzip -c $sql_input > data_input.sql
+    # - sql_input=$(ls -tp \(siplah\) | grep full | head -1)
+    # - sql_input="(siplah)/$sql_input"
+    # - gunzip -c $sql_input > data_input.sql
     # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
     - php vendor/kenjis/ci-phpunit-test/install.php
     - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
