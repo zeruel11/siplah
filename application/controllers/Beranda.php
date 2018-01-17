@@ -18,20 +18,19 @@ class Beranda extends CI_Controller
 
     public function index()
     {
-        
+
         if($this->session->flashdata('cari')){
             $data['listGedung'] = $this->session->flashdata('cari');
         }else{
-            $data['listGedung'] = $this->Beranda_model->getListGedung(); 
+            $data['listGedung'] = $this->Beranda_model->getListGedung();
         }
 
         if ($this->session->userdata('logged_in')) {
             $data['userLogin'] = $this->session->userdata('logged_in');
 
-            // $data['testing'] = $this->session->userdata['logged_in']['uid'];
             $this->load->view('template/header', $data);
             $this->load->view('template/navigation', $data);
-            $this->load->view('template/menu', $data);
+            // $this->load->view('template/menu', $data);
             $this->load->view('masuk/beranda_view', $data);
             $this->load->view('template/footer', $data);
             // redirect('index.php/beranda/master','refresh');

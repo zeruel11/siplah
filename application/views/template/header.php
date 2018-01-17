@@ -9,9 +9,10 @@
 	}
 	?>
 	<!-- css imports -->
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/leaflet.css" />
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/leaflet.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
 
 	<!-- core javascript import -->
 	<script src="<?php echo base_url(); ?>assets/js/leaflet.js"></script>
