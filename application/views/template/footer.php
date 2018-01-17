@@ -1,8 +1,10 @@
 <!-- <script src="assets/js/leaflet.js"></script> -->
-<footer>
+<footer class="footer">
+	<!-- <div class="container"> -->
 	<div class="card-footer text-muted text-center">
 		Copyright: SIMRI ITS 2017
-	</div>
+		</div>
+	<!-- </div> -->
 </footer>
 
 </html>

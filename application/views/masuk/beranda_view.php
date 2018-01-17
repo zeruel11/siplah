@@ -1,28 +1,4 @@
-	<div class="container-fluid">
-		<div class="row flex">
-			<div class="col-lg-2 hidden-xs-down bg-faded">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Reports</a>
-            </li>
-            </li>
-          </ul>
-
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="">Nav item</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="">One more nav</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Another nav item</a>
-            </li>
-          </ul>
-        </div>
+	
 		<div class="col-lg-7">
 			<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 			<div id="image-map"></div>

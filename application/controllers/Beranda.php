@@ -3,10 +3,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Beranda extends CI_Controller
 {
-	/**
-	 * load default model dan library CI
-	 * @method __construct
-	 */
+    /**
+     * load default model dan library CI
+     * @method __construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +30,7 @@ class Beranda extends CI_Controller
 
             $this->load->view('template/header', $data);
             $this->load->view('template/navigation', $data);
-            // $this->load->view('template/menu', $data);
+            $this->load->view('template/menu', $data);
             $this->load->view('masuk/beranda_view', $data);
             $this->load->view('template/footer', $data);
             // redirect('index.php/beranda/master','refresh');
@@ -57,10 +57,15 @@ function detailGedung($ged)
     }else {
       $data['detailGedung'] = null;
   }
-  $this->load->view('template/header', $data);
-  $this->load->view('template/navigation', $data);
-  $this->load->view('data_gedung_view', $data);
-  $this->load->view('template/footer', $data);
+
+  if ($this->session->userdata('logged_in')){
+    $data['userLogin'] = $this->session->userdata('logged_in');
+}
+
+$this->load->view('template/header', $data);
+$this->load->view('template/navigation', $data);
+$this->load->view('data_gedung_view', $data);
+$this->load->view('template/footer', $data);
 }
 
 function searchGedung()
@@ -108,6 +113,44 @@ public function keluar()
     $this->session->userdata('logged_in');
     redirect('beranda');
 }
+
+function dataRenovasi($ged)
+{
+    $result = $this->Beranda_model->getListRenovasi($ged);
+
+    if ($result) {
+      $data['dataRenovasi'] = $result;
+    }else {
+      $data['dataRenovasi'] = null;
+  }
+
+  if ($this->session->userdata('logged_in')) {
+    $data['userLogin'] = $this->session->userdata('logged_in');
+}
+  $this->load->view('template/header', $data);
+  $this->load->view('template/navigation', $data);
+  $this->load->view('template/menu', $data);
+  $this->load->view('data_renovasi_view', $data);
+  $this->load->view('template/footer', $data);
+}
+
+    // function allRenovasi()
+    // {
+    //     $result = $this->Beranda_model->getListRenovasi();
+
+    //     if ($result) {
+    //         $data['dataRenovasi'] = $result;
+    //     }else {
+    //       $data['dataRenovasi'] = null;
+    //     }
+    // if ($this->session->userdata('logged_in')) {
+    //     $data['userLogin'] = $this->session->userdata('logged_in');
+    // }
+    // $this->load->view('template/header', $data);
+    // $this->load->view('template/navigation', $data);
+    // $this->load->view('data_renovasi_view', $data);
+    // $this->load->view('template/footer', $data);
+    // }
 
 }
 
