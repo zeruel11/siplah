@@ -65,6 +65,25 @@ class Beranda_model extends CI_Model {
        }
 	}
 
+	function getListRenovasi($ged)
+	{
+		$this->db->select('idProposal, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
+		$this->db->from('proposal');
+		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
+		if ($ged!='ALL') {
+			// $this->db->where(array('dateDeleted' => NULL));
+			$this->db->where('proposal.idGedung', $ged);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()>0) {
+			return $query->result_array();
+		} else {
+			return null;
+		}
+		
+	}
+
 	/*function getListRuang()
 	{
 		# code...
