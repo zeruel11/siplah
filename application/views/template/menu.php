@@ -10,10 +10,11 @@
 			<div class="col-lg-2 hidden-xs-down bg-faded">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="<?php echo base_url(); ?>">Data Seluruh Gedung<span class="sr-only">(current)</span></a>
+              <?php echo '<a class="nav-link'.(($this->uri->segment(1)=='beranda')?" active":"").'" href="'.base_url().'">Data Seluruh Gedung<span class="sr-only">(current)</span></a>'; ?>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url()."renovasi/ALL" ?>">Data Renovasi</a>
+              <?php // echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?" active":"").'" href="'.base_url().'renovasi/ALL">Data Renovasi</a>' ?>
+							<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?" active":"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/ALL":"").'">Data Renovasi</a>' ?>
             </li>
             </li>
           </ul>

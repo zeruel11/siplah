@@ -1,15 +1,19 @@
-	
-		<div class="col-lg-7">
+
+		<div class="col-lg-6">
 			<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 			<div id="image-map"></div>
 		</div>
-		<div class="col-lg-3">
+		<div class="col-lg-4">
 			<div class="card">
 				<ul class="list-group list-group-flush">
 					<?php $g=0;
 					foreach ($listGedung as $row) { ?>
-					<a href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>" class="list-group-item list-group-item-action"><?php echo $row['namaGedung']; ?></a>
-					<!-- class="btn btn-outline-info btn-sm float-right" -->
+					<li class="list-group-item list-group-item-action">
+						<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>">
+							<?php echo $row['namaGedung']; ?>
+						</a>
+						<a class="btn btn-outline-info btn-sm float-right" href="<?php echo base_url()."renovasi/".$row['idGedung'] ?>">Renovasi</a>
+					</li>
 					<?php
 			// echo "Luasan: ".$row['luasGedung']."<br>";
 			// echo "Lantai: ".$row['jumlahLantai']."<br>";
