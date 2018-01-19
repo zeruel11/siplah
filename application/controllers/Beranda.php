@@ -122,7 +122,6 @@ class Beranda extends CI_Controller
         // $data['dataRenovasi'] = null;
         // }
 
-<<<<<<< Updated upstream
         if ($this->session->userdata('logged_in')) {
             $data['userLogin'] = $this->session->userdata('logged_in');
         }
@@ -135,12 +134,9 @@ class Beranda extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
-    public function listPekerjaan($kerja)
-    {
-        if ($this->session->userdata('logged_in')) {
-            $data['userLogin'] = $this->session->userdata('logged_in');
-        }
-        $data['dataPekerjaan'] = $this->Beranda_model->getListPekerjaan((int)$kerja);
+    // function allRenovasi()
+    // {
+    //     $result = $this->Beranda_model->getListRenovasi();
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
@@ -148,22 +144,6 @@ class Beranda extends CI_Controller
         $this->load->view('data_renovasi_view', $data);
         $this->load->view('template/footer', $data);
     }
-=======
-    if ($result) {
-      $data['dataRenovasi'] = $result;
-    }else {
-      $data['dataRenovasi'] = null;
-  }
-
-  if ($this->session->userdata('logged_in')) {
-    $data['userLogin'] = $this->session->userdata('logged_in');
-}
-  $this->load->view('template/header', $data);
-  $this->load->view('template/navigation', $data);
-  $this->load->view('template/menu', $data);
-  $this->load->view('data_renovasi_view', $data);
-  $this->load->view('template/footer', $data);
-}
 
     // function allRenovasi()
     // {
@@ -182,25 +162,7 @@ class Beranda extends CI_Controller
     // $this->load->view('data_renovasi_view', $data);
     // $this->load->view('template/footer', $data);
     // }
->>>>>>> Stashed changes
 
-    // function allRenovasi()
-    // {
-    //     $result = $this->Beranda_model->getListRenovasi();
-
-    //     if ($result) {
-    //         $data['dataRenovasi'] = $result;
-    //     }else {
-    //       $data['dataRenovasi'] = null;
-    //     }
-    // if ($this->session->userdata('logged_in')) {
-    //     $data['userLogin'] = $this->session->userdata('logged_in');
-    // }
-    // $this->load->view('template/header', $data);
-    // $this->load->view('template/navigation', $data);
-    // $this->load->view('data_renovasi_view', $data);
-    // $this->load->view('template/footer', $data);
-    // }
 }
 
 /* End of file beranda.php */
