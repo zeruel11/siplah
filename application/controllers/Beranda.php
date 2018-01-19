@@ -18,9 +18,10 @@ class Beranda extends CI_Controller
 
     public function index()
     {
-        if ($this->session->flashdata('cari')) {
+
+        if($this->session->flashdata('cari')){
             $data['listGedung'] = $this->session->flashdata('cari');
-        } else {
+        }else{
             $data['listGedung'] = $this->Beranda_model->getListGedung();
         }
 
@@ -121,6 +122,7 @@ class Beranda extends CI_Controller
         // $data['dataRenovasi'] = null;
         // }
 
+<<<<<<< Updated upstream
         if ($this->session->userdata('logged_in')) {
             $data['userLogin'] = $this->session->userdata('logged_in');
         }
@@ -146,6 +148,41 @@ class Beranda extends CI_Controller
         $this->load->view('data_renovasi_view', $data);
         $this->load->view('template/footer', $data);
     }
+=======
+    if ($result) {
+      $data['dataRenovasi'] = $result;
+    }else {
+      $data['dataRenovasi'] = null;
+  }
+
+  if ($this->session->userdata('logged_in')) {
+    $data['userLogin'] = $this->session->userdata('logged_in');
+}
+  $this->load->view('template/header', $data);
+  $this->load->view('template/navigation', $data);
+  $this->load->view('template/menu', $data);
+  $this->load->view('data_renovasi_view', $data);
+  $this->load->view('template/footer', $data);
+}
+
+    // function allRenovasi()
+    // {
+    //     $result = $this->Beranda_model->getListRenovasi();
+
+    //     if ($result) {
+    //         $data['dataRenovasi'] = $result;
+    //     }else {
+    //       $data['dataRenovasi'] = null;
+    //     }
+    // if ($this->session->userdata('logged_in')) {
+    //     $data['userLogin'] = $this->session->userdata('logged_in');
+    // }
+    // $this->load->view('template/header', $data);
+    // $this->load->view('template/navigation', $data);
+    // $this->load->view('data_renovasi_view', $data);
+    // $this->load->view('template/footer', $data);
+    // }
+>>>>>>> Stashed changes
 
     // function allRenovasi()
     // {
@@ -167,3 +204,4 @@ class Beranda extends CI_Controller
 }
 
 /* End of file beranda.php */
+/* Location: ./application/controllers/beranda.php */
