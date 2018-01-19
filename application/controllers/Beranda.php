@@ -18,10 +18,9 @@ class Beranda extends CI_Controller
 
     public function index()
     {
-
-        if($this->session->flashdata('cari')){
+        if ($this->session->flashdata('cari')) {
             $data['listGedung'] = $this->session->flashdata('cari');
-        }else{
+        } else {
             $data['listGedung'] = $this->Beranda_model->getListGedung();
         }
 
@@ -114,7 +113,7 @@ class Beranda extends CI_Controller
         redirect('beranda');
     }
 
-    public function dataRenovasi($ged)
+    function dataRenovasi($ged)
     {
         // if ($result) {
         // $data['dataRenovasi'] = $result;
@@ -125,6 +124,9 @@ class Beranda extends CI_Controller
         if ($this->session->userdata('logged_in')) {
             $data['userLogin'] = $this->session->userdata('logged_in');
         }
+        if ($this->session->flashdata('hasil')) {
+        	$data['hasil'] = $this->session->flashdata('hasil');
+        }
         $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged);
 
         $this->load->view('template/header', $data);
@@ -134,15 +136,37 @@ class Beranda extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
-    // function allRenovasi()
-    // {
-    //     $result = $this->Beranda_model->getListRenovasi();
+    function deleteRenovasi($renovasi)
+    {
+    	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+    	$data['hasil'] = $this->Beranda_model->hapusProposal((int)$renovasi);
+    	$this->session->set_flashdata('hasil', $data['hasil']);
+    	redirect($this->session->userdata('refered_from'));
+    }
+
+    function listPekerjaan($kerja)
+    {
+        if ($this->session->userdata('logged_in')) {
+            $data['userLogin'] = $this->session->userdata('logged_in');
+        }
+        if ($this->session->flashdata('hasil')) {
+        	$data['hasil'] = $this->session->flashdata('hasil');
+        }
+        $data['dataPekerjaan'] = $this->Beranda_model->getListPekerjaan((int)$kerja);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
         $this->load->view('template/menu', $data);
-        $this->load->view('data_renovasi_view', $data);
+        $this->load->view('pekerjaan_view', $data);
         $this->load->view('template/footer', $data);
+    }
+
+    function deletePekerjaan($kerja)
+    {
+    	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+    	$data['hasil'] = $this->Beranda_model->hapusPekerjaan((int)$kerja);
+    	$this->session->set_flashdata('hasil', $data['hasil']);
+    	redirect($this->session->userdata('refered_from'));
     }
 
     // function allRenovasi()
@@ -162,8 +186,6 @@ class Beranda extends CI_Controller
     // $this->load->view('data_renovasi_view', $data);
     // $this->load->view('template/footer', $data);
     // }
-
 }
 
 /* End of file beranda.php */
-/* Location: ./application/controllers/beranda.php */

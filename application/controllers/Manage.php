@@ -11,8 +11,9 @@ class Manage extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('admin');
-		return true;
+		$data['all_user'] = $this->Manage_model->getUser();
+		$this->load->view('masuk/admin_view', $data);
+		// return true;
 	}
 
 	function createUser()

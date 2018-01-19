@@ -83,15 +83,36 @@ class Beranda_model extends CI_Model
         }
     }
 
-    public function getListPekerjaan($kerja)
+    function ubahRenovasi($renovasi)
     {
-        $this->db->select('idPekerjaan, detailPekerjaan');
+    	
+    }
+
+    function hapusProposal($renovasi)
+    {
+    	$this->db->delete('proposal', array('idProposal' => $renovasi));
+    	return $this->db->affected_rows();
+    }
+
+    function getListPekerjaan($kerja)
+    {
+        $this->db->select('idPekerjaan, detailPekerjaan, judulProposal, dateCreated');
         $this->db->from('pekerjaan');
         $this->db->join('proposal', 'pekerjaan.idProposal = proposal.idProposal', 'left');
-        $this->db->where('idPekerjaan', $kerja);
+        $this->db->where('pekerjaan.idProposal', $kerja);
 
         $query = $this->db->get();
-        return $query->result_array();
+        if ($query->num_rows()>0) {
+        	return $query->result_array();
+        } else {
+        	return null;
+        }
+    }
+
+    function hapusPekerjaan($kerja)
+    {
+    	$this->db->delete('pekerjaan', array('idPekerjaan' => $kerja));
+    	return $this->db->affected_rows();
     }
 
     /*function getListRuang()

@@ -18,7 +18,7 @@
 		<div class="dropdown">
 		<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage User</button>
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Lihat User</a>
+    <a class="dropdown-item" href="<?php echo base_url() ?>manage">Lihat User</a>
     <a class="dropdown-item" href="#">Tambah User</a>
     <!-- <a class="dropdown-item" href="#">Hapus User</a> -->
   </div>
