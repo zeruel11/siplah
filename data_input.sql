@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.16  Distrib 10.1.28-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: siplah
 -- ------------------------------------------------------
--- Server version	10.1.26-MariaDB
+-- Server version	10.1.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -121,7 +121,11 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tanggal_record` BEFORE INSERT ON `history_record` FOR EACH ROW if ( isnull(new.tanggal) ) then
+
+
  set new.tanggal=curdate();
+
+
 end if */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -188,13 +192,14 @@ DROP TABLE IF EXISTS `pekerjaan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pekerjaan` (
-  `idPekerjaan` int(11) NOT NULL,
+  `idPekerjaan` int(11) NOT NULL AUTO_INCREMENT,
   `idProposal` int(11) NOT NULL,
   `detailPekerjaan` varchar(250) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idPekerjaan`),
   KEY `fk_idProposal` (`idProposal`),
   CONSTRAINT `pekerjaan_ibfk_1` FOREIGN KEY (`idProposal`) REFERENCES `proposal` (`idProposal`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,6 +208,7 @@ CREATE TABLE `pekerjaan` (
 
 LOCK TABLES `pekerjaan` WRITE;
 /*!40000 ALTER TABLE `pekerjaan` DISABLE KEYS */;
+INSERT INTO `pekerjaan` VALUES (1,1,'membangun ulang dinding selatan',0),(2,1,'meratakan parkiran',1),(3,2,'pengerukan',0),(4,2,'pengairan',0),(5,2,'perluasan kolam',0),(6,2,'selokan',0),(7,1,'perbaikan tangga depan',0);
 /*!40000 ALTER TABLE `pekerjaan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,14 +252,14 @@ CREATE TABLE `proposal` (
   `judulProposal` varchar(255) NOT NULL,
   `deskripsiProposal` varchar(500) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
-  `alokasiDana` varchar(10) NOT NULL,
-  `dateCreated` date NOT NULL,
-  `dateDeleted` date NOT NULL,
+  `alokasiDana` varchar(10) DEFAULT NULL,
+  `dateCreated` date DEFAULT NULL,
+  `dateDeleted` date DEFAULT NULL,
   PRIMARY KEY (`idProposal`),
   KEY `fk_idGedung` (`idGedung`),
   FULLTEXT KEY `ft_deskripsiPekerjaan` (`deskripsiProposal`),
   CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,6 +268,7 @@ CREATE TABLE `proposal` (
 
 LOCK TABLES `proposal` WRITE;
 /*!40000 ALTER TABLE `proposal` DISABLE KEYS */;
+INSERT INTO `proposal` VALUES (1,8,'perbaikan gedung asrama E','gedung asrama perlu diperbaiki dan diperbarui dengan pertimbangan mendekati masa penerimaan mahasiswa baru',0,NULL,'2018-01-17',NULL),(2,8,'renovasi kolam asrama',NULL,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `proposal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,4 +344,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-17  9:43:45
+-- Dump completed on 2018-01-20 21:39:08
