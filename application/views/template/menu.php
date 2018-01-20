@@ -14,7 +14,7 @@
             </li>
             <li class="nav-item">
               <?php // echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?" active":"").'" href="'.base_url().'renovasi/ALL">Data Renovasi</a>' ?>
-							<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?" active":"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/ALL":"").'">Data Renovasi</a>' ?>
+							<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/ALL":"").'">Data Renovasi</a>' ?>
             </li>
             </li>
           </ul>

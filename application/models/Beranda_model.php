@@ -83,12 +83,12 @@ class Beranda_model extends CI_Model
         }
     }
 
-    function ubahRenovasi($renovasi)
+    function updateRenovasi($renovasi)
     {
-    	
+
     }
 
-    function hapusProposal($renovasi)
+    function deleteProposal($renovasi)
     {
     	$this->db->delete('proposal', array('idProposal' => $renovasi));
     	return $this->db->affected_rows();
@@ -109,10 +109,27 @@ class Beranda_model extends CI_Model
         }
     }
 
-    function hapusPekerjaan($kerja)
+    function deletePekerjaan($kerja)
     {
     	$this->db->delete('pekerjaan', array('idPekerjaan' => $kerja));
     	return $this->db->affected_rows();
+    }
+
+    function editPekerjaan($kerja)
+    {
+      $this->db->select('idPekerjaan, detailPekerjaan, dateCreated');
+      $this->db->from('pekerjaan');
+      $this->db->where('idPekerjaan', $kerja);
+
+      $query = $this->db->get();
+      return $query->row(0);
+    }
+
+    function updatePekerjaan($kerja)
+    {
+      $this->db->where('idPekerjaan', $kerja);
+      $this->db->update('pekerjaan', $data);
+      return $this->db->affected_rows();
     }
 
     /*function getListRuang()

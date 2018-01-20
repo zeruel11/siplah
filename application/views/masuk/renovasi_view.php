@@ -7,7 +7,8 @@
 						<li class="list-group-item"><?php echo $dataRenovasi[$r]['judulProposal']; ?>
 							<span class="btn-group float-right" role="group">
 								<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">List Pekerjaan</a>
-								<a class="btn btn-outline-danger" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
+								<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
+								<a class="btn btn-outline-danger" href="<?php echo base_url()."renovasi/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
 							</span>
 						</li>
 					<?php $r++;
@@ -20,6 +21,6 @@
 	<?php }
 	// var_dump($hasil);
 	// echo $this->output->enable_profiler(TRUE); ?>
-	<a class="btn btn-primary mt-3" href="<?php echo base_url() ?>ajuan" role="button">Tambah Renovasi Baru</a>
+	<a class="btn btn-outline-success mt-3" href="<?php echo base_url() ?>ajuan" role="button">Tambah Renovasi Baru</a>
 	</div>
 </body>

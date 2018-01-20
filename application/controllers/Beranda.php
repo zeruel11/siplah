@@ -132,7 +132,7 @@ class Beranda extends CI_Controller
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
         $this->load->view('template/menu', $data);
-        $this->load->view('data_renovasi_view', $data);
+        $this->load->view('masuk/renovasi_view', $data);
         $this->load->view('template/footer', $data);
     }
 
@@ -157,16 +157,29 @@ class Beranda extends CI_Controller
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
         $this->load->view('template/menu', $data);
-        $this->load->view('pekerjaan_view', $data);
+        $this->load->view('masuk/pekerjaan_view', $data);
         $this->load->view('template/footer', $data);
     }
 
-    function deletePekerjaan($kerja)
+    function hapusPekerjaan($kerja)
     {
     	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
-    	$data['hasil'] = $this->Beranda_model->hapusPekerjaan((int)$kerja);
+    	$data['hasil'] = $this->Beranda_model->deletePekerjaan((int)$kerja);
     	$this->session->set_flashdata('hasil', $data['hasil']);
     	redirect($this->session->userdata('refered_from'));
+    }
+
+    function ubahPekerjaan($kerja)
+    {
+      $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+      if ($this->session->userdata('logged_in')) {
+          $data['userLogin'] = $this->session->userdata('logged_in');
+      }
+      $this->load->view('template/header', $data);
+      $this->load->view('template/navigation', $data);
+      $this->load->view('masuk/pekerjaan_form', $data);
+      $this->load->view('template/footer', $data);
+      $data['hasil'] = $this->Beranda_model->updatePekerjaan((int)$kerja);
     }
 
     // function allRenovasi()
