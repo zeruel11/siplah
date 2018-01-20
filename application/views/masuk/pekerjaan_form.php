@@ -1,10 +1,50 @@
-<?php if ($mode="edit") { ?>
-  <body class="">
-    <div class="container-fluid">
-    <form class="form-horizontal mx-auto" role="form" method="POST" action="<?php echo base_url().'index.php/ver_login'; ?>">
-      <div class="row">
-      </div>
-    </form>
+<?php if ($mode="insert") { ?>
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-lg-3"><?php var_dump($this->session->flashdata('proposal')); ?></div>
+  <div class="col-lg-6">
+<form name="input" method="post" action="<?php echo base_url('index.php/Beranda/tambahPekerjaan'); ?>">
+  <!-- <input type="hidden" value="<?php echo $idProposal; ?>" name="idProposal" /> -->
+<!-- <div class="form-group">
+    <label for="judulProposal">Proposal</label>
+    <input type="text" class="form-control disabled" id="judulProposal" placeholder="" disabled />
+  </div> -->
+  <div class="form-group">
+    <label for="detailPekerjaanForm">Detail Pekerjaan</label>
+    <textarea class="form-control" id="detailPekerjaanForm" name="detailPekerjaanForm" rows="2" placeholder="Masukkan pekerjaan yang harus dilakukan"></textarea>
   </div>
-  </body>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="col-lg-3"></div>
+</div>
+  </div>
+  <?php echo $mode ?>
+
+<?php } elseif ($mode="edit") { ?>
+
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6">
+<form name="input" method="post" action="<?php echo base_url('index.php/Beranda/ubahPekerjaan'); ?>">
+  <!-- <div class="form-group">
+  <label for="judulProposal"></label>
+    <p class="form-control-static" id="judulProposal">#<?php echo $dataPekerjaan[0]['idPekerjaan']; ?></p>
+</div> -->
+<div class="form-group">
+    <label for="judulProposal">Proposal</label>
+    <input type="text" class="form-control disabled" id="judulProposal" value="<?php echo $dataPekerjaan[0]['judulProposal']; ?>" disabled>
+  </div>
+  <div class="form-group">
+    <label for="detailPekerjaanForm">Detail Pekerjaan</label>
+    <textarea class="form-control" id="detailPekerjaanForm" name="detailPekerjaanForm" rows="2"><?php echo $dataPekerjaan[0]['detailPekerjaan']; ?></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="col-lg-3"></div>
+</div>
+  </div>
+  
 <?php } ?>

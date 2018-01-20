@@ -34,7 +34,7 @@
 							<th><?php echo $all_user[$u]['uid']; ?></th>
 							<th><?php echo $all_user[$u]['username']; ?></th>
 							<th><?php echo $all_user[$u]['namaLengkap']; ?></th>
-							<th><?php echo $all_user[$u]['user_level']; ?></th>
+							<th><?php echo $all_user[$u]['userLevel']; ?></th>
 							<th><a class="btn btn-warning" href="<?php echo base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
 								<a class="btn btn-danger" href="<?php echo base_url('manage/deleteUser/').$all_user[$u]['uid'] ?>" role="button">Delete User</a>
 							</th>
@@ -50,4 +50,5 @@
 	<a class="btn btn-success" href="<?php echo base_url('manage/createUser') ?>" role="button">Add User</a>
 	<a class="btn btn-secondary float-right" href="<?php echo base_url('beranda') ?>" role="button">HOME</a>
 	</div>
+	<?php var_dump($all_user) ?>
 </body>
