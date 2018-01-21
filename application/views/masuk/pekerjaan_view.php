@@ -40,17 +40,16 @@
 			} ?>
 			<!-- <li class="list-group-item">Jumlah lantai: <?php echo $dataPekerjaan[0]['jumlahLantai']; ?></li> -->
 		</ul>
-
+		<?php $bar = round($b/$k, 2)*100; ?>
+	<h6>Progress:</h6>
+	<div class="progress">
+		<?php echo '<div class="progress-bar" style="width: '.$bar.'%" role="progressbar" aria-valuenow="'.$bar.'" aria-valuemin="0" aria-valuemax="100">'.$b.'/'.$k.'</div>'; ?>
+	</div>
 		<?php } else { ?>
 		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>
 		<?php }
 	// var_dump($this->session->flashdata('proposal'));
 	// echo $this->output->enable_profiler(TRUE); ?>
-	<?php $bar = round($b/$k, 2)*100; ?>
-	<h6>Progress:</h6>
-	<div class="progress">
-		<?php echo '<div class="progress-bar" style="width: '.$bar.'%" role="progressbar" aria-valuenow="'.$bar.'" aria-valuemin="0" aria-valuemax="100">'.$b.'/'.$k.'</div>'; ?>
-	</div>
 	<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
 </div>
 </body>

@@ -67,7 +67,7 @@
 		<!-- <h4 class="card-text">Gedung tidak ditemukan</h4> -->
 	<?php } ?>
 	<!-- </div> -->
-	<a class="btn btn-success" href="<?php echo base_url('manage/createUser') ?>" role="button">Add User</a>
+	<a class="btn btn-success" href="<?php echo base_url('manage/user_baru') ?>" role="button">Add User</a>
 	<a class="btn btn-primary float-right" href="<?php echo base_url('beranda') ?>" role="button">HOME</a>
 	</div>
 	<?php // var_dump($all_user) ?>

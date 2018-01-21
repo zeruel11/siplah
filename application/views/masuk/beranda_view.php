@@ -14,11 +14,11 @@
                     foreach ($listGedung as $row) {
                         ?>
 			<li class="list-group-item list-group-item-action">
-				<a class="card-link" href="<?php echo base_url()." gedung/ ".$row['idGedung'];
+				<a class="card-link" href="<?php echo base_url()." gedung/".$row['idGedung'];
                         $g++; ?>">
 					<?php echo $row['namaGedung']; ?>
 				</a>
-				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url()." renovasi/ ".$row['idGedung'] ?>">Renovasi</a>
+				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
 			</li>
 			<?php
             // echo "Luasan: ".$row['luasGedung']."<br>";

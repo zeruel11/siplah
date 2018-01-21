@@ -66,16 +66,23 @@ class Beranda_model extends CI_Model
         }
     }
 
-    public function getListRenovasi($ged)
+    public function getListRenovasi($ged, $mode)
     {
-        $this->db->select('idProposal, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
-        $this->db->from('proposal');
-        $this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
-        // $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
-        if ($ged!='ALL') {
-            // $this->db->where(array('dateDeleted' => NULL));
-            $this->db->where('gedung.idGedung', $ged);
-        }
+    	if ($mode==1) {
+    		$this->db->select('idProposal, proposal.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
+        	$this->db->from('proposal');
+        	$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
+        	// $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+        	if ($ged!='ALL') {
+        	    // $this->db->where(array('dateDeleted' => NULL));
+        	    $this->db->where('gedung.idGedung', $ged);
+        	}
+    	} else {
+    		$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
+    		$this->db->from('proposal');
+    		$this->db->where('idProposal', $ged);
+    	}
+        
 
         $query = $this->db->get();
         if ($query->num_rows()>0) {
@@ -85,9 +92,18 @@ class Beranda_model extends CI_Model
         }
     }
 
-    function updateRenovasi($renovasi)
+    function createRenovasi($send)
     {
+    	$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$send['idGedung']."', '".$send['judulProposal']."', '".$send['deskripsiProposal']."', CURDATE())";
+    	return $this->db->query($sql);
+    	// return $this->db->affected_rows();
+    }
 
+    function updateRenovasi($renovasi, $data)
+    {
+    	$this->db->where('idProposal', $renovasi);
+    	$this->db->update('proposal', $data);
+    	return $this->db->affected_rows();
     }
 
     function deleteRenovasi($renovasi)
@@ -141,7 +157,7 @@ class Beranda_model extends CI_Model
     function createPekerjaan($data)
     {
     	$this->db->insert('pekerjaan', $data);
-      return $this->db->affected_rows();
+    	return $this->db->affected_rows();
     }
 
     /*function getListRuang()

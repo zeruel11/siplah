@@ -131,10 +131,13 @@ class Beranda extends CI_Controller
         // }
 
         $data = $this->data;
-        if ($this->session->flashdata('hasil')) {
-        	$data['hasil'] = $this->session->flashdata('hasil');
-        }
-        $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged);
+        // if ($this->session->flashdata('hasil')) {
+        // 	$data['hasil'] = $this->session->flashdata('hasil');
+        // }
+        $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 1);
+        // if (count($data['dataRenovasi'])==1) {
+        $this->session->set_flashdata('gedung', (int)$data['dataRenovasi'][0]['idGedung']);
+        // }
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
@@ -143,10 +146,77 @@ class Beranda extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
-    function deleteRenovasi($renovasi)
+    function tambahRenovasi()
+    {
+        $data = $this->data;
+        if ($this->session->flashdata('gedung')) {
+            $data['idGedung'] = $idGedung = $this->session->flashdata('gedung');
+        }
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
+        $this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data['mode']="insert";
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
+            $this->load->view('masuk/renovasi_form', $data);
+            $this->load->view('template/footer', $data);
+            $this->session->set_flashdata('gedung', $idGedung);
+        } else {
+            $data = array(
+            'idGedung'=>$idGedung,
+            'judulProposal'=>$this->input->post('judulProposalForm'),
+            'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+            );
+            $this->Beranda_model->createRenovasi($data);
+            $url = "renovasi/".$idGedung;
+            redirect($url);
+            // $data['mode']="insert";
+            // $this->load->view('template/header', $data);
+            // $this->load->view('template/navigation', $data);
+            // $this->load->view('masuk/renovasi_form', $data);
+            // $this->load->view('template/footer', $data);
+            // $this->session->set_flashdata('gedung', $idGedung);
+        }
+    }
+
+    function ubahRenovasi($renovasi)
+    {
+        $data = $this->data;
+        if ($this->session->flashdata('gedung')) {
+            $data['idGedung'] = $idGedung = $this->session->flashdata('gedung');
+        }
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
+        $this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
+        
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 2);
+            $data['mode'] = "edit";
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
+            $this->load->view('masuk/renovasi_form', $data);
+            $this->load->view('template/footer', $data);
+            $this->session->set_flashdata('gedung', $idGedung);
+        } else {
+            $data = array(
+            // 'idGedung'=>$idGedung,
+            'judulProposal'=>$this->input->post('judulProposalForm'),
+            'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+            );
+            $this->Beranda_model->updateRenovasi($renovasi, $data);
+            $url = "renovasi/".$idGedung;
+            redirect($url);
+        }
+    }
+
+    function hapusRenovasi($renovasi)
     {
     	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
-    	$data['hasil'] = $this->Beranda_model->hapusProposal((int)$renovasi);
+    	$data['hasil'] = $this->Beranda_model->deleteRenovasi((int)$renovasi);
     	$this->session->set_flashdata('hasil', $data['hasil']);
     	redirect($this->session->userdata('refered_from'));
     }
@@ -167,7 +237,11 @@ class Beranda extends CI_Controller
         //     $p++;
         // }
         // $data['proses'] = round($b/count($data['dataPekerjaan']), 2)*100;
-        $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
+        if ($data['dataPekerjaan']!=null) {
+            $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
+        } else {
+            $this->session->set_flashdata('proposal', $kerja);
+        }
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
@@ -187,17 +261,13 @@ class Beranda extends CI_Controller
     function ubahPekerjaan($kerja)
     {
         $data = $this->data;
-        // $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
         $idProposal = $this->session->flashdata('proposal');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
         // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
-        // $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-        // $this->form_validation->set_rules('email', 'Email', 'required');
-
+        
         if ($this->form_validation->run() == FALSE)
         {
-            // $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 2);
             $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan($kerja, 2);
             $data['mode'] = "edit";
             $this->load->view('template/header', $data);
@@ -206,15 +276,12 @@ class Beranda extends CI_Controller
             $this->load->view('template/footer', $data);
             $this->session->set_flashdata('proposal', $idProposal);
         } else {
-            // $this->load->model('Users_model');
-            // $this->Users_model->insert_user();
             $data = array(
             'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
             );
             $this->Beranda_model->updatePekerjaan($kerja, $data);
             $url = "renovasi/pekerjaan/".$idProposal;
             redirect($url);
-            // redirect($this->session->userdata('refered_from'));
         }
     }
 

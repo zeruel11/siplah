@@ -41,45 +41,89 @@ class Manage extends CI_Controller {
 		if ($this->session->userdata('logged_in')) {
 			$data['userLogin'] = $this->session->userdata('logged_in');
 		}
-		$idProposal = $this->session->flashdata('proposal');
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
+		// $idProposal = $this->session->flashdata('proposal');
+		$this->load->library(array('form_validation', 'encrypt'));
+		$this->form_validation->set_rules('usernameForm', 'Username', 'required');
+		$this->form_validation->set_rules('passwordForm', 'Password', 'required');
+		$this->form_validation->set_rules('namaLengkapForm', 'Nama Lengkap', 'required');
+		$this->form_validation->set_rules('user_levelForm', 'User Level', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{
 				$data['mode']="insert";
-				// $this->load->view('template/header', $data);
+				$data['encPass'] = $this->encrypt->encode('test');
+				$this->load->view('template/header', $data);
 				// $this->load->view('template/navigation', $data);
 				$this->load->view('masuk/manage_form', $data);
 				// $this->load->view('template/footer', $data);
 				// $this->session->set_flashdata('proposal', $idProposal);
 		} else {
-				$data = array(
-				'idProposal'=>$idProposal,
-				'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
+				$send = array(
+				'username'=>$this->input->post('usernameForm'),
+				'password'=>md5($this->input->post('passwordForm')),
+				'namaLengkap'=>$this->input->post('namaLengkapForm'),
+				'user_level'=>$this->input->post('user_levelForm')
 				);
-				$this->Manage_model->createUser($data);
-				// $url = "renovasi/pekerjaan/".$idProposal;
+				$this->Manage_model->createUser($send);
 				redirect('manage');
 		}
 	}
 
 	function updateUser($id)
 	{
-		return true;
+		if ($this->session->userdata('logged_in')) {
+			$data['userLogin'] = $this->session->userdata('logged_in');
+		}
+		// $data = $this->data;
+        // $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+        // $idProposal = $this->session->flashdata('proposal');
+        $this->load->library(array('form_validation', 'encrypt'));
+        $this->form_validation->set_rules('usernameForm', 'Username', 'required');
+		// $this->form_validation->set_rules('passwordForm', 'Password', 'required');
+		$this->form_validation->set_rules('namaLengkapForm', 'Nama Lengkap', 'required');
+		$this->form_validation->set_rules('user_levelForm', 'User Level', 'required');
+        // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
+        // $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
+        // $this->form_validation->set_rules('email', 'Email', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            // $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 2);
+            $data['all_user'] = $this->Manage_model->editUser($id);
+            $data['mode'] = "edit";
+            $this->load->view('template/header', $data);
+            // $this->load->view('template/navigation', $data);
+            $this->load->view('masuk/manage_form', $data);
+            // $this->load->view('template/footer', $data);
+            // $this->session->set_flashdata('proposal', $idProposal);
+        } else {
+            $send = array(
+				'username'=>$this->input->post('usernameForm'),
+				// 'password'=>md5($this->input->post('passwordForm')),
+				'namaLengkap'=>$this->input->post('namaLengkapForm'),
+				'user_level'=>$this->input->post('user_levelForm')
+				);
+            $this->Manage_model->updateUser($id, $send);
+            redirect('manage');
+        }
 	}
 
 	function deleteUser($id)
 	{
 		$result = $this->Manage_model->deleteUser($id);
 		if ($result==1) {
-			$data['hasil'] = "success";
+			$this->session->set_flashdata('message', 'User berhasil dihapus');
 		} else {
-			$data['hasil'] = "fail";
+			$this->session->set_flashdata('message', 'Gagal');
 		}
 
 
 		redirect('manage','refresh');
+	}
+
+	function changePassword($id)
+	{
+		# code...
 	}
 
 }

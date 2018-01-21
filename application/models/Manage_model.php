@@ -22,16 +22,31 @@ class Manage_model extends CI_Model {
 
 	}
 
-	function createUser($data)
+	function createUser($send)
 	{
-		$this->db->insert('pekerjaan', $data);
+		$this->db->insert('user', $send);
 		return $this->db->affected_rows();
 	}
 
-	function updateUser($id, $data)
+	function editUser($id)
+	{
+		$this->db->select('uid, username, password, user_level, namaLengkap');
+		$this->db->from('user');
+		$this->db->where('uid', $id);
+
+		$query = $this->db->get();
+		if ($query->num_rows()>0) {
+			return $query->result_array();
+		} else {
+			return null;
+		}
+
+	}
+
+	function updateUser($id, $send)
 	{
 		$this->db->where('uid', $id);
-		$this->db->update('pekerjaan', $data);
+		$this->db->update('user', $send);
 		return $this->db->affected_rows();
 	}
 
