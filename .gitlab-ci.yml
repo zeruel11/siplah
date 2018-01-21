@@ -39,7 +39,7 @@ variables:
 stages:
   # - setup
   - test
-  - deploy
+  - report
 
 # setup:
 #   stage: setup
@@ -70,13 +70,16 @@ testing:
     - cd application/tests && ../../vendor/bin/phpunit
   allow_failure: true
   artifacts:
+    when: always
     paths:
     - application/tests/build
     expire_in: 15 days
 
 pages:
-  stage: deploy
+  stage: report
   when: always
+  dependencies:
+    - testing
   script:
     - mv application/tests/build/coverage public/
   artifacts:
