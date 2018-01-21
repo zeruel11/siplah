@@ -3,7 +3,11 @@
 		if ($userLogin['userLevel']==1) {
 			$userAccess = "Admin";
 		} elseif ($userLogin['userLevel']==2) {
-			$userAccess = "Pegawai";
+			$userAccess = "Pegawai SIMRI";
+		} elseif ($userLogin['userLevel']==3) {
+			$userAccess = "Wakil Rektor II";
+		} elseif ($userLogin['userLevel']==4) {
+			$userAccess = "SARPRAS";
 		} else {
 			$userAccess = "Pengguna Lain";
 		}

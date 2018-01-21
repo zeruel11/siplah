@@ -59,4 +59,4 @@ $route['renovasi/(:any)'] = 'beranda/dataRenovasi/$1';
 $route['renovasi/pekerjaan/(:num)'] = 'beranda/listPekerjaan/$1';
 $route['search'] = 'beranda/searchGedung';
 $route['renovasi/pekerjaan/baru'] = 'beranda/tambahPekerjaan';
-$route['renovasi/pekerjaan/edit/(:num)'] = 'beranda/ubahPekerjaan/$1';
+$route['renovasi/pekerjaan/edit/(:any)'] = 'beranda/ubahPekerjaan/$1';

@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Beranda extends CI_Controller
 {
+  /**
+   * global variable data
+   * @var array
+   */
+  var $data;
+
     /**
      * load default model dan library CI
      * @method __construct
@@ -14,19 +20,27 @@ class Beranda extends CI_Controller
         $this->load->library('Encryption');
         // $this->load->library('breadcrumb');
         $this->load->library('pagination');
+        if ($this->session->userdata('logged_in')) {
+            $this->data['userLogin'] = $this->session->userdata('logged_in');
+        }
+        if ($this->session->flashdata('message')) {
+          $this->data['message'] = $this->session->flashdata('message');
+        }
     }
 
     public function index()
     {
+      $data = $this->data;
         if ($this->session->flashdata('cari')) {
             $data['listGedung'] = $this->session->flashdata('cari');
         } else {
             $data['listGedung'] = $this->Beranda_model->getListGedung();
         }
+        if ($this->session->flashdata('not_found')) {
+          $data['message'] = "Gedung tidak ditemukan";
+        }
 
         if ($this->session->userdata('logged_in')) {
-            $data['userLogin'] = $this->session->userdata('logged_in');
-
             $this->load->view('template/header', $data);
             $this->load->view('template/navigation', $data);
             $this->load->view('template/menu', $data);
@@ -57,10 +71,6 @@ class Beranda extends CI_Controller
             $data['detailGedung'] = null;
         }
 
-        if ($this->session->userdata('logged_in')) {
-            $data['userLogin'] = $this->session->userdata('logged_in');
-        }
-
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
         $this->load->view('data_gedung_view', $data);
@@ -71,13 +81,12 @@ class Beranda extends CI_Controller
     {
         $search = $this->input->post('gedung');
         $result = $this->Beranda_model->searchListGedungByName($search);
-
         if ($result) {
-            $data['listGedung'] = $result;
+          $this->session->set_flashdata('cari', $result);
         } else {
-            $data['listGedung'] = null;
+          $this->session->set_flashdata('not_found', 1);
         }
-        $this->session->set_flashdata('cari', $result);
+
         redirect('beranda');
     }
 
@@ -121,9 +130,7 @@ class Beranda extends CI_Controller
         // $data['dataRenovasi'] = null;
         // }
 
-        if ($this->session->userdata('logged_in')) {
-            $data['userLogin'] = $this->session->userdata('logged_in');
-        }
+        $data = $this->data;
         if ($this->session->flashdata('hasil')) {
         	$data['hasil'] = $this->session->flashdata('hasil');
         }
@@ -146,9 +153,7 @@ class Beranda extends CI_Controller
 
     function listPekerjaan($kerja)
     {
-        if ($this->session->userdata('logged_in')) {
-            $data['userLogin'] = $this->session->userdata('logged_in');
-        }
+        $data = $this->data;
         if ($this->session->flashdata('hasil')) {
         	$data['hasil'] = $this->session->flashdata('hasil');
         }
@@ -181,9 +186,7 @@ class Beranda extends CI_Controller
 
     function ubahPekerjaan($kerja)
     {
-        if ($this->session->userdata('logged_in')) {
-          $data['userLogin'] = $this->session->userdata('logged_in');
-        }
+        $data = $this->data;
         // $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
         $idProposal = $this->session->flashdata('proposal');
         $this->load->library('form_validation');
@@ -208,7 +211,7 @@ class Beranda extends CI_Controller
             $data = array(
             'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
             );
-            $this->Beranda_model->updatePekerjaan($data);
+            $this->Beranda_model->updatePekerjaan($kerja, $data);
             $url = "renovasi/pekerjaan/".$idProposal;
             redirect($url);
             // redirect($this->session->userdata('refered_from'));
@@ -217,22 +220,13 @@ class Beranda extends CI_Controller
 
     function tambahPekerjaan()
     {
-        // $this->load->helper('form');
-
-        if ($this->session->userdata('logged_in')) {
-          $data['userLogin'] = $this->session->userdata('logged_in');
-        }
-        // $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+        $data = $this->data;
         $idProposal = $this->session->flashdata('proposal');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
-        // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
-        // $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-        // $this->form_validation->set_rules('email', 'Email', 'required');
 
         if ($this->form_validation->run() == FALSE)
         {
-            // $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 2);
             $data['mode']="insert";
             $this->load->view('template/header', $data);
             $this->load->view('template/navigation', $data);
@@ -240,8 +234,6 @@ class Beranda extends CI_Controller
             $this->load->view('template/footer', $data);
             $this->session->set_flashdata('proposal', $idProposal);
         } else {
-            // $this->load->model('Users_model');
-            // $this->Users_model->insert_user();
             $data = array(
             'idProposal'=>$idProposal,
             'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
@@ -249,7 +241,6 @@ class Beranda extends CI_Controller
             $this->Beranda_model->createPekerjaan($data);
             $url = "renovasi/pekerjaan/".$idProposal;
             redirect($url);
-            // redirect($this->session->userdata('refered_from'));
         }
     }
 

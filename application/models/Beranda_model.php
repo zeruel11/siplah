@@ -33,8 +33,9 @@ class Beranda_model extends CI_Model
         $this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
         $this->db->from('gedung');
         $this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
+        $this->db->where("MATCH(namaGedung) AGAINST ('$ged*' IN BOOLEAN MODE)", null, false);
         $this->db->order_by('idGedung', 'desc');
-        $this->db->where("MATCH(namaGedung) AGAINST ('$ged' IN NATURAL LANGUAGE MODE)", null, false);
+        // $this->db->like('namaGedung', $ged);
 
         $query=$this->db->get();
         if ($query->num_rows() > 0) {
@@ -140,6 +141,7 @@ class Beranda_model extends CI_Model
     function createPekerjaan($data)
     {
     	$this->db->insert('pekerjaan', $data);
+      return $this->db->affected_rows();
     }
 
     /*function getListRuang()

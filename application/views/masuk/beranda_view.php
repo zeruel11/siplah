@@ -1,32 +1,39 @@
-
-		<div class="col-lg-6">
-			<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
-			<div id="image-map"></div>
-		</div>
-		<div class="col-lg-4">
-			<div class="card">
-				<ul class="list-group list-group-flush">
-					<?php $g=0;
-					foreach ($listGedung as $row) { ?>
-					<li class="list-group-item list-group-item-action">
-						<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>">
-							<?php echo $row['namaGedung']; ?>
-						</a>
-						<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url()."renovasi/".$row['idGedung'] ?>">Renovasi</a>
-					</li>
-					<?php
-			// echo "Luasan: ".$row['luasGedung']."<br>";
-			// echo "Lantai: ".$row['jumlahLantai']."<br>";
-			// echo $row['x'].$row['y'];
-			// echo "".$row['label']."<br>";
-			// echo $row;
-				}
-				// var_dump($listGedung)?>
-			</ul>
-		</div>
-	</div>
+<div class="col-lg-6">
+	<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
+	<div id="image-map"></div>
+</div>
+<div class="col-lg-4">
+	<?php if ($this->session->flashdata('not_found')) {
+    echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  	'.$message.'
+		</div>';
+} ?>
+	<div class="card">
+		<ul class="list-group list-group-flush">
+			<?php $g=0;
+                    foreach ($listGedung as $row) {
+                        ?>
+			<li class="list-group-item list-group-item-action">
+				<a class="card-link" href="<?php echo base_url()." gedung/ ".$row['idGedung'];
+                        $g++; ?>">
+					<?php echo $row['namaGedung']; ?>
+				</a>
+				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url()." renovasi/ ".$row['idGedung'] ?>">Renovasi</a>
+			</li>
+			<?php
+            // echo "Luasan: ".$row['luasGedung']."<br>";
+            // echo "Lantai: ".$row['jumlahLantai']."<br>";
+            // echo $row['x'].$row['y'];
+            // echo "".$row['label']."<br>";
+            // echo $row;
+                    }
+                // var_dump($listGedung)?>
+		</ul>
 	</div>
 </div>
+</div>
+</div>
+<?php // var_dump($message)?>
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
@@ -45,31 +52,34 @@
 		zoom: 1,
 		crs: L.CRS.Simple,
 		zoomControl: false,
-		attributionControl:false
+		attributionControl: false
 	});
 	L.control.zoom({
-		position:'bottomleft'
+		position: 'bottomleft'
 	}).addTo(map);
 	// dimensions of the image
 	var w = 2500,
-	h = 3500,
-	url = '<?php echo base_url(); ?>assets/img/allits.png';
+		h = 3500,
+		url = '<?php echo base_url(); ?>assets/img/allits.png';
 	// calculate the edges of the image, in coordinate space
-	var southWest = map.unproject([0, h], map.getMaxZoom()-1);
-	var northEast = map.unproject([w, 0], map.getMaxZoom()-1);
+	var southWest = map.unproject([0, h], map.getMaxZoom() - 1);
+	var northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
 	var bounds = new L.LatLngBounds(southWest, northEast);
 	// add the image overlay, so that it covers the entire map
 	var image = L.imageOverlay(url, bounds).addTo(map);
 	// tell leaflet that the map is exactly as big as the image
 	map.fitBounds(bounds);
 
-	<?php $l = 1; foreach ( $listGedung as $lokasi ) { ?>
-		var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-		L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
+	<?php $l = 1; foreach ($listGedung as $lokasi) {
+                    ?>
+	var sol = L.latLng([<?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+	L.marker(sol, {
+		icon: gedungIcon
+	}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
 
-		<?php $l++; } ?>
-
-	</script>
+	<?php $l++;
+                } ?>
+</script>
 
 </body>
 

@@ -21,13 +21,16 @@ class Manage extends CI_Controller {
             		$data['all_user'][$u]['userLevel']='Pegawai SIMRI';
             	} elseif ($data['all_user'][$u]['user_level']=='3') {
             		$data['all_user'][$u]['userLevel']='Wakil Rektor II';
-            	} else {
+            	} elseif ($data['all_user'][$u]['user_level']=='4') {
             		$data['all_user'][$u]['userLevel']='SARPRAS';
+            	} else {
+            		$data['all_user'][$u]['userLevel']='Pengguna Lain';
             	}
             	$u++;
             }
 			$this->load->view('masuk/admin_view', $data);
         } else {
+					$this->session->set_flashdata('message', 'Anda belum login');
         	redirect('beranda','refresh');
         }
 		// return true;
@@ -35,8 +38,30 @@ class Manage extends CI_Controller {
 
 	function createUser()
 	{
-		// $this->Manage_model->
-		return true;
+		if ($this->session->userdata('logged_in')) {
+			$data['userLogin'] = $this->session->userdata('logged_in');
+		}
+		$idProposal = $this->session->flashdata('proposal');
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+				$data['mode']="insert";
+				// $this->load->view('template/header', $data);
+				// $this->load->view('template/navigation', $data);
+				$this->load->view('masuk/manage_form', $data);
+				// $this->load->view('template/footer', $data);
+				// $this->session->set_flashdata('proposal', $idProposal);
+		} else {
+				$data = array(
+				'idProposal'=>$idProposal,
+				'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
+				);
+				$this->Manage_model->createUser($data);
+				// $url = "renovasi/pekerjaan/".$idProposal;
+				redirect('manage');
+		}
 	}
 
 	function updateUser($id)
@@ -46,8 +71,15 @@ class Manage extends CI_Controller {
 
 	function deleteUser($id)
 	{
-		$data['hasil'] = $this->Manage_model->deleteUser($id);
-		$this->load->view('masuk/admin_view', $data);
+		$result = $this->Manage_model->deleteUser($id);
+		if ($result==1) {
+			$data['hasil'] = "success";
+		} else {
+			$data['hasil'] = "fail";
+		}
+
+
+		redirect('manage','refresh');
 	}
 
 }

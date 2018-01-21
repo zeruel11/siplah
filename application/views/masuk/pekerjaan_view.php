@@ -3,7 +3,7 @@
 		// var_dump($dataPekerjaan) ?>
 		<h4 class="card-text">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
 		<ul class="list-group mt-3">
-			<?php $k=0; $b=0; foreach ($dataPekerjaan as $row) { 
+			<?php $k=0; $b=0; foreach ($dataPekerjaan as $row) {
 				if ($dataPekerjaan[$k]['status']=='1') {
 					$b++;
 				} ?>
@@ -29,7 +29,7 @@
 								Apakah anda yakin ingin menghapus pekerjaan?
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 								<a class="btn btn-danger" href="<?php echo base_url('beranda/hapusPekerjaan/').$dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Hapus</a>
 							</div>
 						</div>

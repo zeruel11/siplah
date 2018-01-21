@@ -6,9 +6,9 @@
 	<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css"> -->
 
 	<!-- core javascript import -->
-	<!-- <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" charset="utf-8"></script> -->
+	<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 	<!-- <script src="<?php echo base_url(); ?>assets/js/leaflet.js"></script> -->
-	<!-- <script src="<?php echo base_url(); ?>assets/js/popper-1.12.9.js" charset="utf-8"></script> -->
+	<script src="<?php echo base_url(); ?>assets/js/popper-1.12.9.js" charset="utf-8"></script>
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
 </head>
@@ -36,9 +36,29 @@
 							<th><?php echo $all_user[$u]['namaLengkap']; ?></th>
 							<th><?php echo $all_user[$u]['userLevel']; ?></th>
 							<th><a class="btn btn-warning" href="<?php echo base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
-								<a class="btn btn-danger" href="<?php echo base_url('manage/deleteUser/').$all_user[$u]['uid'] ?>" role="button">Delete User</a>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?php echo $all_user[$u]['uid'] ?>">Delete User</button>
 							</th>
 						</tr>
+						<!-- Modal -->
+						<div class="modal fade" id="modalHapus<?php echo $all_user[$u]['uid'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalDeleteTitle">Perhatian!</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Apakah anda yakin ingin menghapus user?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+										<a class="btn btn-danger" href="<?php echo base_url('manage/deleteUser/').$all_user[$u]['uid'] ?>" role="button">Delete User</a>
+									</div>
+								</div>
+							</div>
+						</div>
 					<?php $u++;
 					} ?>
 				</tbody>
@@ -48,7 +68,7 @@
 	<?php } ?>
 	<!-- </div> -->
 	<a class="btn btn-success" href="<?php echo base_url('manage/createUser') ?>" role="button">Add User</a>
-	<a class="btn btn-secondary float-right" href="<?php echo base_url('beranda') ?>" role="button">HOME</a>
+	<a class="btn btn-primary float-right" href="<?php echo base_url('beranda') ?>" role="button">HOME</a>
 	</div>
-	<?php var_dump($all_user) ?>
+	<?php // var_dump($all_user) ?>
 </body>

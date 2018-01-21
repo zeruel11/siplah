@@ -3,7 +3,7 @@
   <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-6">
-<form name="input" method="post" action="<?php echo base_url('index.php/Beranda/tambahPekerjaan'); ?>">
+<form name="input" method="post" action="<?php echo base_url('index.php/Manage/createUser'); ?>">
   <!-- <input type="hidden" value="<?php echo $idProposal; ?>" name="idProposal" /> -->
 <!-- <div class="form-group">
     <label for="judulProposal">Proposal</label>

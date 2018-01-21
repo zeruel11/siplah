@@ -12,24 +12,27 @@ class Manage_model extends CI_Model {
 	{
 		$this->db->select('uid, username, user_level, namaLengkap');
 		$this->db->from('user');
-		
+
 		$query = $this->db->get();
 		if ($query->num_rows()>0) {
 			return $query->result_array();
 		} else {
 			return null;
 		}
-		
+
 	}
 
-	function createUser($id)
+	function createUser($data)
 	{
-		# code...
+		$this->db->insert('pekerjaan', $data);
+		return $this->db->affected_rows();
 	}
 
-	function updateUser($id)
+	function updateUser($id, $data)
 	{
-		
+		$this->db->where('uid', $id);
+		$this->db->update('pekerjaan', $data);
+		return $this->db->affected_rows();
 	}
 
 	function deleteUser($id)
