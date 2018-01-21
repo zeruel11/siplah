@@ -63,6 +63,7 @@
 	}
 
 	#image-map {
+		margin: 0;
 		background: #000000;
 		width: 100%;
 		min-height: 450px;

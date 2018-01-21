@@ -177,8 +177,8 @@ DROP TABLE IF EXISTS `koordinat`;
 CREATE TABLE `koordinat` (
   `idKoord` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(255) NOT NULL,
-  `x` int(11) NOT NULL,
-  `y` int(11) NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
   `xy` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`idKoord`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -190,7 +190,7 @@ CREATE TABLE `koordinat` (
 
 LOCK TABLES `koordinat` WRITE;
 /*!40000 ALTER TABLE `koordinat` DISABLE KEYS */;
-INSERT INTO `koordinat` VALUES (3,'a1',26,24,NULL),(4,'trial2',33,15,NULL);
+INSERT INTO `koordinat` VALUES (3,'a1',-165,50.5,NULL),(4,'trial2',-184.875,27.875,NULL);
 /*!40000 ALTER TABLE `koordinat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `pekerjaan` (
   PRIMARY KEY (`idPekerjaan`),
   KEY `fk_idProposal` (`idProposal`),
   CONSTRAINT `pekerjaan_ibfk_1` FOREIGN KEY (`idProposal`) REFERENCES `proposal` (`idProposal`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `pekerjaan` (
 
 LOCK TABLES `pekerjaan` WRITE;
 /*!40000 ALTER TABLE `pekerjaan` DISABLE KEYS */;
-INSERT INTO `pekerjaan` VALUES (1,1,'membangun ulang dinding selatan',0),(2,1,'meratakan parkiran',1),(4,2,'pembersihan air',0),(5,2,'perluasan kolam',0),(6,2,'selokan',0),(7,1,'perbaikan tangga depan',0),(8,2,'penambahan pulau',0),(9,2,'membangun patung dekorasi',0),(12,10,'cor lahan parkir sebelah timur',0);
+INSERT INTO `pekerjaan` VALUES (1,1,'membangun ulang dinding selatan',0),(2,1,'meratakan parkiran',1),(4,2,'pembersihan air',0),(5,2,'perluasan kolam',0),(6,2,'selokan',0),(7,1,'perbaikan tangga depan',0),(8,2,'penambahan pulau',0),(9,2,'membangun patung dekorasi',0),(12,10,'cor lahan parkir sebelah timur',0),(13,11,'perbaikan lantai depan',0);
 /*!40000 ALTER TABLE `pekerjaan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,7 +269,7 @@ CREATE TABLE `proposal` (
   KEY `fk_idGedung` (`idGedung`),
   FULLTEXT KEY `ft_deskripsiPekerjaan` (`deskripsiProposal`),
   CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +278,7 @@ CREATE TABLE `proposal` (
 
 LOCK TABLES `proposal` WRITE;
 /*!40000 ALTER TABLE `proposal` DISABLE KEYS */;
-INSERT INTO `proposal` VALUES (1,8,'perbaikan gedung asrama E','gedung asrama perlu diperbaiki dan diperbarui dengan pertimbangan mendekati masa penerimaan mahasiswa baru',0,NULL,'2018-01-17',NULL),(2,8,'renovasi kolam asrama',NULL,0,NULL,NULL,NULL),(10,8,'renovasi parkiran utara','parkiran asrama perlu diperluas mengingat bertambahnya penghuni asrama yang membawa kendaraan bermotor',0,NULL,'2018-01-21',NULL);
+INSERT INTO `proposal` VALUES (1,8,'perbaikan gedung asrama E','gedung asrama perlu diperbaiki dan diperbarui dengan pertimbangan mendekati masa penerimaan mahasiswa baru',0,NULL,'2018-01-17',NULL),(2,8,'renovasi kolam asrama',NULL,0,NULL,NULL,NULL),(10,8,'renovasi parkiran utara','parkiran asrama perlu diperluas mengingat bertambahnya penghuni asrama yang membawa kendaraan bermotor',0,NULL,'2018-01-21',NULL),(11,7,'renovasi fasor ruang 1','perlu dilakukan agar demikian',0,NULL,'2018-01-21',NULL);
 /*!40000 ALTER TABLE `proposal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,4 +354,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-21 13:31:11
+-- Dump completed on 2018-01-21 20:34:36

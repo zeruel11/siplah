@@ -64,12 +64,22 @@
     		// tell leaflet that the map is exactly as big as the image
     		map.fitBounds(bounds);
 
-    		<?php $l = 1; foreach ( $listGedung as $lokasi ) { ?>
-    			var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-    			L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
+            function onMapClick(e) {
 
-    			<?php $l++; } ?>
+                var mapWidth=map._container.offsetWidth;
+                var mapHeight=map._container.offsetHeight;
+                console.log(e.latlng.lat);
+                console.log(e.latlng.lng);
+                console.log(e);
+            }
+            map.on('contextmenu', onMapClick);
 
-    		</script>
+            <?php $l = 1; foreach ( $listGedung as $lokasi ) { ?>
+             var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+             L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
 
-    	</body>
+             <?php $l++; } ?>
+
+         </script>
+
+     </body>
