@@ -51,7 +51,7 @@ class Beranda_test extends TestCase
       }
     );
     $output = $this->request('GET', 'beranda/index');
-    $expected = 'class="d-inline-block align-center" width="35" height="35">Selamat datang Pegawai w sakti';
+    $expected = 'class="d-inline-block align-center" width="35" height="35">Selamat datang Pegawai 1';
     $this->assertContains($expected, $output);
   }
 
@@ -106,7 +106,7 @@ class Beranda_test extends TestCase
 
   // public function test_search_gedung()
   // {
-    
+
   // }
 
 }

@@ -68,16 +68,15 @@ testing:
     - php vendor/kenjis/ci-phpunit-test/install.php
     - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
     - cd application/tests && ../../vendor/bin/phpunit
+  allow_failure: true
   artifacts:
-    when: on_success
     paths:
     - application/tests/build
     expire_in: 15 days
 
 pages:
   stage: deploy
-  dependencies:
-    - testing
+  when: always
   script:
     - mv application/tests/build/coverage public/
   artifacts:
