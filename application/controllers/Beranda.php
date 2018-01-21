@@ -131,10 +131,16 @@ class Beranda extends CI_Controller
         // }
 
         $data = $this->data;
+        if ($ged=='proposal') {
+            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 3);
+        } elseif ($ged=='kerja') {
+            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 4);
+        } else {
+            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 1);
+        }
         // if ($this->session->flashdata('hasil')) {
         // 	$data['hasil'] = $this->session->flashdata('hasil');
         // }
-        $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 1);
         // if (count($data['dataRenovasi'])==1) {
         $this->session->set_flashdata('gedung', (int)$data['dataRenovasi'][0]['idGedung']);
         // }

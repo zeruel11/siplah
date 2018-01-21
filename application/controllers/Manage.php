@@ -23,6 +23,8 @@ class Manage extends CI_Controller {
             		$data['all_user'][$u]['userLevel']='Wakil Rektor II';
             	} elseif ($data['all_user'][$u]['user_level']=='4') {
             		$data['all_user'][$u]['userLevel']='SARPRAS';
+            	} elseif ($data['all_user'][$u]['user_level']=='5') {
+            		$data['all_user'][$u]['userLevel']='Unit Fakultas/Jurusan';
             	} else {
             		$data['all_user'][$u]['userLevel']='Pengguna Lain';
             	}
