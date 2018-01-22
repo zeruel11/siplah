@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.28-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: siplah
 -- ------------------------------------------------------
--- Server version	10.1.28-MariaDB
+-- Server version	10.1.26-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,13 +58,14 @@ DROP TABLE IF EXISTS `gedung`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gedung` (
   `idGedung` int(11) NOT NULL AUTO_INCREMENT,
-  `kodeGedung` varchar(7) NOT NULL,
+  `kodeGedung` varchar(7) DEFAULT NULL,
   `koordGedung` int(11) NOT NULL,
   `namaGedung` varchar(255) NOT NULL,
   `kategoriGedung` int(11) DEFAULT NULL,
   `luasGedung` int(11) NOT NULL,
+  `tinggiGedung` int(11) DEFAULT NULL,
   `jumlahLantai` int(11) NOT NULL,
-  `jumlahRuang` int(11) NOT NULL,
+  `jumlahRuang` int(11) DEFAULT NULL,
   `statusPengelola` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idGedung`),
   KEY `fk_koordinat_gedung` (`koordGedung`),
@@ -79,7 +80,7 @@ CREATE TABLE `gedung` (
 
 LOCK TABLES `gedung` WRITE;
 /*!40000 ALTER TABLE `gedung` DISABLE KEYS */;
-INSERT INTO `gedung` VALUES (7,'11',3,'fasor',1,22,1,0,NULL),(8,'9',4,'asrama',1,35,2,0,NULL);
+INSERT INTO `gedung` VALUES (7,NULL,3,'UPT FASOR',NULL,158,NULL,1,NULL,NULL),(8,NULL,4,'ASRAMA',NULL,4370,NULL,2,NULL,NULL);
 /*!40000 ALTER TABLE `gedung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,4 +355,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-21 20:34:36
+-- Dump completed on 2018-01-22  9:20:36

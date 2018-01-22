@@ -11,7 +11,7 @@
 						foreach ($listGedung as $row) { ?>
 						<a href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>" class="list-group-item list-group-item-action"><?php echo $row['namaGedung']; ?></a>
 						<!-- class="btn btn-outline-info btn-sm float-right" -->
-						<?php 
+						<?php
 				// echo "Luasan: ".$row['luasGedung']."<br>";
 				// echo "Lantai: ".$row['jumlahLantai']."<br>";
 				// echo $row['x'].$row['y'];
@@ -24,8 +24,8 @@
 		</div>
 	</div>
 </div>
-<?php // $l = 1; 
-// foreach ( $listGedung as $lokasi ) { 
+<?php // $l = 1;
+// foreach ( $listGedung as $lokasi ) {
 //     	echo ($lokasi['x']).($lokasi['y']);
     	// $l++; } ?>
     	<script>

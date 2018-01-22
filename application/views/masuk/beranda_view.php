@@ -73,9 +73,7 @@
 	<?php $l = 1; foreach ($listGedung as $lokasi) {
                     ?>
 	var sol = L.latLng([<?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-	L.marker(sol, {
-		icon: gedungIcon
-	}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
+	L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
 
 	<?php $l++;
                 } ?>

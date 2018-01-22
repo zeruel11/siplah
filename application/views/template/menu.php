@@ -24,8 +24,8 @@
                 <?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/kerja":"").'">Data Renovasi Telah Disetujui</a>'; ?>
               </li>
               <?php } ?>
-            
-            <?php var_dump($userLogin) ?>
+
+            <?php // var_dump($userLogin) ?>
           </ul>
           <!-- <ul class="nav nav-pills flex-column">
             <li class="nav-item">
