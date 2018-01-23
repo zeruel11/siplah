@@ -5,6 +5,11 @@
 			<div class="col-lg-8"><div id="image-map"></div></div>
 			<!-- <div class="col-lg-3"></div> -->
 			<div class="col-lg-4">
+				<?php if (isset($message)) {
+			    echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+			  	'.$message.'
+					</div>';
+			} ?>
 				<div class="card">
 					<ul class="list-group list-group-flush">
 						<?php $g=0;
@@ -74,11 +79,14 @@
             }
             map.on('contextmenu', onMapClick);
 
-            <?php $l = 1; foreach ( $listGedung as $lokasi ) { ?>
-             var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-             L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
+            <?php $l = 0; foreach ( $listGedung as $lokasi ) {
+							if ($lokasi['x']!=NULL) { ?>
 
-             <?php $l++; } ?>
+             var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+             L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b>");
+
+             <?php }
+						 $l++; } ?>
 
          </script>
 

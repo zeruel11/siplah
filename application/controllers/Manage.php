@@ -44,7 +44,7 @@ class Manage extends CI_Controller {
 			$data['userLogin'] = $this->session->userdata('logged_in');
 		}
 		// $idProposal = $this->session->flashdata('proposal');
-		$this->load->library(array('form_validation', 'encrypt'));
+		$this->load->library(array('form_validation'));
 		$this->form_validation->set_rules('usernameForm', 'Username', 'required');
 		$this->form_validation->set_rules('passwordForm', 'Password', 'required');
 		$this->form_validation->set_rules('namaLengkapForm', 'Nama Lengkap', 'required');
@@ -53,7 +53,7 @@ class Manage extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 				$data['mode']="insert";
-				$data['encPass'] = $this->encrypt->encode('test');
+				$data['encPass'] = md5('test');
 				$this->load->view('template/header', $data);
 				// $this->load->view('template/navigation', $data);
 				$this->load->view('masuk/manage_form', $data);

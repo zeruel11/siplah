@@ -8,6 +8,7 @@ class Beranda extends CI_Controller
    * @var array
    */
   var $data;
+  // private $foo;
 
     /**
      * load default model dan library CI
@@ -36,8 +37,8 @@ class Beranda extends CI_Controller
         } else {
             $data['listGedung'] = $this->Beranda_model->getListGedung();
         }
-        if ($this->session->flashdata('not_found')) {
-          $data['message'] = "Gedung tidak ditemukan";
+        if ($this->session->flashdata('message')) {
+          $data['message'] = $this->session->flashdata('message');
         }
 
         if ($this->session->userdata('logged_in')) {
@@ -63,6 +64,7 @@ class Beranda extends CI_Controller
      */
     public function detailGedung($ged)
     {
+      $data=$this->data;
         $result = $this->Beranda_model->getDataGedung($ged);
 
         if ($result) {
@@ -73,18 +75,29 @@ class Beranda extends CI_Controller
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
+        if ($this->session->userdata('logged_in')) {
+          $this->load->view('template/menu', $data);
+        }
         $this->load->view('data_gedung_view', $data);
         $this->load->view('template/footer', $data);
     }
 
     public function searchGedung()
     {
-        $search = $this->input->post('gedung');
-        $result = $this->Beranda_model->searchListGedungByName($search);
-        if ($result) {
-          $this->session->set_flashdata('cari', $result);
+      $this->load->library('form_validation');
+      $this->form_validation->set_rules('cari_gedung', 'Search', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->session->set_flashdata('message', "Harap masukkan nama gedung");
         } else {
-          $this->session->set_flashdata('not_found', 1);
+          $search = $this->input->post('cari_gedung');
+          $result = $this->Beranda_model->searchListGedungByName($search);
+          if ($result) {
+            $this->session->set_flashdata('cari', $result);
+          } else {
+            $this->session->set_flashdata('message', "Gedung tidak ditemukan");
+          }
         }
 
         redirect('beranda');
@@ -142,7 +155,8 @@ class Beranda extends CI_Controller
         // 	$data['hasil'] = $this->session->flashdata('hasil');
         // }
         // if (count($data['dataRenovasi'])==1) {
-        $this->session->set_flashdata('gedung', (int)$data['dataRenovasi'][0]['idGedung']);
+        $this->session->set_flashdata('gedung', ((int)$data['dataRenovasi'][0]['idGedung']));
+        $this->foo=20;
         // }
 
         $this->load->view('template/header', $data);
@@ -197,7 +211,7 @@ class Beranda extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
         $this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
-        
+
         if ($this->form_validation->run() == FALSE)
         {
             $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 2);
@@ -230,10 +244,17 @@ class Beranda extends CI_Controller
     function listPekerjaan($kerja)
     {
         $data = $this->data;
-        if ($this->session->flashdata('hasil')) {
-        	$data['hasil'] = $this->session->flashdata('hasil');
+        if ($this->session->flashdata('message')) {
+        	$data['message'] = $this->session->flashdata('message');
         }
-        $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 1);
+        $result = $this->Beranda_model->getPekerjaan((int)$kerja, 1);
+        if ($result!=null) {
+          $data['dataPekerjaan'] = $result;
+        } else {
+          $data['dataPekerjaan'] = $this->Beranda_model->getListRenovasi((int)$kerja, 2);
+        }
+
+        // $data['apapun']=$this->foo;
 
         // $p=0; $b=0;
         // foreach ($data['dataPekerjaan'] as $row) {
@@ -271,7 +292,7 @@ class Beranda extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
         // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
-        
+
         if ($this->form_validation->run() == FALSE)
         {
             $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan($kerja, 2);

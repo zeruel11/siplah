@@ -1,7 +1,8 @@
 	<div class="card-body">
-		<?php if ($dataPekerjaan[0]['idPekerjaan']!=null) {
+		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) {
 		// var_dump($dataPekerjaan) ?>
-		<h4 class="card-text">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
+		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
+		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<ul class="list-group mt-3">
 			<?php $k=0; $b=0; foreach ($dataPekerjaan as $row) {
 				if ($dataPekerjaan[$k]['status']=='1') {
@@ -47,6 +48,7 @@
 	</div>
 		<?php } else { ?>
 		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>
+		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<?php }
 	// var_dump($this->session->flashdata('proposal'));
 	// echo $this->output->enable_profiler(TRUE); ?>

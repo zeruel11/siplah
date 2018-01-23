@@ -1,7 +1,7 @@
 <?php if ($mode=="insert") { ?>
 <div class="container-fluid">
   <div class="row">
-  <div class="col-lg-3"><?php var_dump($encPass) ?></div>
+  <div class="col-lg-3"></div>
   <div class="col-lg-6">
 <form name="input" method="post" action="<?php echo base_url('index.php/Manage/createUser'); ?>">
   <!-- <input type="hidden" value="<?php echo $idProposal; ?>" name="idProposal" /> -->
@@ -15,7 +15,7 @@
   </div>
   <div class="form-group">
     <label for="passwordForm">Password:</label>
-    <input type="text" class="form-control" id="passwordForm" name="passwordForm" placeholder="Password"></input>
+    <input type="password" class="form-control" id="passwordForm" name="passwordForm" placeholder="Password"></input>
   </div>
   <div class="form-group">
     <label for="namaLengkapForm">Nama Lengkap:</label>

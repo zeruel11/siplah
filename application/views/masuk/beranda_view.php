@@ -1,9 +1,9 @@
-<div class="col-lg-6">
+<div class="col-lg-6 col-lg-offset-2">
 	<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 	<div id="image-map"></div>
 </div>
 <div class="col-lg-4">
-	<?php if ($this->session->flashdata('not_found')) {
+	<?php if (isset($message)) {
     echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
   	'.$message.'
 		</div>';
@@ -14,7 +14,7 @@
                     foreach ($listGedung as $row) {
                         ?>
 			<li class="list-group-item list-group-item-action">
-				<a class="card-link" href="<?php echo base_url()." gedung/".$row['idGedung'];
+				<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung'];
                         $g++; ?>">
 					<?php echo $row['namaGedung']; ?>
 				</a>
@@ -33,7 +33,6 @@
 </div>
 </div>
 </div>
-<?php // var_dump($message)?>
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
@@ -70,13 +69,14 @@
 	// tell leaflet that the map is exactly as big as the image
 	map.fitBounds(bounds);
 
-	<?php $l = 1; foreach ($listGedung as $lokasi) {
-                    ?>
-	var sol = L.latLng([<?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-	L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<?php echo $lokasi['namaGedung'] ?>");
+	<?php $l = 0; foreach ( $listGedung as $lokasi ) {
+		if ($lokasi['x']!=NULL) { ?>
 
-	<?php $l++;
-                } ?>
+	 var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+	 L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b>");
+
+	 <?php }
+	 $l++; } ?>
 </script>
 
 </body>
