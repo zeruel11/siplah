@@ -33,6 +33,7 @@
 </div>
 </div>
 </div>
+<?php // var_dump($message)?>
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',

@@ -23,6 +23,9 @@ class Beranda extends CI_Controller
         $this->load->library('pagination');
         if ($this->session->userdata('logged_in')) {
             $this->data['userLogin'] = $this->session->userdata('logged_in');
+        } else {
+            // redirect('beranda','refresh');
+            // $this->session->set_flashdata('message', 'Anda belum login');
         }
         if ($this->session->flashdata('message')) {
           $this->data['message'] = $this->session->flashdata('message');
@@ -64,7 +67,7 @@ class Beranda extends CI_Controller
      */
     public function detailGedung($ged)
     {
-      $data=$this->data;
+        $data = $this->data;
         $result = $this->Beranda_model->getDataGedung($ged);
 
         if ($result) {
@@ -84,6 +87,7 @@ class Beranda extends CI_Controller
 
     public function searchGedung()
     {
+	$data = $this->data;
       $this->load->library('form_validation');
       $this->form_validation->set_rules('cari_gedung', 'Search', 'required');
 
@@ -156,7 +160,7 @@ class Beranda extends CI_Controller
         // }
         // if (count($data['dataRenovasi'])==1) {
         $this->session->set_flashdata('gedung', ((int)$data['dataRenovasi'][0]['idGedung']));
-        $this->foo=20;
+        // $this->foo=20;
         // }
 
         $this->load->view('template/header', $data);
@@ -211,7 +215,7 @@ class Beranda extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
         $this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
-
+        
         if ($this->form_validation->run() == FALSE)
         {
             $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 2);
@@ -235,6 +239,7 @@ class Beranda extends CI_Controller
 
     function hapusRenovasi($renovasi)
     {
+        $data = $this->data;
     	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
     	$data['hasil'] = $this->Beranda_model->deleteRenovasi((int)$renovasi);
     	$this->session->set_flashdata('hasil', $data['hasil']);
@@ -279,6 +284,7 @@ class Beranda extends CI_Controller
 
     function hapusPekerjaan($kerja)
     {
+        $data = $this->data;
     	$this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
     	$data['hasil'] = $this->Beranda_model->deletePekerjaan((int)$kerja);
     	$this->session->set_flashdata('hasil', $data['hasil']);
@@ -290,9 +296,16 @@ class Beranda extends CI_Controller
         $data = $this->data;
         $idProposal = $this->session->flashdata('proposal');
         $this->load->library('form_validation');
+
+        if ($this->session->userdata('logged_in')) {
+            # code...
+        } else {
+            # code...
+        }
+        
         $this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
         // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
-
+        
         if ($this->form_validation->run() == FALSE)
         {
             $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan($kerja, 2);

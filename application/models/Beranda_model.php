@@ -102,49 +102,51 @@ class Beranda_model extends CI_Model
         }
     }
 
-    public function createRenovasi($send)
+    function createRenovasi($send)
     {
-        $sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$send['idGedung']."', '".$send['judulProposal']."', '".$send['deskripsiProposal']."', CURDATE())";
-        return $this->db->query($sql);
-        // return $this->db->affected_rows();
+    	$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$send['idGedung']."', '".$send['judulProposal']."', '".$send['deskripsiProposal']."', CURDATE())";
+    	return $this->db->query($sql);
+    	// return $this->db->affected_rows();
     }
 
-    public function updateRenovasi($renovasi, $data)
+    function updateRenovasi($renovasi, $data)
     {
-        $this->db->where('idProposal', $renovasi);
-        $this->db->update('proposal', $data);
-        return $this->db->affected_rows();
+    	$this->db->where('idProposal', $renovasi);
+    	$this->db->update('proposal', $data);
+    	return $this->db->affected_rows();
     }
 
-    public function deleteRenovasi($renovasi)
+    function deleteRenovasi($renovasi)
     {
-        $this->db->delete('proposal', array('idProposal' => $renovasi));
-        return $this->db->affected_rows();
+    	$this->db->delete('proposal', array('idProposal' => $renovasi));
+    	return $this->db->affected_rows();
     }
 
-    public function getPekerjaan($kerja, $mode)
+    function getPekerjaan($kerja, $mode)
     {
-        $this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, pekerjaan.idProposal, proposal.deskripsiProposal, judulProposal');
-        $this->db->from('pekerjaan');
+    	$this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, pekerjaan.idProposal, judulProposal');
+    	$this->db->from('pekerjaan');
         $this->db->join('proposal', 'pekerjaan.idProposal = proposal.idProposal', 'left');
         if ($mode==1) {
-            $this->db->where('pekerjaan.idProposal', $kerja);
+        	$this->db->where('pekerjaan.idProposal', $kerja);
+        } elseif ($mode==2) {
+        	$this->db->where('pekerjaan.idPekerjaan', $kerja);
         } else {
             $this->db->where('pekerjaan.idPekerjaan', $kerja);
         }
 
         $query = $this->db->get();
         if ($query->num_rows()>0) {
-            return $query->result_array();
+        	return $query->result_array();
         } else {
-            return null;
+        	return null;
         }
     }
 
-    public function deletePekerjaan($kerja)
+    function deletePekerjaan($kerja)
     {
-        $this->db->delete('pekerjaan', array('idPekerjaan' => $kerja));
-        return $this->db->affected_rows();
+    	$this->db->delete('pekerjaan', array('idPekerjaan' => $kerja));
+    	return $this->db->affected_rows();
     }
 
     // function editPekerjaan($kerja)
@@ -157,17 +159,17 @@ class Beranda_model extends CI_Model
     //   return $query->row(0);
     // }
 
-    public function updatePekerjaan($kerja, $data)
+    function updatePekerjaan($kerja, $data)
     {
-        $this->db->where('idPekerjaan', $kerja);
-        $this->db->update('pekerjaan', $data);
-        return $this->db->affected_rows();
+      $this->db->where('idPekerjaan', $kerja);
+      $this->db->update('pekerjaan', $data);
+      return $this->db->affected_rows();
     }
 
-    public function createPekerjaan($data)
+    function createPekerjaan($data)
     {
-        $this->db->insert('pekerjaan', $data);
-        return $this->db->affected_rows();
+    	$this->db->insert('pekerjaan', $data);
+    	return $this->db->affected_rows();
     }
 
     /*function getListRuang()
