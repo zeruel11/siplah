@@ -33,7 +33,7 @@
 </div>
 </div>
 </div>
-<?php // var_dump($message)?>
+<?php // var_dump($this->session->flashdata('test'))?>
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
@@ -74,7 +74,7 @@
 		if ($lokasi['x']!=NULL) { ?>
 
 	 var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-	 L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b>");
+	 L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
 
 	 <?php }
 	 $l++; } ?>

@@ -8,6 +8,8 @@
         $userAccess = "Wakil Rektor II";
     } elseif ($userLogin['userLevel']==4) {
         $userAccess = "SARPRAS";
+		} elseif ($userLogin['userLevel']==5) {
+		        $userAccess = "Unit/Jurusan";
     } else {
         $userAccess = "Pengguna Lain";
     }

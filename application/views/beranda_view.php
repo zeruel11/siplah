@@ -14,7 +14,7 @@
 					<ul class="list-group list-group-flush">
 						<?php $g=0;
 						foreach ($listGedung as $row) { ?>
-						<a href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>" class="list-group-item list-group-item-action"><?php echo $row['namaGedung']; ?></a>
+						<a href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>" class="list-group-item list-group-item-action" target="_blank"><?php echo $row['namaGedung']; ?></a>
 						<!-- class="btn btn-outline-info btn-sm float-right" -->
 						<?php
 				// echo "Luasan: ".$row['luasGedung']."<br>";
@@ -83,7 +83,7 @@
 							if ($lokasi['x']!=NULL) { ?>
 
              var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-             L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b>");
+             L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
 
              <?php }
 						 $l++; } ?>

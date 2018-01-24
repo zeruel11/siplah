@@ -60,11 +60,16 @@ body {
   left: 0;
   /* 		margin-right: 50px; */
   z-index: 1000;
-  padding: 20px;
+  padding: 15px;
   overflow-x: hidden;
   overflow-y: auto;
+  max-width: 200px;
   /* Scrollable contents if viewport is shorter than content. */
   /* border-right: 1px solid #000; */
+}
+
+.small-btn {
+  width:220px;
 }
 
 #image-map {

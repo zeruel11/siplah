@@ -9,12 +9,14 @@
 					$b++;
 				} ?>
 				<li class="list-group-item"><?php echo $dataPekerjaan[$k]['detailPekerjaan']." - ".(($dataPekerjaan[$k]['status']=='1')?"Sudah dikerjakan":"Belum dikerjakan"); ?>
-					<span class="btn-group float-right" role="group">
-						<?php //if ($dataPekerjaan[$k]['status']=='0') { ?>
-						<a class="btn btn-outline-warning" href="edit/<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Ubah</a>
-						<?php //} ?>
-						<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>">Hapus</button>
-					</span>
+					<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
+						<span class="btn-group float-right" role="group">
+							<?php //if ($dataPekerjaan[$k]['status']=='0') { ?>
+							<a class="btn btn-outline-warning" href="edit/<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Ubah</a>
+							<?php //} ?>
+							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>">Hapus</button>
+						</span>
+					<?php } ?>
 				</li>
 				<!-- Modal -->
 				<div class="modal fade" id="modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
@@ -51,7 +53,9 @@
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<?php }
 	// var_dump($this->session->flashdata('proposal'));
-	// echo $this->output->enable_profiler(TRUE); ?>
-	<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
+	// echo $this->output->enable_profiler(TRUE);
+	if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
+		<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
+	<?php } ?>
 </div>
 </body>

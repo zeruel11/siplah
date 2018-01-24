@@ -8,7 +8,7 @@
         ?>
 			<div class="card mt-1">
 				<div class="card-block w-50">
-				<h5 class="card-title"><?php echo $dataRenovasi[$r]['judulProposal']; ?></h5>
+				<h5 class="card-title"><?php echo $dataRenovasi[$r]['judulProposal'].$dataRenovasi[$r]['status']; ?></h5>
 
 					<?php if ($dataRenovasi[$r]['deskripsiProposal']!=null) {
             echo '<p class="card-subtitle text-muted text-truncate">'.$dataRenovasi[$r]['deskripsiProposal'];
@@ -17,13 +17,21 @@
         } ?>
 				</p>
 				</div>
-				<div class="card-block text-right">
-					<div class="btn-group float-right" role="group">
-						<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-						<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
-						<a class="btn btn-outline-danger" href="<?php echo base_url('renovasi/del/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
+				<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) {
+            ?>
+					<div class="card-block text-right">
+						<div class="btn-group float-right" role="group">
+							<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
+							<a class="btn btn-outline-danger" href="<?php echo base_url('renovasi/del/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
+						</div>
 					</div>
-				</div>
+				<?php
+        } else {
+            ?>
+					<a class="btn btn-outline-info small-btn" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+				<?php
+        } ?>
 				<!-- <div class="progress">
 					<div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 				</div> -->
@@ -41,7 +49,9 @@
     }
     // var_dump($hasil);
     // echo $this->output->enable_profiler(TRUE);?>
-	<a class="btn btn-outline-success mt-3" href="<?php echo base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
+		<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) { ?>
+			<a class="btn btn-outline-success mt-3" href="<?php echo base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
+		<?php } ?>
 </div>
 </div>
 </div>
