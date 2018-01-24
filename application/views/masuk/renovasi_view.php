@@ -1,11 +1,10 @@
 	<div class="card-body col-lg-10">
 		<?php if ($dataRenovasi[0]['idProposal']!=null) {
     // var_dump($dataRenovasi)?>
-		<h3 class="card-title">Gedung <?php echo $dataRenovasi[0]['namaGedung']; ?></h3>
 		<!-- <ul class="list-group"> -->
 			<?php $r=0;
-    foreach ($dataRenovasi as $row) {
-        ?>
+    foreach ($dataRenovasi as $row) { ?>
+			<h3 class="card-title mt-3">Gedung <?php echo $dataRenovasi[$r]['namaGedung']; ?></h3>
 			<div class="card mt-1">
 				<div class="card-block w-50">
 				<h5 class="card-title"><?php echo $dataRenovasi[$r]['judulProposal']; ?></h5>

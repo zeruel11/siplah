@@ -89,7 +89,7 @@ class Beranda_model extends CI_Model
         if ($mode==1) {
             $this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
             $this->db->from('proposal');
-            $this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
+            $this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
             // $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
             if ($ged!='ALL') {
                 // $this->db->where(array('dateDeleted' => NULL));
@@ -108,7 +108,7 @@ class Beranda_model extends CI_Model
             $this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
             $this->db->from('proposal');
             $this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
-            $this->db->where('status', 4);
+            $this->db->where('status', 2);
         }
 
 

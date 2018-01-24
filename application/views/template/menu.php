@@ -17,16 +17,16 @@
                 <?php if ($userLogin['userLevel']==4) {
                 	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(2)=='pekerjaan')?base_url():"").'">Renovasi Tersedia</a>';
                 } else {
-                	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(2)=='pekerjaan')?base_url():"").'">Data Renovasi</a>';
+                	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('ALL').'">Data Renovasi</a>';
                 }
                  ?>
               </li>
               <?php } elseif ($userLogin['userLevel']==3) { ?>
               <li class="nav-item">
-                <?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/proposal":"").'">Data Renovasi Belum Disetujui</a>'; ?>
+                <?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='proposal')?" active":"").'" href="'.base_url('renovasi/proposal').'">Data Renovasi Belum Disetujui</a>'; ?>
               </li>
               <li class="nav-item">
-                <?php echo '<a class="nav-link mt-2'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(1)!='renovasi')?base_url()."renovasi/kerja":"").'">Data Renovasi Telah Disetujui</a>'; ?>
+                <?php echo '<a class="nav-link mt-2'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='kerja')?" active":"").'" href="'.base_url('renovasi/kerja').'">Data Renovasi Telah Disetujui</a>'; ?>
               </li>
               <?php } ?>
 
