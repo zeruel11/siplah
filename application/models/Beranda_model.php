@@ -20,7 +20,9 @@ class Beranda_model extends CI_Model
             $this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
             $this->db->join('proposal', 'proposal.idGedung = gedung.idGedung', 'right');
             $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
+            $this->db->where('pekerjaan.status', '0');
             $this->db->order_by('kodeGedung', 'asc');
+            $this->db->group_by('idGedung');
         } else {
             $this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, x, y');
             $this->db->from('gedung');
@@ -35,6 +37,13 @@ class Beranda_model extends CI_Model
         } else {
             return null;
         }
+    }
+
+    function totalLuas()
+    {
+      $sql = "SELECT SUM(luasGedung) AS luas FROM gedung";
+      $result = $this->db->query($sql);
+      return $result->result();
     }
 
     public function searchListGedungByName($ged)
@@ -125,6 +134,22 @@ class Beranda_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    function updateStatusRenovasi($renovasi, $mode)
+    {
+      if ($mode==1) {
+        $data = array(
+          'status'=>2
+        );
+      } else {
+        $data = array(
+          'status'=>3
+        );
+      }
+      $this->db->where('idProposal', $renovasi);
+      $this->db->update('proposal', $data);
+
+    }
+
     public function deleteRenovasi($renovasi)
     {
         $this->db->delete('proposal', array('idProposal' => $renovasi));
@@ -158,21 +183,23 @@ class Beranda_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    // function editPekerjaan($kerja)
-    // {
-    //   $this->db->select('idPekerjaan, detailPekerjaan');
-    //   $this->db->from('pekerjaan');
-    //   $this->db->where('idPekerjaan', $kerja);
-
-    //   $query = $this->db->get();
-    //   return $query->row(0);
-    // }
+    function donePekerjaan($id, $data)
+    {
+      $this->db->where('idPekerjaan', $id);
+      $this->db->update('pekerjaan', $data);
+    }
 
     public function updatePekerjaan($kerja, $data)
     {
         $this->db->where('idPekerjaan', $kerja);
         $this->db->update('pekerjaan', $data);
         return $this->db->affected_rows();
+    }
+
+    function cekPekerjaan($kerja)
+    {
+      $this->db->where('idPekerjaan', $kerja);
+      $this->db->update('pekerjaan', $object);
     }
 
     public function createPekerjaan($data)

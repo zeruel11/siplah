@@ -36,6 +36,7 @@ class Beranda extends CI_Controller
     public function index()
     {
         $data = $this->data;
+        $data['luasTotal'] = $this->Beranda_model->totalLuas();
         if ($this->session->flashdata('message')) {
             $data['message'] = $this->session->flashdata('message');
         }
@@ -157,6 +158,20 @@ class Beranda extends CI_Controller
         redirect('beranda');
     }
 
+    function setuju($renov)
+    {
+      $this->Beranda_model->updateStatusRenovasi($renov, 1);
+      $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+      redirect($this->session->userdata('refered_from'));
+    }
+
+    function tolak($renov)
+    {
+      $this->Beranda_model->updateStatusRenovasi($renov, 0);
+      $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+      redirect($this->session->userdata('refered_from'));
+    }
+
     public function dataRenovasi($ged)
     {
         // if ($result) {
@@ -271,8 +286,10 @@ class Beranda extends CI_Controller
         $result = $this->Beranda_model->getPekerjaan((int)$kerja, 1);
         if ($result!=null) {
             $data['dataPekerjaan'] = $result;
+            $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
         } else {
             $data['dataPekerjaan'] = $this->Beranda_model->getListRenovasi((int)$kerja, 2);
+            $this->session->set_flashdata('proposal', $kerja);
         }
 
         // $data['apapun']=$this->foo;
@@ -285,17 +302,20 @@ class Beranda extends CI_Controller
         //     $p++;
         // }
         // $data['proses'] = round($b/count($data['dataPekerjaan']), 2)*100;
-        if ($data['dataPekerjaan']!=null) {
-            $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
-        } else {
-            $this->session->set_flashdata('proposal', $kerja);
-        }
 
-        $this->load->view('template/header', $data);
-        $this->load->view('template/navigation', $data);
-        $this->load->view('template/menu', $data);
-        $this->load->view('masuk/pekerjaan_view', $data);
-        $this->load->view('template/footer', $data);
+        if ($data['userLogin']['userLevel']==4) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
+            $this->load->view('template/menu', $data);
+            $this->load->view('masuk/pekerjaan_ceklis', $data);
+            $this->load->view('template/footer', $data);
+        } else {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/navigation', $data);
+            $this->load->view('template/menu', $data);
+            $this->load->view('masuk/pekerjaan_view', $data);
+            $this->load->view('template/footer', $data);
+        }
     }
 
     public function hapusPekerjaan($kerja)
@@ -312,12 +332,6 @@ class Beranda extends CI_Controller
         $data = $this->data;
         $idProposal = $this->session->flashdata('proposal');
         $this->load->library('form_validation');
-
-        if ($this->session->userdata('logged_in')) {
-            # code...
-        } else {
-            # code...
-        }
 
         $this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
         // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
@@ -338,6 +352,29 @@ class Beranda extends CI_Controller
             $url = "renovasi/pekerjaan/".$idProposal;
             redirect($url);
         }
+    }
+
+    public function selesaiPekerjaan()
+    {
+        $data=$this->data;
+        $check = $this->input->post('pekerjaanCheck');
+        foreach ($check as $id) {
+          $send = array(
+            'status'=>1
+          );
+          $this->Beranda_model->donePekerjaan((int)$id, $send);
+        }
+        $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
+        // $data['hasil'] = $this->Beranda_model->deletePekerjaan((int)$kerja);
+        // $this->session->set_flashdata('hasil', $data['hasil']);
+        redirect($this->session->userdata('refered_from'));
+        // $send = array(
+        //   'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
+        // );
+        // $this->load->view('test', $send);
+      // $this->Beranda_model->updatePekerjaan($kerja, $send);
+      // $url = "renovasi/pekerjaan/".$idProposal;
+      // redirect($url);
     }
 
     public function tambahPekerjaan()

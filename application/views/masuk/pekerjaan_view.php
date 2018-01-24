@@ -1,4 +1,4 @@
-	<div class="card-body">
+	<div class="card-body col-lg-10">
 		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) {
 		// var_dump($dataPekerjaan) ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
@@ -46,7 +46,7 @@
 		<?php $bar = round($b/$k, 2)*100; ?>
 	<h6>Progress:</h6>
 	<div class="progress">
-		<?php echo '<div class="progress-bar" style="width: '.$bar.'%" role="progressbar" aria-valuenow="'.$bar.'" aria-valuemin="0" aria-valuemax="100">'.$b.'/'.$k.'</div>'; ?>
+		<?php echo '<div class="progress-bar" style="width: '.$bar.'%" role="progressbar" aria-valuenow="'.$bar.'" aria-valuemin="0" aria-valuemax="100">'.$bar.'%</div>'; ?>
 	</div>
 		<?php } else { ?>
 		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>

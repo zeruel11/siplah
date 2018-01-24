@@ -72,6 +72,10 @@ body {
   width:220px;
 }
 
+.mini-btn {
+  width:170px;
+}
+
 #image-map {
   margin: 0;
   background: #000000;

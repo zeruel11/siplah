@@ -7,7 +7,7 @@
 <body>
 <div class="container-fluid">
 		<div class="row flex">
-			<nav class="row-lg-2 hidden-xs-down bg-faded sidebar">
+			<nav class="col-lg-2 hidden-xs-down bg-faded sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <?php echo '<a class="nav-link'.(($this->uri->segment(1)=='beranda'||$this->uri->segment(1)=='')?" active":($this->uri->segment(1)=='gedung')?" active":"").'" href="'.base_url().'">'.(($this->uri->segment(1)=='gedung')?"Data Gedung":"Overview Gedung").'<span class="sr-only">(current)</span></a>'; ?>

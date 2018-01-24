@@ -20,16 +20,11 @@
 				</a>
 				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
 			</li>
-			<?php
-            // echo "Luasan: ".$row['luasGedung']."<br>";
-            // echo "Lantai: ".$row['jumlahLantai']."<br>";
-            // echo $row['x'].$row['y'];
-            // echo "".$row['label']."<br>";
-            // echo $row;
-                    }
-                // var_dump($listGedung)?>
+			<?php }
+    // var_dump($luasTotal[0]->luas)?>
 		</ul>
 	</div>
+	<p class="blockquote"><?php echo "Total luas gedung terbangun: ".$luasTotal[0]->luas." m<sup>2</sup>"; ?></p>
 </div>
 </div>
 </div>
