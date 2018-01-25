@@ -7,8 +7,8 @@ class Beranda extends CI_Controller
      * global variable data
      * @var array
      */
-    public $data;
-    // private $foo;
+    var $data;
+    public $foo;
 
     /**
      * load default model dan library CI
@@ -24,13 +24,13 @@ class Beranda extends CI_Controller
         if ($this->session->userdata('logged_in')) {
             $this->data['userLogin'] = $this->session->userdata('logged_in');
         } else {
-            // $this->data['userLogin']['userLevel'] = 0;
-            // redirect('beranda','refresh');
-            // $this->session->set_flashdata('message', 'Anda belum login');
+            // $this->data['message'] = "Anda belum login";
+            $this->session->set_flashdata('timeout', 'Anda belum login');
+            // redirect('beranda');
         }
-        if ($this->session->flashdata('message')) {
-            $this->data['message'] = $this->session->flashdata('message');
-        }
+        // if ($this->session->flashdata('message')) {
+        //     $this->data['message'] = $this->session->flashdata('message');
+        // }
     }
 
     public function index()
@@ -192,9 +192,10 @@ class Beranda extends CI_Controller
         // 	$data['hasil'] = $this->session->flashdata('hasil');
         // }
         // if (count($data['dataRenovasi'])==1) {
-        $this->session->set_flashdata('gedung', ((int)$data['dataRenovasi'][0]['idGedung']));
         // $this->foo=20;
         // }
+        
+        $this->session->set_userdata('gedung', $data['dataRenovasi']);
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
@@ -206,9 +207,12 @@ class Beranda extends CI_Controller
     public function tambahRenovasi()
     {
         $data = $this->data;
-        if ($this->session->flashdata('gedung')) {
-            $data['idGedung'] = $idGedung = $this->session->flashdata('gedung');
-        }
+        $data['gedung'] = $this->session->userdata('gedung');
+
+        // $data['idGed'] = $this->dataRenovasi();
+        // if ($this->session->flashdata('gedung')) {
+        //     $data['idGedung'] = $idGedung;
+        // }
         $this->load->library('form_validation');
         $this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
         $this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
@@ -219,15 +223,15 @@ class Beranda extends CI_Controller
             $this->load->view('template/navigation', $data);
             $this->load->view('masuk/renovasi_form', $data);
             $this->load->view('template/footer', $data);
-            $this->session->set_flashdata('gedung', $idGedung);
         } else {
-            $data = array(
-            'idGedung'=>$idGedung,
+            // $id = $data['gedung_renovasi'][0]['idGedung'];
+            $send = array(
+            'idGedung'=>$data['gedung'][0]['idGedung'],
             'judulProposal'=>$this->input->post('judulProposalForm'),
             'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
             );
-            $this->Beranda_model->createRenovasi($data);
-            $url = "renovasi/".$idGedung;
+            $this->Beranda_model->createRenovasi($send);
+            $url = "renovasi/".$data['gedung'][0]['idGedung'];
             redirect($url);
             // $data['mode']="insert";
             // $this->load->view('template/header', $data);

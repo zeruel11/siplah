@@ -1,6 +1,6 @@
 	<div class="card-body col-lg-10">
-		<?php if ($dataRenovasi[0]['idProposal']!=null) {
-    // var_dump($dataRenovasi)?>
+		<?php // $this->output->enable_profiler(TRUE); ?>
+		<?php if ($dataRenovasi[0]['idProposal']!=null) { ?>
 		<!-- <ul class="list-group"> -->
 			<?php $r=0;
     foreach ($dataRenovasi as $row) { ?>
