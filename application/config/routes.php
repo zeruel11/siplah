@@ -65,6 +65,7 @@ $route['renovasi/pekerjaan/edit/(:any)'] = 'beranda/ubahPekerjaan/$1';
 $route['renovasi/del/(:num)'] = 'beranda/hapusRenovasi/$1';
 $route['renovasi/setuju/(:num)'] = 'beranda/setuju/$1';
 $route['renovasi/tolak/(:num)'] = 'beranda/tolak/$1';
+$route['renovasi/selesai/(:num)'] = 'beranda/doneRenovasi/$1';
 $route['manage/user_baru'] = 'manage/createUser';
 $route['manage/user_update/(:num)'] = 'manage/updateUser/$1';
 $route['ajuan'] = 'beranda/tambahRenovasi';
