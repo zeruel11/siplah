@@ -4,8 +4,7 @@
 			<span class="d-none d-md-inline">Ajuan Renovasi</span></a>
 </div>
 </div>-->
-<body>
-<div class="container-fluid">
+<main class="container-fluid">
 		<div class="row flex">
 			<nav class="col-lg-2 hidden-xs-down bg-faded sidebar">
           <ul class="nav nav-pills flex-column">
@@ -17,7 +16,7 @@
                 <?php if ($userLogin['userLevel']==4) {
                 	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(2)=='pekerjaan')?base_url():"").'">Renovasi Tersedia</a>';
                 } else {
-                	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('ALL').'">Data Renovasi</a>';
+                	echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/ALL').'">Renovasi</a>';
                 }
                  ?>
               </li>

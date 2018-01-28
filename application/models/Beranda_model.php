@@ -85,18 +85,20 @@ class Beranda_model extends CI_Model
     	}
     }
 
-    public function getListRenovasi($ged, $mode)
+    function getListRenovasi($ged, $mode)
     {
     	if ($mode==1) {
-    		$this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
+    		$this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated, dateDeleted');
     		$this->db->from('proposal');
-    		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
+    		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
             // $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
     		if ($ged!='ALL') {
                 // $this->db->where(array('dateDeleted' => NULL));
     			$this->db->where('gedung.idGedung', $ged);
     		}
-    		$this->db->order_by('idProposal', 'asc');
+				$this->db->where('dateDeleted', NULL);
+    		$this->db->order_by('namaGedung', 'asc');
+				$this->db->order_by('dateCreated', 'asc');
     	} elseif ($mode==2) {
     		$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
     		$this->db->from('proposal');
@@ -115,7 +117,6 @@ class Beranda_model extends CI_Model
     		$this->db->where('status', 2);
     		$this->db->order_by('idProposal', 'asc');
     	}
-
 
     	$query = $this->db->get();
     	if ($query->num_rows()>0) {

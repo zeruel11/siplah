@@ -6,5 +6,4 @@
 		</div>
 	<!-- </div> -->
 </footer>
-
-</html>
+</body>

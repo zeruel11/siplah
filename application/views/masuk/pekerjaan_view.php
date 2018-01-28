@@ -41,7 +41,6 @@
 				<?php $k++;
 
 			} ?>
-			<!-- <li class="list-group-item">Jumlah lantai: <?php echo $dataPekerjaan[0]['jumlahLantai']; ?></li> -->
 		</ul>
 		<?php $bar = round($b/$k, 2)*100; ?>
 	<h6>Progress:</h6>

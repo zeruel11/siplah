@@ -186,7 +186,7 @@ class Beranda extends CI_Controller
         } elseif ($ged=='kerja') {
             $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 4);
         } else {
-            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$ged, 1);
+            $data['dataRenovasi'] = $this->Beranda_model->getListRenovasi($ged, 1);
         }
         // if ($this->session->flashdata('hasil')) {
         // 	$data['hasil'] = $this->session->flashdata('hasil');
@@ -194,7 +194,7 @@ class Beranda extends CI_Controller
         // if (count($data['dataRenovasi'])==1) {
         // $this->foo=20;
         // }
-        
+
         $this->session->set_userdata('gedung', $data['dataRenovasi']);
 
         $this->load->view('template/header', $data);
