@@ -2,6 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ver_login extends CI_Controller {
+
+	/**
+	 * load required models
+	 * @method __construct
+	 */
 	function __construct()
 	{
 		parent::__construct();
@@ -15,9 +20,14 @@ class Ver_login extends CI_Controller {
 		} else {
 			redirect('beranda', 'refresh');
 		}
-		
+
 	}*/
 
+/**
+ * validate login
+ * @method index
+ * @return mixed user data
+ */
 	function index()
 	{
 		// Check flashdata
@@ -40,7 +50,7 @@ class Ver_login extends CI_Controller {
 					'userLevel' => $row->user_level,
 					'namaLengkap' => $row->namaLengkap
 				);
-				
+
 				$this->session->set_userdata( 'logged_in', $sess_array );
 			}
 			// return true;
@@ -50,7 +60,7 @@ class Ver_login extends CI_Controller {
 			$this->session->set_flashdata('validUser', 'false');
 			redirect('beranda/masuk', 'refresh');
 		}
-		
+
 	}
 
 }

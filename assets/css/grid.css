@@ -28,6 +28,10 @@ main {
   padding-top: 51px;
 }
 
+.navbar {
+  height: 60px;
+}
+
 .container-fluid{
   min-height: 100%;
   /* min-height: 100vh; */

@@ -87,11 +87,12 @@ class Beranda extends CI_Controller
         }
     }
 
-    /**
-     * fungsi view data Gedung
-     * @param  int $ged idGedung
-     * @return array      array(namaGedung,luasGedung,jumlahLantai)
-     */
+/**
+ * read data gedung
+ * @method detailGedung
+ * @param  int       $ged $idGedung
+ * @return int            detail data gedung
+ */
     public function detailGedung($ged)
     {
         $data = $this->data;
@@ -112,6 +113,11 @@ class Beranda extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
+/**
+ * fungsi search
+ * @method searchGedung
+ * @return string       search result
+ */
     public function searchGedung()
     {
         $data = $this->data;
@@ -135,7 +141,7 @@ class Beranda extends CI_Controller
 
     /**
      * fungsi login
-     * @return array data_login
+     * @return mixed data_login
      */
     public function masuk()
     {
@@ -150,7 +156,7 @@ class Beranda extends CI_Controller
 
     /**
      * fungsi logout
-     * @return [type] destroy session
+     * @return mixed destroy session
      */
     public function keluar()
     {
@@ -165,6 +171,12 @@ class Beranda extends CI_Controller
         redirect('beranda');
     }
 
+/**
+ * update renovasi/proposal setuju
+ * @method setuju
+ * @param  int $renovasi idProposal
+ * @return string           message status
+ */
     function setuju($renovasi)
     {
         $this->Beranda_model->updateStatusRenovasi($renovasi, 1);
@@ -172,6 +184,12 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata('refered_from'));
     }
 
+/**
+ * update renovasi/proposal tolak
+ * @method tolak
+ * @param  int $renovasi idProposal
+ * @return string           message status
+ */
     function tolak($renovasi)
     {
         $this->Beranda_model->updateStatusRenovasi($renovasi, 0);
@@ -179,6 +197,12 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata('refered_from'));
     }
 
+/**
+ * read renovasi/proposal
+ * @method dataRenovasi
+ * @param  int       $ged idProposal, idPekerjaan, atau idGedung
+ * @return mixed            load renovasi_view
+ */
     function dataRenovasi($ged)
     {
         // if ($result) {
@@ -211,6 +235,12 @@ class Beranda extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
+/**
+ * update renovasi/proposal selesai
+ * @method doneRenovasi
+ * @param  int       $renovasi idProposal
+ * @return string                 message status
+ */
     function doneRenovasi($renovasi)
     {
         $result = $this->Beranda_model->updateStatusRenovasi($renovasi, 2);
@@ -223,6 +253,11 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata('refered_from'));
     }
 
+/**
+ * create renovasi/proposal
+ * @method tambahRenovasi
+ * @return string         message status
+ */
     function tambahRenovasi()
     {
         $data = $this->data;
@@ -262,6 +297,12 @@ class Beranda extends CI_Controller
         }
     }
 
+/**
+ * update renovasi/proposal
+ * @method ubahRenovasi
+ * @param  int       $renovasi idProposal
+ * @return string                 message status
+ */
     function ubahRenovasi($renovasi)
     {
         $data = $this->data;
@@ -295,6 +336,12 @@ class Beranda extends CI_Controller
         }
     }
 
+/**
+ * delete renovasi/proposal
+ * @method hapusRenovasi
+ * @param  int        $renovasi idProposal
+ * @return string                  message status
+ */
     function hapusRenovasi($renovasi)
     {
         $data = $this->data;
@@ -304,6 +351,12 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata('refered_from'));
     }
 
+/**
+ * read pekerjaan
+ * @method listPekerjaan
+ * @param  int        $kerja idPekerjaan
+ * @return mixed               data pekerjaan
+ */
     function listPekerjaan($kerja)
     {
         $data = $this->data;
@@ -314,12 +367,11 @@ class Beranda extends CI_Controller
         if ($result!=null) {
             $data['dataPekerjaan'] = $result;
             $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
+            // TODO change this to session_userdata item
         } else {
             $data['dataPekerjaan'] = $this->Beranda_model->getListRenovasi((int)$kerja, 2);
             $this->session->set_flashdata('proposal', $kerja);
         }
-
-        // $data['apapun']=$this->foo;
 
         // $p=0; $b=0;
         // foreach ($data['dataPekerjaan'] as $row) {
@@ -345,6 +397,12 @@ class Beranda extends CI_Controller
         }
     }
 
+/**
+ * delete pekerjaan
+ * @method hapusPekerjaan
+ * @param  int         $kerja idPekerjaan
+ * @return string                message status
+ */
     function hapusPekerjaan($kerja)
     {
         $data = $this->data;
@@ -354,6 +412,12 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata('refered_from'));
     }
 
+/**
+ * update pekerjaan
+ * @method ubahPekerjaan
+ * @param  int        $kerja idPekerjaan
+ * @return string               message status
+ */
     function ubahPekerjaan($kerja)
     {
         $data = $this->data;
@@ -381,6 +445,11 @@ class Beranda extends CI_Controller
         }
     }
 
+/**
+ * update pekerjaan selesai
+ * @method selesaiPekerjaan
+ * @return string           message status
+ */
     function selesaiPekerjaan()
     {
         $data=$this->data;
@@ -395,15 +464,13 @@ class Beranda extends CI_Controller
         // $data['hasil'] = $this->Beranda_model->deletePekerjaan((int)$kerja);
         // $this->session->set_flashdata('hasil', $data['hasil']);
         redirect($this->session->userdata('refered_from'));
-        // $send = array(
-        //   'detailPekerjaan'=>$this->input->post('detailPekerjaanForm')
-        // );
-        // $this->load->view('test', $send);
-      // $this->Beranda_model->updatePekerjaan($kerja, $send);
-      // $url = "renovasi/pekerjaan/".$idProposal;
-      // redirect($url);
     }
 
+/**
+ * create pekerjaan
+ * @method tambahPekerjaan
+ * @return string          message status
+ */
     function tambahPekerjaan()
     {
         $data = $this->data;
@@ -429,23 +496,7 @@ class Beranda extends CI_Controller
         }
     }
 
-    // function allRenovasi()
-    // {
-    //     $result = $this->Beranda_model->getListRenovasi();
 
-    //     if ($result) {
-    //         $data['dataRenovasi'] = $result;
-    //     }else {
-    //       $data['dataRenovasi'] = null;
-    //     }
-    // if ($this->session->userdata('logged_in')) {
-    //     $data['userLogin'] = $this->session->userdata('logged_in');
-    // }
-    // $this->load->view('template/header', $data);
-    // $this->load->view('template/navigation', $data);
-    // $this->load->view('data_renovasi_view', $data);
-    // $this->load->view('template/footer', $data);
-    // }
 }
 
 /* End of file beranda.php */

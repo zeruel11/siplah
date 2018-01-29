@@ -91,7 +91,7 @@ class Beranda_model extends CI_Model
     		$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
     		$this->db->from('proposal');
     		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
-            $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+        $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
     		if ($ged!='ALL') {
                 // $this->db->where(array('dateDeleted' => NULL));
     			$this->db->where('gedung.idGedung', $ged);

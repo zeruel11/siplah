@@ -2278,6 +2278,7 @@ data	assets/js/popper-1.12.9.js	/^function runModifiers(modifiers, data, ends) {
 data	system/libraries/Trackback.php	/^	public $data = array($/;"	p
 data	system/libraries/Trackback.php	/^	public function data($item)$/;"	f
 data	system/libraries/Upload.php	/^	public function data($index = NULL)$/;"	f
+data;	application/controllers/Beranda.php	/^    private $data;$/;"	p
 data;	system/libraries/Xmlrpc.php	/^	public $data;$/;"	p
 dataRenovasi	application/controllers/Beranda.php	/^    function dataRenovasi($ged)$/;"	f
 data_cache	system/database/DB_driver.php	/^	public $data_cache		= array();$/;"	p
@@ -3422,7 +3423,7 @@ fn	assets/js/popper-1.12.9.js	/^    fn: preventOverflow,$/;"	r
 fn	assets/js/popper-1.12.9.js	/^    fn: shift$/;"	r
 fn	assets/js/popper-1.12.9.js	/^    var fn = modifier['function'] || modifier.fn; \/\/ eslint-disable-line dot-notation$/;"	r
 focus	system/libraries/Javascript.php	/^	public function focus($element = 'this', $js = '')$/;"	f
-foo;	application/controllers/Beranda.php	/^    public $foo;$/;"	p
+foo;	application/controllers/Beranda.php	/^    \/\/ public $foo;$/;"	p
 force_download	system/helpers/download_helper.php	/^	function force_download($filename = '', $data = '', $set_mime = FALSE)$/;"	f
 form;	system/helpers/form_helper.php	/^		static $form;$/;"	p
 form_button	system/helpers/form_helper.php	/^	function form_button($data = '', $content = '', $extra = '')$/;"	f

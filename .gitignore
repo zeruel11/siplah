@@ -44,3 +44,7 @@ application/tests/*
 !application/tests/controllers
 !application/tests/models
 .gitkeep
+
+## Documentations
+/build/
+/application/docs

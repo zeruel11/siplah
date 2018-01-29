@@ -1,6 +1,6 @@
 <body>
 
-	<div class="container-fluid" style="margin-top: 70px">
+	<div class="container-fluid mt-2">
 		<div class="row">
 			<div class="col-lg-8"><div id="image-map"></div></div>
 			<!-- <div class="col-lg-3"></div> -->
