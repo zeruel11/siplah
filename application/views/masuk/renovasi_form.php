@@ -14,6 +14,7 @@
     <textarea class="form-control" id="deskripsiProposalForm" name="deskripsiProposalForm" rows="2" placeholder="Masukkan deskripsi singkat renovasi dan/atau pertimbangan dalam mengajukan renovasi"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary float-right" href="<?= $cancel ?>" role="button">Cancel</a>
   </form>
 </div>
 <div class="col-lg-3"></div>
@@ -36,6 +37,7 @@
     <textarea class="form-control" id="deskripsiProposalForm" name="deskripsiProposalForm" rows="2"><?php echo $dataRenovasi[0]['deskripsiProposal'] ?></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary float-right" href="<?= $cancel ?>" role="button">Cancel</a>
   </form>
 </div>
 <div class="col-lg-3"></div>

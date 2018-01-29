@@ -88,17 +88,19 @@ class Beranda_model extends CI_Model
     function getListRenovasi($ged, $mode)
     {
     	if ($mode==1) {
-    		$this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated, dateDeleted');
+    		$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
     		$this->db->from('proposal');
     		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
-            // $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+            $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
     		if ($ged!='ALL') {
                 // $this->db->where(array('dateDeleted' => NULL));
     			$this->db->where('gedung.idGedung', $ged);
     		}
-				$this->db->where('dateDeleted', NULL);
+				// $this->db->where('dateDeleted', NULL);
     		$this->db->order_by('namaGedung', 'asc');
-				$this->db->order_by('dateCreated', 'asc');
+			$this->db->order_by('dateCreated', 'asc');
+            $this->db->group_by('idProposal');
+            // count(pekerjaan.*)
     	} elseif ($mode==2) {
     		$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
     		$this->db->from('proposal');
@@ -156,7 +158,7 @@ class Beranda_model extends CI_Model
     		$this->db->update('proposal', $data);
     	} elseif ($mode==2) {
     		$sql = "UPDATE `proposal` SET `status` = '6', `dateDeleted` = CURDATE() WHERE `proposal`.`idProposal` = ".(int)$renovasi;
-    		$this->db_query($sql);
+    		$this->db->query($sql);
     	}
     	return $this->db->affected_rows();
     }

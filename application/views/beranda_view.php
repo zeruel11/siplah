@@ -1,15 +1,15 @@
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-top: 70px">
 		<div class="row">
 			<div class="col-lg-8"><div id="image-map"></div></div>
 			<!-- <div class="col-lg-3"></div> -->
 			<div class="col-lg-4">
-				<?php if (isset($message)) {
-			    echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
-			  	'.$message.'
-					</div>';
-			} ?>
+				<?php if (isset($warn)) {
+			    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">'.$warn.'</div>';
+			} elseif (isset($message)) {
+                echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">'.$message.'</div>';
+            } ?>
 				<div class="card">
 					<ul class="list-group list-group-flush">
 						<?php $g=0;

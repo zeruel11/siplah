@@ -4,7 +4,7 @@
 			<span class="d-none d-md-inline">Ajuan Renovasi</span></a>
 </div>
 </div>-->
-<main class="container-fluid">
+<main class="container-fluid" style="margin-top: 20px">
 		<div class="row flex">
 			<nav class="col-lg-2 hidden-xs-down bg-faded sidebar">
           <ul class="nav nav-pills flex-column">

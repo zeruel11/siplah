@@ -1,5 +1,5 @@
 <body>
-	<div class="card-body">
+	<div class="card-body" style="margin-top: 51px">
 	<?php if ($detailGedung!=null) {
     // var_dump($detailGedung)?>
 			<h4 class="card-title">Gedung <?php echo $detailGedung[0]['namaGedung'].(($detailGedung[0]['kategoriGedung']==1)?" - Gedung Pendidikan":""); ?></h4>

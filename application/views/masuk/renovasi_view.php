@@ -1,5 +1,5 @@
 	<div class="card-body col-lg-10 pt-1">
-		<?php // $this->output->enable_profiler(TRUE); ?>
+		<?php $this->output->enable_profiler(TRUE); ?>
 		<?php if ($dataRenovasi[0]['idProposal']!=null) { ?>
 		<!-- <ul class="list-group"> -->
 			<?php $r=0;
@@ -15,10 +15,12 @@
 				<h5 class="card-title"><?php echo $row['judulProposal']; ?></h5>
 				<!-- .$dataRenovasi[$r]['status'] -->
 
-					<?php if ($row['deskripsiProposal']!=null) {
-            echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'];
+					<?php if ($row['dateDeleted']!=NULL) {
+            echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
+        } elseif ($row['deskripsiProposal']!=NULL) {
+        	echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'].'</p>';
         } else {
-            echo '<p class="card-subtitle text-danger">'."-proposal tidak memiliki deskripsi-";
+        	echo '<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>';
         } ?>
 				</p>
 				</div>
@@ -38,6 +40,7 @@
             ?>
 						<div class="btn-group float-right" role="group">
 							<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<a class="btn btn-outline-success" href="<?php echo base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Renovasi Selesai</a>
 							<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
 							<a class="btn btn-outline-danger" href="<?php echo base_url('renovasi/del/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
 						</div>
