@@ -1,5 +1,5 @@
 	<div class="card-body col-lg-10 pt-1">
-		<?php $this->output->enable_profiler(TRUE); ?>
+		<?php // $this->output->enable_profiler(TRUE); ?>
 		<?php if ($dataRenovasi[0]['idProposal']!=null) { ?>
 		<!-- <ul class="list-group"> -->
 			<?php $r=0;
@@ -25,14 +25,14 @@
 				</p>
 				</div>
 				<div class="card-block col-lg-6 p-1 w-50 text-right">
-					<p class="card-subtitle">Tanggal Mulai Renovasi: <?= $row['dateCreated']?></p>
-					<p class="card-subtitle">Tanggal Selesai Renovasi: <?= ($row['dateDeleted']!=NULL)?$dataRenovasi[$r]['dateDeleted']:"-"?></p>
+					<p class="card-subtitle text-muted">Tanggal Mulai Renovasi: <?= $row['dateCreated']?></p>
+					<p class="card-subtitle text-muted">Tanggal Selesai Renovasi: <?= ($row['dateDeleted']!=NULL)?$dataRenovasi[$r]['dateDeleted']:"-"?></p>
 				</div>
 				</div>
 				<div class="row no-gutters pl-1">
 					<div class="card-block col-lg-6 pr-3">
 					<div class="progress">
-						<div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+						<div class="progress-bar w-<?= $row['progress'] ?>" role="progressbar" aria-valuenow="<?= $row['progress'] ?>" aria-valuemin="0" aria-valuemax="100"><?= $row['progress'] ?>%</div>
 					</div>
 				</div>
 				<div class="card-block col-lg-6 text-right">

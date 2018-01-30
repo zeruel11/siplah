@@ -32,10 +32,9 @@ class Manage extends CI_Controller {
             }
 			$this->load->view('masuk/admin_view', $data);
         } else {
-					$this->session->set_flashdata('message', 'Anda belum login');
+			$this->session->set_flashdata('message', 'Anda belum login');
         	redirect('beranda','refresh');
         }
-		// return true;
 	}
 
 	function createUser()
@@ -123,9 +122,17 @@ class Manage extends CI_Controller {
 		redirect('manage','refresh');
 	}
 
-	function changePassword($id)
+	function resetPassword($id)
 	{
-		# code...
+		$result = $this->Manage_model->resetPwd($id);
+		if ($result==1) {
+			$this->session->set_flashdata('message', 'Password user telah di reset ke password default "123qwe"');
+		} else {
+			$this->session->set_flashdata('message', 'Gagal melakukan reset password');
+		}
+
+
+		redirect('manage','refresh');
 	}
 
 }

@@ -40,13 +40,21 @@ class Manage_model extends CI_Model {
 		} else {
 			return null;
 		}
-
 	}
 
 	function updateUser($id, $send)
 	{
 		$this->db->where('uid', $id);
 		$this->db->update('user', $send);
+		return $this->db->affected_rows();
+	}
+
+	function resetPwd($id)
+	{
+		$this->db->where('uid', $id);
+		$this->db->update('user', array(
+				'password'=>md5('123qwe')
+				));
 		return $this->db->affected_rows();
 	}
 

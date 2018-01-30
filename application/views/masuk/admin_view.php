@@ -35,9 +35,11 @@
 							<th><?php echo $all_user[$u]['username']; ?></th>
 							<th><?php echo $all_user[$u]['namaLengkap']; ?></th>
 							<th><?php echo $all_user[$u]['userLevel']; ?></th>
-							<th><a class="btn btn-warning" href="<?php echo base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
+							<th><div class="btn-group" role="group" aria-label="Basic example">
+								<a class="btn btn-primary" href="<?php echo base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
+								<a class="btn btn-warning" href="<?php echo base_url('manage/resetPassword/').$all_user[$u]['uid'] ?>" role="button">Reset Password</a>
 								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?php echo $all_user[$u]['uid'] ?>">Delete User</button>
-							</th>
+							</div></th>
 						</tr>
 						<!-- Modal -->
 						<div class="modal fade" id="modalHapus<?php echo $all_user[$u]['uid'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">

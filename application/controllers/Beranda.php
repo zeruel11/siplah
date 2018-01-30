@@ -4,17 +4,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Beranda extends CI_Controller
 {
     /**
-     * global variable data
+     * global data variable
      * @var array
      */
-    var $data;
-    public $foo;
+    private $data;
+    // public $foo;
 
     /**
      * load default model dan library CI
      * @method __construct
      */
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
         $this->load->model('Beranda_model');
@@ -91,9 +91,9 @@ class Beranda extends CI_Controller
  * read data gedung
  * @method detailGedung
  * @param  int       $ged $idGedung
- * @return int            detail data gedung
+ * @return array            detail data gedung
  */
-    public function detailGedung($ged)
+    function detailGedung($ged)
     {
         $data = $this->data;
         $result = $this->Beranda_model->getDataGedung($ged);
@@ -116,7 +116,7 @@ class Beranda extends CI_Controller
 /**
  * fungsi search
  * @method searchGedung
- * @return string       search result
+ * @return array       search result
  */
     public function searchGedung()
     {
@@ -141,7 +141,7 @@ class Beranda extends CI_Controller
 
     /**
      * fungsi login
-     * @return mixed data_login
+     * @return array data_login
      */
     public function masuk()
     {
@@ -156,7 +156,7 @@ class Beranda extends CI_Controller
 
     /**
      * fungsi logout
-     * @return mixed destroy session
+     * @return null destroy session
      */
     public function keluar()
     {
@@ -200,7 +200,7 @@ class Beranda extends CI_Controller
 /**
  * read renovasi/proposal
  * @method dataRenovasi
- * @param  int       $ged idProposal, idPekerjaan, atau idGedung
+ * @param  mixed       $ged idGedung, 'ALL', 'proposal', atau 'kerja'
  * @return mixed            load renovasi_view
  */
     function dataRenovasi($ged)
@@ -227,6 +227,19 @@ class Beranda extends CI_Controller
         // }
 
         $this->session->set_userdata('gedung', $data['dataRenovasi']);
+        if ($ged=='ALL') {
+            $this->session->unset_userdata('gedung');
+        }
+
+        $p=0;
+        foreach ($data['dataRenovasi'] as $row) {
+            $data['dataRenovasi'][$p]['progress'] = ($row['done']/$row['kerja'])*100;
+            $date0 = new DateTime($row['dateCreated']);
+            $date1 = new DateTime($row['dateDeleted']);
+            $data['dataRenovasi'][$p]['dateCreated'] = $date0->format('d-m-Y');
+            $data['dataRenovasi'][$p]['dateDeleted'] = $date1->format('d-m-Y');
+            $p++;
+        }
 
         $this->load->view('template/header', $data);
         $this->load->view('template/navigation', $data);
@@ -355,7 +368,7 @@ class Beranda extends CI_Controller
  * read pekerjaan
  * @method listPekerjaan
  * @param  int        $kerja idPekerjaan
- * @return mixed               data pekerjaan
+ * @return array               data pekerjaan
  */
     function listPekerjaan($kerja)
     {
@@ -366,8 +379,16 @@ class Beranda extends CI_Controller
         $result = $this->Beranda_model->getPekerjaan((int)$kerja, 1);
         if ($result!=null) {
             $data['dataPekerjaan'] = $result;
-            $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
             // TODO change this to session_userdata item
+            $this->session->set_flashdata('proposal', (int)$data['dataPekerjaan'][0]['idProposal']);
+
+            $d=0;
+            foreach ($result as $row) {
+                $date0 = new DateTime($row['dateCreated']);
+                $date1 = new DateTime($row['dateDeleted']);
+                $data['dataPekerjaan'][$d]['dateCreated'] = $date0->format('d-m-Y');
+                $data['dataPekerjaan'][$d]['dateDeleted'] = $date1->format('d-m-Y');
+            }
         } else {
             $data['dataPekerjaan'] = $this->Beranda_model->getListRenovasi((int)$kerja, 2);
             $this->session->set_flashdata('proposal', $kerja);

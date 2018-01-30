@@ -3,6 +3,8 @@
 		// var_dump($dataPekerjaan) ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
+		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
+		<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= $dataPekerjaan[0]['dateDeleted'] ?></p>
 		<ul class="list-group mt-3">
 			<?php $k=0; $b=0; foreach ($dataPekerjaan as $row) {
 				if ($dataPekerjaan[$k]['status']=='1') {
