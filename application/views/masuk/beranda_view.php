@@ -5,30 +5,46 @@
 </div>
 <div class="col-lg-4">
 	<?php if (isset($message)) {
-    echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
-  	'.$message.'
-		</div>';
+		echo '<div class="alert alert-primary fade show animated fadeInUp" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+		</button>'.$message.'</div>';
 } ?>
 	<div class="card">
 		<ul class="list-group list-group-flush">
 			<?php $g=0;
-                    foreach ($listGedung as $row) {
-                        ?>
+										foreach ($listGedung as $row) {
+												?>
 			<li class="list-group-item list-group-item-action">
 				<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung'];
-                        $g++; ?>">
+												$g++; ?>">
 					<?php echo $row['namaGedung']; ?>
 				</a>
 				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
 			</li>
 			<?php }
-    // var_dump($luasTotal[0]->luas)?>
+		// var_dump($luasTotal[0]->luas)?>
 		</ul>
 	</div>
 </div>
 </div>
 </div>
-<?php // var_dump($this->session->flashdata('test'))?>
+
+<script>
+// $('.alert').addClass('animated fadeInUp');
+setTimeout(function () {
+	$(".alert").alert('close')
+}, 3500);
+
+$(function () {
+		$('body').on('close.bs.alert', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				$(e.target).slideUp();
+		});
+});
+</script>
+
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
@@ -78,9 +94,9 @@
 </body>
 
 <!-- <script>
-    var map = L.map('map', {
-        crs: L.CRS.Simple
-        });
+		var map = L.map('map', {
+				crs: L.CRS.Simple
+				});
 
 var bounds = [[500,0], [0,360]];
 var image = L.imageOverlay('assets/img/allits.png', bounds).addTo(map);

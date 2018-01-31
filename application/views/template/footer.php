@@ -4,6 +4,5 @@
 	<div class="pt-1 text-muted text-center">
 		Copyright: SIMRI ITS 2017
 		</div>
-	<!-- </div> -->
 </footer>
 </body>

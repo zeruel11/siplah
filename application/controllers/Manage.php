@@ -12,29 +12,32 @@ class Manage extends CI_Controller {
 	function index()
 	{
 		if ($this->session->userdata('logged_in')) {
-            $data['all_user'] = $this->Manage_model->getUser();
-            $u=0;
-            foreach ($data['all_user'] as $row) {
-            	if ($data['all_user'][$u]['user_level']=='1'){
-            		$data['all_user'][$u]['userLevel']='Administrator';
-            	} elseif ($data['all_user'][$u]['user_level']=='2') {
-            		$data['all_user'][$u]['userLevel']='Pegawai SIMRI';
-            	} elseif ($data['all_user'][$u]['user_level']=='3') {
-            		$data['all_user'][$u]['userLevel']='Wakil Rektor II';
-            	} elseif ($data['all_user'][$u]['user_level']=='4') {
-            		$data['all_user'][$u]['userLevel']='SARPRAS';
-            	} elseif ($data['all_user'][$u]['user_level']=='5') {
-            		$data['all_user'][$u]['userLevel']='Unit Fakultas/Jurusan';
-            	} else {
-            		$data['all_user'][$u]['userLevel']='Pengguna Lain';
-            	}
-            	$u++;
-            }
+			$data['all_user'] = $this->Manage_model->getUser();
+			$u=0;
+			foreach ($data['all_user'] as $row) {
+				if ($data['all_user'][$u]['user_level']=='1'){
+					$data['all_user'][$u]['userLevel']='Administrator';
+				} elseif ($data['all_user'][$u]['user_level']=='2') {
+					$data['all_user'][$u]['userLevel']='Pegawai SIMRI';
+				} elseif ($data['all_user'][$u]['user_level']=='3') {
+					$data['all_user'][$u]['userLevel']='Wakil Rektor II';
+				} elseif ($data['all_user'][$u]['user_level']=='4') {
+					$data['all_user'][$u]['userLevel']='SARPRAS';
+				} elseif ($data['all_user'][$u]['user_level']=='5') {
+					$data['all_user'][$u]['userLevel']='Unit Fakultas/Jurusan';
+				} else {
+					$data['all_user'][$u]['userLevel']='Pengguna Lain';
+				}
+				$u++;
+			}
+			if ($this->session->flashdata('message')) {
+				$data['message'] = $this->session->flashdata('message');
+			}
 			$this->load->view('masuk/admin_view', $data);
-        } else {
+		} else {
 			$this->session->set_flashdata('message', 'Anda belum login');
-        	redirect('beranda','refresh');
-        }
+			redirect('beranda','refresh');
+		}
 	}
 
 	function createUser()
@@ -65,7 +68,10 @@ class Manage extends CI_Controller {
 				'namaLengkap'=>$this->input->post('namaLengkapForm'),
 				'user_level'=>$this->input->post('user_levelForm')
 				);
-				$this->Manage_model->createUser($send);
+				$result = $this->Manage_model->createUser($send);
+				if ($result==1) {
+					$this->session->set_flashdata('message', 'Berhasil membuat user baru');
+				}
 				redirect('manage');
 		}
 	}
@@ -75,38 +81,38 @@ class Manage extends CI_Controller {
 		if ($this->session->userdata('logged_in')) {
 			$data['userLogin'] = $this->session->userdata('logged_in');
 		}
-		// $data = $this->data;
-        // $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
-        // $idProposal = $this->session->flashdata('proposal');
-        $this->load->library(array('form_validation', 'encrypt'));
-        $this->form_validation->set_rules('usernameForm', 'Username', 'required');
+		$this->load->library(array('form_validation', 'encrypt'));
+		$this->form_validation->set_rules('usernameForm', 'Username', 'required');
 		// $this->form_validation->set_rules('passwordForm', 'Password', 'required');
 		$this->form_validation->set_rules('namaLengkapForm', 'Nama Lengkap', 'required');
 		$this->form_validation->set_rules('user_levelForm', 'User Level', 'required');
-        // $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
-        // $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-        // $this->form_validation->set_rules('email', 'Email', 'required');
+		// $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
+		// $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
+		// $this->form_validation->set_rules('email', 'Email', 'required');
 
-        if ($this->form_validation->run() == FALSE)
-        {
-            // $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 2);
-            $data['all_user'] = $this->Manage_model->editUser($id);
-            $data['mode'] = "edit";
-            $this->load->view('template/header', $data);
-            // $this->load->view('template/navigation', $data);
-            $this->load->view('masuk/manage_form', $data);
-            // $this->load->view('template/footer', $data);
-            // $this->session->set_flashdata('proposal', $idProposal);
-        } else {
-            $send = array(
-				'username'=>$this->input->post('usernameForm'),
-				// 'password'=>md5($this->input->post('passwordForm')),
-				'namaLengkap'=>$this->input->post('namaLengkapForm'),
-				'user_level'=>$this->input->post('user_levelForm')
-				);
-            $this->Manage_model->updateUser($id, $send);
-            redirect('manage');
-        }
+		if ($this->form_validation->run() == FALSE)
+		{
+			// $data['dataPekerjaan'] = $this->Beranda_model->getPekerjaan((int)$kerja, 2);
+			$data['all_user'] = $this->Manage_model->editUser($id);
+			$data['mode'] = "edit";
+			$this->load->view('template/header', $data);
+			// $this->load->view('template/navigation', $data);
+			$this->load->view('masuk/manage_form', $data);
+			// $this->load->view('template/footer', $data);
+			// $this->session->set_flashdata('proposal', $idProposal);
+		} else {
+			$send = array(
+			'username'=>$this->input->post('usernameForm'),
+			// 'password'=>md5($this->input->post('passwordForm')),
+			'namaLengkap'=>$this->input->post('namaLengkapForm'),
+			'user_level'=>$this->input->post('user_levelForm')
+			);
+			$result = $this->Manage_model->updateUser($id, $send);
+			if ($result==1) {
+				$this->session->set_flashdata('message', 'User berhasil di update');
+			}
+			redirect('manage');
+			}
 	}
 
 	function deleteUser($id)
@@ -117,8 +123,6 @@ class Manage extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('message', 'Gagal');
 		}
-
-
 		redirect('manage','refresh');
 	}
 
@@ -130,8 +134,6 @@ class Manage extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('message', 'Gagal melakukan reset password');
 		}
-
-
 		redirect('manage','refresh');
 	}
 

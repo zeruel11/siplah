@@ -19,7 +19,6 @@ class Manage_model extends CI_Model {
 		} else {
 			return null;
 		}
-
 	}
 
 	function createUser($send)

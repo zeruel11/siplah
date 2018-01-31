@@ -6,9 +6,15 @@
 			<!-- <div class="col-lg-3"></div> -->
 			<div class="col-lg-4">
 				<?php if (isset($warn)) {
-			    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">'.$warn.'</div>';
+			    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>'.$warn.'</div>';
 			} elseif (isset($message)) {
-                echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">'.$message.'</div>';
+                echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>'.$message.'</div>';
             } ?>
 				<div class="card">
 					<ul class="list-group list-group-flush">
