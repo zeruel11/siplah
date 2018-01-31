@@ -14,6 +14,7 @@
     <textarea class="form-control" id="detailPekerjaanForm" name="detailPekerjaanForm" rows="2" placeholder="Masukkan pekerjaan yang harus dilakukan"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary float-right" href="<?= $cancel ?>" role="button">Cancel</a>
   </form>
 </div>
 <div class="col-lg-3"></div>
@@ -40,6 +41,7 @@
     <textarea class="form-control" id="detailPekerjaanForm" name="detailPekerjaanForm" rows="2"><?php echo $dataPekerjaan[0]['detailPekerjaan']; ?></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary float-right" href="<?= $cancel ?>" role="button">Cancel</a>
   </form>
 </div>
 <div class="col-lg-3"></div>

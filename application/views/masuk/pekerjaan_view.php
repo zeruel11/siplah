@@ -1,4 +1,5 @@
 	<div class="card-body col-lg-10">
+		<?php $this->output->enable_profiler(TRUE); ?>
 		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) {
 		// var_dump($dataPekerjaan) ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
@@ -57,6 +58,7 @@
 	// echo $this->output->enable_profiler(TRUE);
 	if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 		<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
+		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	<?php } ?>
 </div>
 </body>

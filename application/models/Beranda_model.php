@@ -251,7 +251,7 @@ class Beranda_model extends CI_Model
     	$this->db->update('pekerjaan', $data);
     }
 
-    public function updatePekerjaan($kerja, $data)
+    function updatePekerjaan($kerja, $data)
     {
     	$this->db->where('idPekerjaan', $kerja);
     	$this->db->update('pekerjaan', $data);
@@ -264,16 +264,13 @@ class Beranda_model extends CI_Model
     	$this->db->update('pekerjaan', $object);
     }
 
-    public function createPekerjaan($data)
+    function createPekerjaan($data)
     {
     	$this->db->insert('pekerjaan', $data);
     	return $this->db->affected_rows();
     }
 
-    /*function getListRuang()
-    {
-        # code...
-    }*/
+    
 }
 
 /* End of file beranda_model.php */

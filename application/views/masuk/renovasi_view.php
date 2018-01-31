@@ -1,5 +1,5 @@
 	<div class="card-body col-lg-10 pt-1">
-		<?php // $this->output->enable_profiler(TRUE); ?>
+		<?php $this->output->enable_profiler(TRUE); ?>
 		<?php if ($dataRenovasi[0]['idProposal']!=null) { ?>
 		<!-- <ul class="list-group"> -->
 			<?php $r=0;
@@ -32,7 +32,15 @@
 				<div class="row no-gutters pl-1">
 					<div class="card-block col-lg-6 pr-3">
 					<div class="progress">
-						<div class="progress-bar w-<?= $row['progress'] ?>" role="progressbar" aria-valuenow="<?= $row['progress'] ?>" aria-valuemin="0" aria-valuemax="100"><?= $row['progress'] ?>%</div>
+						<?php if (isset($row['progress'])) {
+							if ($row['progress']==0) {
+								echo '<div class="progress-bar bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>';
+							} else {
+								echo '<div class="progress-bar" style="width: '.$row['progress'].'%" role="progressbar" aria-valuenow="'.$row['progress'].'" aria-valuemin="0" aria-valuemax="100">'.$row['progress'].'%</div>';
+							}
+						} else {
+							echo '<div class="progress-bar progress-bar-striped bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Pekerjaan Kosong</div>';
+						} ?>
 					</div>
 				</div>
 				<div class="card-block col-lg-6 text-right">
