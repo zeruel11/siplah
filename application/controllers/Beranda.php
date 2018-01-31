@@ -392,7 +392,7 @@ class Beranda extends CI_Controller
         $data['dataPekerjaan'] = $result;
 
         $pekerjaan = array(
-                'id' => $data['dataPekerjaan'][0]['idProposal'],
+                'id' => $this->uri->segment(3),
                 'url' => base_url().$this->uri->uri_string()
             );
         $this->session->set_userdata('refered_from', $pekerjaan);
@@ -400,10 +400,12 @@ class Beranda extends CI_Controller
         if ($result!=null) {
             $d=0;
             foreach ($result as $row) {
-                $date0 = new DateTime($row['dateCreated']);
-                $date1 = new DateTime($row['dateDeleted']);
-                $data['dataPekerjaan'][$d]['dateCreated'] = $date0->format('d-m-Y');
-                $data['dataPekerjaan'][$d]['dateDeleted'] = $date1->format('d-m-Y');
+                $date = new DateTime($row['dateCreated']);
+                $data['dataPekerjaan'][$d]['dateCreated'] = $date->format('d-m-Y');
+                if ($row['dateDeleted']!=NULL) {
+                    $date = new DateTime($row['dateDeleted']);
+                    $data['dataPekerjaan'][$d]['dateDeleted'] = $date->format('d-m-Y');
+                }
             }
         }
         if ($data['userLogin']['userLevel']==4) {

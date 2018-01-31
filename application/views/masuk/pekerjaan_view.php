@@ -1,10 +1,11 @@
 	<div class="card-body col-lg-10">
-		<?php //$this->output->enable_profiler(TRUE); ?>
-		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) { ?>
+		<?php $this->output->enable_profiler(TRUE); 
+		var_dump($dataPekerjaan) ?>
+		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL) { ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
-		<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= $dataPekerjaan[0]['dateDeleted'] ?></p>
+		<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<ul class="list-group mt-3">
 			<?php $k=0; $b=0; foreach ($dataPekerjaan as $row) {
 				if ($dataPekerjaan[$k]['status']=='1') {

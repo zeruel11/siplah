@@ -120,8 +120,8 @@ class Beranda_model extends CI_Model
     			$this->db->where('gedung.idGedung', $ged);
     		} else {
                 $this->db->where('proposal.idProposal is NOT NULL', NULL, FALSE);
-                $this->db->group_by('idProposal');
             }
+            $this->db->group_by('idProposal');
     		$this->db->order_by('namaGedung', 'asc');
 			$this->db->order_by('dateCreated', 'asc');
     	} elseif ($mode==2) {
@@ -220,14 +220,12 @@ class Beranda_model extends CI_Model
 
     function getPekerjaan($kerja, $mode)
     {
-    	$this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, pekerjaan.idProposal, judulProposal, deskripsiProposal, dateCreated, dateDeleted');
-    	$this->db->from('pekerjaan');
-    	$this->db->join('proposal', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+    	$this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, proposal.idProposal, judulProposal, deskripsiProposal, dateCreated, dateDeleted');
+    	$this->db->from('proposal');
+    	$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
     	if ($mode==1) {
-    		$this->db->where('pekerjaan.idProposal', $kerja);
+    		$this->db->where('proposal.idProposal', $kerja);
     	} elseif ($mode==2) {
-    		$this->db->where('pekerjaan.idPekerjaan', $kerja);
-    	} else {
     		$this->db->where('pekerjaan.idPekerjaan', $kerja);
     	}
 

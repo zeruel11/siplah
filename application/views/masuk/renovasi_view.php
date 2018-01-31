@@ -1,4 +1,4 @@
-	<?php // $this->output->enable_profiler(TRUE); ?>
+	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
 		<?php if (isset($message)) {
     		echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
@@ -33,9 +33,13 @@
 					<div class="row no-gutters pl-1">
 						<div class="card-block col-lg-6 pr-3">
 							<div class="progress">
-								<?php if (isset($row['progress'])) {
+								<?php if ($row['dateDeleted']!=NULL) {
+									echo '<div class="progress-bar progress-bar-striped bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>';
+								} elseif (isset($row['progress'])) {
 									if ($row['progress']==0) {
 										echo '<div class="progress-bar bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>';
+									} elseif ($row['progress']==100) {
+										echo '<div class="progress-bar bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>';
 									} else {
 										echo '<div class="progress-bar" style="width: '.$row['progress'].'%" role="progressbar" aria-valuenow="'.$row['progress'].'" aria-valuemin="0" aria-valuemax="100">'.$row['progress'].'%</div>';
 									}
