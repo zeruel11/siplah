@@ -179,7 +179,10 @@ class Beranda extends CI_Controller
      */
     function setuju($renovasi)
     {
-        $this->Beranda_model->updateStatusRenovasi($renovasi, 1);
+        $result = $this->Beranda_model->updateStatusRenovasi($renovasi, 1);
+        if ($result==1) {
+            $this->session->set_flashdata('message', 'Proposal renovasi telah disetujui');
+        }
         $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
         redirect($this->session->userdata('refered_from'));
     }
@@ -193,6 +196,9 @@ class Beranda extends CI_Controller
     function tolak($renovasi)
     {
         $this->Beranda_model->updateStatusRenovasi($renovasi, 0);
+        if ($result==1) {
+            $this->session->set_flashdata('message', 'Proposal renovasi telah ditolak');
+        }
         $this->session->set_userdata('refered_from', $_SERVER['HTTP_REFERER']);
         redirect($this->session->userdata('refered_from'));
     }
@@ -521,7 +527,10 @@ class Beranda extends CI_Controller
             $send = array(
             'status'=>1
           );
-            $this->Beranda_model->donePekerjaan((int)$id, $send);
+            $result = $this->Beranda_model->donePekerjaan((int)$id, $send);
+        }
+        if ($result==1) {
+            $this->session->set_flashdata('message', 'Update pekerjaan selesai');
         }
         
         redirect($this->session->userdata['refered_from']['url']);

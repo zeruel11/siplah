@@ -160,8 +160,8 @@ class Beranda_model extends CI_Model
     function createRenovasi($data)
     {
     	$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$data['idGedung']."', '".$data['judulProposal']."', '".$data['deskripsiProposal']."', CURDATE())";
-    	return $this->db->query($sql);
-        // return $this->db->affected_rows();
+    	$this->db->query($sql);
+        return $this->db->affected_rows();
     }
 
 /**
@@ -249,6 +249,7 @@ class Beranda_model extends CI_Model
     {
     	$this->db->where('idPekerjaan', $id);
     	$this->db->update('pekerjaan', $data);
+        return $this->db->affected_rows();
     }
 
     function updatePekerjaan($kerja, $data)
@@ -262,6 +263,7 @@ class Beranda_model extends CI_Model
     {
     	$this->db->where('idPekerjaan', $kerja);
     	$this->db->update('pekerjaan', $object);
+        return $this->db->affected_rows();
     }
 
     function createPekerjaan($data)
