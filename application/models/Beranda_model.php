@@ -8,11 +8,13 @@ class Beranda_model extends CI_Model
 		parent::__construct();
 	}
 
-    /**
-     * model ambil data semua gedung
-     * @return array ambil data dan koordinat gedung
-     */
-    function getListGedung($mode)
+/**
+ * database read data gedung minimal
+ * @method getListGedung
+ * @param  mixed        $mode list gedung yang diambil
+ * @return array              sql result
+ */
+    public function getListGedung($mode)
     {
     	if ($mode=='sarpras') {
     		$this->db->select('gedung.idGedung, kodeGedung, namaGedung, luasGedung, x, y');
@@ -40,13 +42,24 @@ class Beranda_model extends CI_Model
     	}
     }
 
-    function totalLuas()
+/**
+ * luas seluruh bangunan
+ * @method totalLuas
+ * @return string    total luas gedung
+ */
+    public function totalLuas()
     {
     	$sql = "SELECT SUM(luasGedung) AS luas FROM gedung";
     	$result = $this->db->query($sql);
     	return $result->result();
     }
 
+/**
+ * database search
+ * @method searchListGedungByName
+ * @param  string                 $ged nama gedung
+ * @return array                      search result database
+ */
     public function searchListGedungByName(string $ged)
     {
     	$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
@@ -64,7 +77,13 @@ class Beranda_model extends CI_Model
     	}
     }
 
-    function getDataGedung(int $ged)
+/**
+ * database read data gedung complete
+ * @method getDataGedung
+ * @param  int           $ged idGedung
+ * @return array             data gedung
+ */
+    public function getDataGedung(int $ged)
     {
         // $sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";
     	$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung');
@@ -80,7 +99,14 @@ class Beranda_model extends CI_Model
     	}
     }
 
-    function getListRenovasi(int $ged, $mode)
+/**
+ * database read list renovasi/proposal
+ * @method getListRenovasi
+ * @param  string           $ged  idGedung, 'ALL'
+ * @param  int             $mode which proposal to get
+ * @return array                data renovasi/proposal
+ */
+    function getListRenovasi(string $ged, int $mode)
     {
     	if ($mode==1) {
     		$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
@@ -125,21 +151,41 @@ class Beranda_model extends CI_Model
     	}
     }
 
-    public function createRenovasi($data)
+/**
+ * database create renovasi/proposal
+ * @method createRenovasi
+ * @param  array         $data data proposal
+ * @return int               db rows
+ */
+    function createRenovasi($data)
     {
     	$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$data['idGedung']."', '".$data['judulProposal']."', '".$data['deskripsiProposal']."', CURDATE())";
     	return $this->db->query($sql);
         // return $this->db->affected_rows();
     }
 
-    public function updateRenovasi($renovasi, $data)
+/**
+ * database update renovasi/proposal
+ * @method updateRenovasi
+ * @param  int            $renovasi idProposal
+ * @param  array          $data     data renovasi
+ * @return int                   db rows affected
+ */
+    function updateRenovasi(int $renovasi, array $data)
     {
     	$this->db->where('idProposal', $renovasi);
     	$this->db->update('proposal', $data);
     	return $this->db->affected_rows();
     }
 
-    function updateStatusRenovasi($renovasi, $mode)
+/**
+ * database update renovasi/proposal status
+ * @method updateStatusRenovasi
+ * @param  int                  $renovasi idProposal
+ * @param  int                  $mode     status update to
+ * @return int                         db row affected
+ */
+    function updateStatusRenovasi(int $renovasi, int $mode)
     {
     	if ($mode==1) {
     		$data = array(
@@ -160,14 +206,13 @@ class Beranda_model extends CI_Model
     	return $this->db->affected_rows();
     }
 
-    // function doneRenovasi($renovasi)
-    // {
-    	// $sql = "UPDATE `proposal` SET `status` = '6', `dateDeleted` = CURDATE() WHERE `proposal`.`idProposal` = ".(int)$renovasi;
-    // 	$this->db_query($sql);
-    // 	return $this->db->affected_rows();
-    // }
-
-    function deleteRenovasi($renovasi)
+/**
+ * database delete renovasi/proposal
+ * @method deleteRenovasi
+ * @param  int         $renovasi idProposal
+ * @return int                   db rows
+ */
+    function deleteRenovasi(int $renovasi)
     {
     	$this->db->delete('proposal', array('idProposal' => $renovasi));
     	return $this->db->affected_rows();

@@ -1,3 +1,4 @@
+<?php $this->output->enable_profiler(TRUE); ?>
 <?php if ($mode=="insert") { ?>
 <div class="container-fluid">
   <div class="row">
@@ -22,7 +23,7 @@
   </div>
 
 <?php } elseif ($mode=="edit") { ?>
-
+<?php var_dump($dataRenovasi) ?>
 <div class="container-fluid">
   <div class="row">
   <div class="col-lg-3"></div>

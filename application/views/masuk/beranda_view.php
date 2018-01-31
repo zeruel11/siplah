@@ -1,7 +1,7 @@
-<div class="col-lg-6 col-lg-offset-2">
+<div class="col-lg-6 col-lg-offset-2 mb-5">
 	<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 	<div id="image-map"></div>
-	<p class="blockquote"><?php echo "-- Total luas gedung terbangun: ".$luasTotal[0]->luas." m<sup>2</sup> --"; ?></p>
+	<p class="blockquote text-success"><?php echo "-- Total luas gedung terbangun: ".$luasTotal[0]->luas." m<sup>2</sup> --"; ?></p>
 </div>
 <div class="col-lg-4">
 	<?php if (isset($message)) {
