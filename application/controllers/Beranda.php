@@ -125,14 +125,14 @@ class Beranda extends CI_Controller
         $this->form_validation->set_rules('cari_gedung', 'Search', 'required');
 
         if ($this->form_validation->run() == false) {
-            $this->session->set_flashdata('message', "Harap masukkan nama gedung");
+            $this->session->set_flashdata('message', "Harap masukkan <strong>nama gedung</strong>");
         } else {
             $search = $this->input->post('cari_gedung');
             $result = $this->Beranda_model->searchListGedungByName($search);
             if ($result) {
                 $this->session->set_flashdata('cari', $result);
             } else {
-                $this->session->set_flashdata('message', "Gedung tidak ditemukan");
+                $this->session->set_flashdata('message', "Gedung tidak ditemukan. Apakah anda yakin <strong>nama gedung</strong> benar?");
             }
         }
 
@@ -231,10 +231,12 @@ class Beranda extends CI_Controller
                 if ($row['kerja']!=0) {
                     $data['dataRenovasi'][$d]['progress'] = round(($row['done']/$row['kerja'])*100);
                 }
-                $date0 = new DateTime($row['dateCreated']);
-                $date1 = new DateTime($row['dateDeleted']);
-                $data['dataRenovasi'][$d]['dateCreated'] = $date0->format('d-m-Y');
-                $data['dataRenovasi'][$d]['dateDeleted'] = $date1->format('d-m-Y');
+                $date = new DateTime($row['dateCreated']);
+                $data['dataRenovasi'][$d]['dateCreated'] = $date->format('d-m-Y');
+                if ($row['dateDeleted']!=NULL) {
+                    $date = new DateTime($row['dateDeleted']);
+                    $data['dataRenovasi'][$d]['dateDeleted'] = $date->format('d-m-Y');
+                }
                 $d++;
             }
         }
@@ -536,7 +538,11 @@ class Beranda extends CI_Controller
         redirect($this->session->userdata['refered_from']['url']);
     }
 
-
+    public function test()
+    {
+        $this->load->view('template/header');
+        $this->load->view('test');
+    }
 }
 
 /* End of file beranda.php */

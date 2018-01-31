@@ -113,17 +113,17 @@ class Beranda_model extends CI_Model
             $this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
             $this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
     		$this->db->from('proposal');
-    		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
-        $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+    		$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
+            $this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
     		if ($ged!='ALL') {
                 // $this->db->where(array('dateDeleted' => NULL));
     			$this->db->where('gedung.idGedung', $ged);
-    		}
-				// $this->db->where('dateDeleted', NULL);
+    		} else {
+                $this->db->where('proposal.idProposal is NOT NULL', NULL, FALSE);
+                $this->db->group_by('idProposal');
+            }
     		$this->db->order_by('namaGedung', 'asc');
 			$this->db->order_by('dateCreated', 'asc');
-            $this->db->group_by('idProposal');
-            // count(pekerjaan.*)
     	} elseif ($mode==2) {
     		$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
     		$this->db->from('proposal');

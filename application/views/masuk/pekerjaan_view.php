@@ -1,7 +1,6 @@
 	<div class="card-body col-lg-10">
-		<?php $this->output->enable_profiler(TRUE); ?>
-		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) {
-		// var_dump($dataPekerjaan) ?>
+		<?php //$this->output->enable_profiler(TRUE); ?>
+		<?php if (array_key_exists("idPekerjaan", $dataPekerjaan[0])) { ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
@@ -14,13 +13,12 @@
 				<li class="list-group-item"><?php echo $dataPekerjaan[$k]['detailPekerjaan']." - ".(($dataPekerjaan[$k]['status']=='1')?"Sudah dikerjakan":"Belum dikerjakan"); ?>
 					<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 						<span class="btn-group float-right" role="group">
-							<?php //if ($dataPekerjaan[$k]['status']=='0') { ?>
 							<a class="btn btn-outline-warning" href="edit/<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Ubah</a>
-							<?php //} ?>
 							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>">Hapus</button>
 						</span>
 					<?php } ?>
 				</li>
+
 				<!-- Modal -->
 				<div class="modal fade" id="modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
 					<div class="modal-dialog" role="document">
@@ -54,8 +52,6 @@
 		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<?php }
-	// var_dump($this->session->flashdata('proposal'));
-	// echo $this->output->enable_profiler(TRUE);
 	if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 		<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>

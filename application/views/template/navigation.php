@@ -1,3 +1,4 @@
+<body>
 <nav class="navbar fixed-top navbar-dark" style="background-color: rgba(1, 56, 128, 0.9);">
 	<?php if (isset($userLogin)) {
     if ($userLogin['userLevel']==1) {

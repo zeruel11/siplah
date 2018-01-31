@@ -5,9 +5,10 @@
 </div>
 <div class="col-lg-4">
 	<?php if (isset($message)) {
-    echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
-  	'.$message.'
-		</div>';
+    echo '<div class="alert alert-primary fade show animated fadeInUp" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>'.$message.'</div>';
 } ?>
 	<div class="card">
 		<ul class="list-group list-group-flush">
@@ -28,7 +29,22 @@
 </div>
 </div>
 </div>
-<?php // var_dump($this->session->flashdata('test'))?>
+
+<script>
+// $('.alert').addClass('animated fadeInUp');
+setTimeout(function () {
+	$(".alert").alert('close')
+}, 3500);
+
+$(function () {
+   	$('body').on('close.bs.alert', function(e){
+       	e.preventDefault();
+       	e.stopPropagation();
+       	$(e.target).slideUp();
+   	});
+});
+</script>
+
 <script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
