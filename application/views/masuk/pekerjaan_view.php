@@ -1,7 +1,11 @@
 	<div class="card-body col-lg-10">
-		<?php $this->output->enable_profiler(TRUE); 
-		var_dump($dataPekerjaan) ?>
-		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL) { ?>
+		<?php // $this->output->enable_profiler(TRUE); ?>
+		<?php if (isset($message)) {
+				echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+				</button>'.$message.'</div>';
+		}if ($dataPekerjaan[0]['idPekerjaan']!=NULL) { ?>
 		<h4 class="card-title">Renovasi: <?php echo $dataPekerjaan[0]['judulProposal']; ?></h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
@@ -52,10 +56,25 @@
 		<?php } else { ?>
 		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
+		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
+		<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<?php }
 	if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 		<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	<?php } ?>
 </div>
-</body>
+
+<script>
+setTimeout(function () {
+	$(".alert").alert('close')
+}, 3500);
+
+$(function () {
+		$('body').on('close.bs.alert', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				$(e.target).slideUp();
+		});
+});
+</script>

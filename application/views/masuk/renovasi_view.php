@@ -1,10 +1,10 @@
-	<?php $this->output->enable_profiler(TRUE); ?>
+	<?php // $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
 		<?php if (isset($message)) {
-    		echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
-    		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    		    <span aria-hidden="true">&times;</span>
-    		</button>'.$message.'</div>';
+				echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+				</button>'.$message.'</div>';
 		} if ($dataRenovasi[0]['idProposal']!=null) {
 			$r=0; foreach ($dataRenovasi as $row) {
 				if ($r==0) {
@@ -18,12 +18,12 @@
 							<h5 class="card-title"><?php echo $row['judulProposal']; ?></h5>
 
 							<?php if ($row['dateDeleted']!=NULL) {
-			        		    echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
-			        		} elseif ($row['deskripsiProposal']!=NULL) {
-			        			echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'].'</p>';
-			        		} else {
-			        			echo '<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>';
-			        		} ?>
+											echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
+									} elseif ($row['deskripsiProposal']!=NULL) {
+										echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'].'</p>';
+									} else {
+										echo '<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>';
+									} ?>
 						</div>
 						<div class="card-block col-lg-6 p-1 w-50 text-right">
 							<p class="card-subtitle text-muted">Tanggal Mulai Renovasi: <?= $row['dateCreated']?></p>
@@ -81,7 +81,7 @@
 		<?php } ?>
 			</div>
 			<div class="col-lg-3">
-				
+
 			</div>
 		</div>
 	</div>
@@ -91,12 +91,12 @@
 	setTimeout(function () {
 		$(".alert").alert('close')
 	}, 3500);
-	
+
 	$(function () {
-	   	$('body').on('close.bs.alert', function(e){
-	       	e.preventDefault();
-	       	e.stopPropagation();
-	       	$(e.target).slideUp();
-	   	});
+			$('body').on('close.bs.alert', function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					$(e.target).slideUp();
+			});
 	});
 	</script>

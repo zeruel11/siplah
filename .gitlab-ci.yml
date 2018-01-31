@@ -4,42 +4,42 @@ image: php:7.0.22
 
 # Select what we should cache between builds
 cache:
-  paths:
-  - vendor/
-  - assets/
+	paths:
+	- vendor/
+	- assets/
 
 before_script:
-  - apt-get update -yqq
-  # Activate PHP modrewrite
-  #- a2enmod rewrite
-  #- systemctl restart apache2
-  # Install PHP extensions
-  - apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client gzip
-  - docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
-  # Install & enable Xdebug for code coverage reports
-  - pecl install xdebug
-  - docker-php-ext-enable xdebug
-  # Install and satisfy Composer dependency
-  - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install
+	- apt-get update -yqq
+	# Activate PHP modrewrite
+	#- a2enmod rewrite
+	#- systemctl restart apache2
+	# Install PHP extensions
+	- apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev mysql-client gzip
+	- docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache mysqli
+	# Install & enable Xdebug for code coverage reports
+	- pecl install xdebug
+	- docker-php-ext-enable xdebug
+	# Install and satisfy Composer dependency
+	- curl -sS https://getcomposer.org/installer | php
+	- php composer.phar install
 
 # Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
 # See http://docs.gitlab.com/ce/ci/services/README.html for examples.
 services:
-  - mysql
+	- mysql
 
 # Set any variables we need
 variables:
-  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-  MYSQL_DATABASE: siplah
-  MYSQL_ROOT_PASSWORD: zeruel13
+	# Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+	MYSQL_DATABASE: siplah
+	MYSQL_ROOT_PASSWORD: zeruel13
 
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 stages:
-  # - setup
-  - test
-  - report
+	# - setup
+	- test
+	- report
 
 # setup:
 #   stage: setup
@@ -57,37 +57,38 @@ stages:
 #     expire_in: 2 hrs
 
 testing:
-  stage: test
-  script:
-    # Extract mysql dump and store it as sql
-    # - cd \(siplah\)
-    # - sql_input=$(ls -tp \(siplah\) | grep full | head -1)
-    # - sql_input="(siplah)/$sql_input"
-    # - gunzip -c $sql_input > data_input.sql
-    # Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
-    - php vendor/kenjis/ci-phpunit-test/install.php
-    - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
-    - cd application/tests && ../../vendor/bin/phpunit
-  allow_failure: true
-  artifacts:
-    when: always
-    paths:
-    - application/tests/build
-    expire_in: 15 days
+	stage: test
+	script:
+		# Extract mysql dump and store it as sql
+		# - cd \(siplah\)
+		# - sql_input=$(ls -tp \(siplah\) | grep full | head -1)
+		# - sql_input="(siplah)/$sql_input"
+		# - gunzip -c $sql_input > data_input.sql
+		# Install ci-phpunit-test (overwrites tests!!) - dump mysql - run phpunit
+		- php vendor/kenjis/ci-phpunit-test/install.php
+		- mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql < data_input.sql
+		- rm application/tests/controllers/Welcome_test.php
+		- cd application/tests && ../../vendor/bin/phpunit
+	allow_failure: true
+	artifacts:
+		when: always
+		paths:
+		- application/tests/build
+		expire_in: 15 days
 
 pages:
-  stage: report
-  when: always
-  dependencies:
-    - testing
-  script:
-    - mv application/tests/build/coverage public/
-  artifacts:
-    paths:
-      - public
-    expire_in: 30 days
-  only:
-  - master
+	stage: report
+	when: always
+	dependencies:
+		- testing
+	script:
+		- mv application/tests/build/coverage public/
+	artifacts:
+		paths:
+			- public
+		expire_in: 30 days
+	only:
+	- master
 
 # deploy_testing:
 #   stage: test
