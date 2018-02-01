@@ -244,7 +244,7 @@ CREATE TABLE `pekerjaan` (
   PRIMARY KEY (`idPekerjaan`),
   KEY `fk_idProposal` (`idProposal`),
   CONSTRAINT `pekerjaan_ibfk_1` FOREIGN KEY (`idProposal`) REFERENCES `proposal` (`idProposal`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +253,7 @@ CREATE TABLE `pekerjaan` (
 
 LOCK TABLES `pekerjaan` WRITE;
 /*!40000 ALTER TABLE `pekerjaan` DISABLE KEYS */;
-INSERT INTO `pekerjaan` VALUES (13,11,'perbaikan lantai depan',0),(22,11,'perbaikan pintu',0),(23,11,'cek kondisi atap',1),(24,16,'Menambah kapasitas parkiran motor',0),(25,16,'Memperbaiki ruang tengah asrama',1);
+INSERT INTO `pekerjaan` VALUES (22,11,'perbaikan pintu depan',0),(23,11,'cek kondisi atap',1),(24,16,'Menambah kapasitas parkiran motor',0),(25,16,'Memperbaiki ruang tengah asrama',1),(26,17,'Pemasangan lantai',0),(27,18,'keruk kolam',0);
 /*!40000 ALTER TABLE `pekerjaan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +304,7 @@ CREATE TABLE `proposal` (
   KEY `fk_idGedung` (`idGedung`),
   FULLTEXT KEY `ft_deskripsiPekerjaan` (`deskripsiProposal`),
   CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`idGedung`) REFERENCES `gedung` (`idGedung`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `proposal` (
 
 LOCK TABLES `proposal` WRITE;
 /*!40000 ALTER TABLE `proposal` DISABLE KEYS */;
-INSERT INTO `proposal` VALUES (11,33,'renovasi fasor ruang 1','Ruangan UPT FASOR telah banyak mengalami degradasi struktur karena sangat sering digunakan namun jarang dilakukan perawatan. Diperlukan peninjauan ulang dan perbaikan terhadap struktur bangunan',0,NULL,'2018-01-21',NULL),(16,87,'Uplift asrama','Mengingat makin dekatnya masa penerimaan mahasiswa baru, maka perlu dilakukan beberapa renovasi terhadap asrama agar dapat menarik mahasiswa baru untuk tinggal di asrama',0,NULL,'2018-01-24',NULL);
+INSERT INTO `proposal` VALUES (11,33,'renovasi fasor ruang 1','Ruangan UPT FASOR telah banyak mengalami degradasi struktur karena sangat sering digunakan namun jarang dilakukan perawatan. Diperlukan peninjauan ulang dan perbaikan terhadap struktur bangunan',6,NULL,'2018-01-21','2018-01-31'),(16,87,'Uplift asrama','Mengingat makin dekatnya masa penerimaan mahasiswa baru, maka perlu dilakukan beberapa renovasi terhadap asrama agar dapat menarik mahasiswa baru untuk tinggal di asrama',2,NULL,'2018-01-24',NULL),(17,101,'Improvement RC','Perbaikan lantai 10',0,NULL,'2018-01-25',NULL),(18,87,'renovasi kolam asrama','perlu melakukan renovasi kolam',0,NULL,'2018-01-28',NULL),(19,33,'renovasi fasor parkiran','memperluas',0,NULL,'2018-01-31',NULL);
 /*!40000 ALTER TABLE `proposal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +368,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','ca9820427073d97200124dae537ff784',1,'w sakti'),(2,'pegawai1','6b7330782b2feb4924020cc4a57782a9',2,'pegawai no 1'),(3,'wr2','78042aaf99ab008f4799649aa171b9ae',3,'Bpk. Wakil Rektor II'),(4,'sarpras1','379563d4cc020b27338863c063b9368d',4,'SARPRAS unit FTI'),(5,'pegawai2','9e014682c94e0f2cc834bf7348bda428',2,'pegawai simri 2'),(6,'sisfor','d7a454d8c4be3b87aed0b28b4327a3d1',5,'Unit Sistem Informasi');
+INSERT INTO `user` VALUES (1,'admin','ca9820427073d97200124dae537ff784',1,'w sakti'),(2,'pegawai1','46f94c8de14fb36680850768ff1b7f2a',2,'pegawai no 1'),(3,'wr2','78042aaf99ab008f4799649aa171b9ae',3,'Bpk. Wakil Rektor II'),(4,'sarpras1','379563d4cc020b27338863c063b9368d',4,'SARPRAS unit FTI'),(5,'pegawai2','9e014682c94e0f2cc834bf7348bda428',2,'pegawai simri 2'),(6,'sisfor','d7a454d8c4be3b87aed0b28b4327a3d1',5,'Unit Sistem Informasi');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,4 +389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-25  5:55:11
+-- Dump completed on 2018-02-01  0:50:18
