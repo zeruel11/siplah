@@ -12,18 +12,14 @@
 } ?>
 	<div class="card">
 		<ul class="list-group list-group-flush">
-			<?php $g=0;
-										foreach ($listGedung as $row) {
-												?>
+			<?php $g=0; foreach ($listGedung as $row) { ?>
 			<li class="list-group-item list-group-item-action">
-				<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung'];
-												$g++; ?>">
+				<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung']; ?>">
 					<?php echo $row['namaGedung']; ?>
 				</a>
 				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
 			</li>
-			<?php }
-		// var_dump($luasTotal[0]->luas)?>
+			<?php $g++; } ?>
 		</ul>
 	</div>
 </div>
@@ -92,14 +88,3 @@ $(function () {
 </script>
 
 </body>
-
-<!-- <script>
-		var map = L.map('map', {
-				crs: L.CRS.Simple
-				});
-
-var bounds = [[500,0], [0,360]];
-var image = L.imageOverlay('assets/img/allits.png', bounds).addTo(map);
-map.fitBounds(bounds);
-
-</script> -->
