@@ -13,16 +13,6 @@ class Ver_login extends CI_Controller {
 		$this->load->model('login_model');
 	}
 
-	/*function index()
-	{
-		if ($this->check_database() == FALSE) {
-			redirect('beranda', 'refresh');
-		} else {
-			redirect('beranda', 'refresh');
-		}
-
-	}*/
-
 /**
  * validate login
  * @method index
@@ -30,10 +20,7 @@ class Ver_login extends CI_Controller {
  */
 	function index()
 	{
-		// Check flashdata
-		// $validLogin=$this->session->flashdata('validUser');
-		// var_dump($validLogin);
-
+		// TODO: change to use CI form validator
 		// Validation variable
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
@@ -63,6 +50,12 @@ class Ver_login extends CI_Controller {
 
 	}
 
+/**
+ * user change password after reset
+ * @method changepwd
+ * @param  int       $id uid
+ * @return string        status
+ */
 	function changepwd(int $id)
 	{
 		$send = array(

@@ -8,6 +8,11 @@ class Manage_model extends CI_Model {
 		parent::__construct();
 	}
 
+/**
+ * ambil data user
+ * @method getUser
+ * @return array  list user
+ */
 	function getUser()
 	{
 		$this->db->select('uid, username, user_level, namaLengkap');
@@ -21,12 +26,24 @@ class Manage_model extends CI_Model {
 		}
 	}
 
+/**
+ * db create user
+ * @method createUser
+ * @param  array     $send data user
+ * @return int           affected rows
+ */
 	function createUser($send)
 	{
 		$this->db->insert('user', $send);
 		return $this->db->affected_rows();
 	}
 
+/**
+ * db ambil data user existing
+ * @method editUser
+ * @param  int   $id uid
+ * @return array       db rows
+ */
 	function editUser($id)
 	{
 		$this->db->select('uid, username, password, user_level, namaLengkap');
@@ -41,6 +58,13 @@ class Manage_model extends CI_Model {
 		}
 	}
 
+/**
+ * set data user
+ * @method updateUser
+ * @param  int     $id   uid
+ * @param  array     $send data user baru
+ * @return int           affected rows
+ */
 	function updateUser($id, $send)
 	{
 		$this->db->where('uid', $id);
@@ -48,6 +72,11 @@ class Manage_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+/**
+ * db reset user password
+ * @method resetPwd
+ * @param  int   $id uid
+ */
 	function resetPwd($id)
 	{
 		$this->db->where('uid', $id);
@@ -57,6 +86,12 @@ class Manage_model extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+/**
+ * db hapus user
+ * @method deleteUser
+ * @param  int     $id uid
+ * @return int         affected rows
+ */
 	function deleteUser($id)
 	{
 		$this->db->delete('user', array('uid' => $id));

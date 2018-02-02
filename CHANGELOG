@@ -1,2 +1,4 @@
 changed redirection method to userdata, also affected how id is passed.
 added alert for CUD
+
+added feature to reset user password

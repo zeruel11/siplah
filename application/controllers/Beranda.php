@@ -11,7 +11,7 @@ class Beranda extends CI_Controller
 		// public $foo;
 
 		/**
-		 * load default model dan library CI
+		 * load default model dan library CI, check user login
 		 * @method __construct
 		 */
 		function __construct()

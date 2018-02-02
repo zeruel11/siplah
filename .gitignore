@@ -31,6 +31,7 @@ sftp-config*.json
 ## Atom project files
 .ftpconfig
 .ftpignore
+.tags
 
 ## emacs temp files
 *.php~

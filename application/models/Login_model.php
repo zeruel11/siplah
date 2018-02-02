@@ -7,6 +7,12 @@ class Login_model extends CI_Model {
 		parent::__construct();
 	}*/
 
+/**
+ * login db
+ * @method login
+ * @param  int $username uid
+ * @param  string $password password md5
+ */
 	function login($username, $password)
 	{
 		$this->db->select('uid, username, password, user_level, namaLengkap');
@@ -24,6 +30,13 @@ class Login_model extends CI_Model {
 		}
 	}
 
+/**
+ * db reset password
+ * @method chPwd
+ * @param  int    $id   uid
+ * @param  array  $data default password
+ * @return int       affected rows
+ */
 	function chPwd(int $id, array $data)
 	{
 		$this->db->where('uid', $id);

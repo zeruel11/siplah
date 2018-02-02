@@ -3,12 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Manage extends CI_Controller {
 
+/**
+ * load required model
+ * @method __construct
+ */
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model('Manage_model');
 	}
 
+/**
+ * tampilkan list user
+ * @method index
+ * @return array list user
+ */
 	function index()
 	{
 		if ($this->session->userdata('logged_in')) {
@@ -40,6 +49,11 @@ class Manage extends CI_Controller {
 		}
 	}
 
+/**
+ * create new user
+ * @method createUser
+ * @return string     message status
+ */
 	function createUser()
 	{
 		if ($this->session->userdata('logged_in')) {
@@ -76,6 +90,12 @@ class Manage extends CI_Controller {
 		}
 	}
 
+/**
+ * update data user
+ * @method updateUser
+ * @param  int     $id uid
+ * @return string         message status
+ */
 	function updateUser($id)
 	{
 		if ($this->session->userdata('logged_in')) {
@@ -115,6 +135,12 @@ class Manage extends CI_Controller {
 			}
 	}
 
+/**
+ * hapus user
+ * @method deleteUser
+ * @param  int     $id uid
+ * @return string         message status
+ */
 	function deleteUser($id)
 	{
 		$result = $this->Manage_model->deleteUser($id);
@@ -126,6 +152,11 @@ class Manage extends CI_Controller {
 		redirect('manage','refresh');
 	}
 
+/**
+ * reset user password '123qwe'
+ * @method resetPassword
+ * @param  string        $id uid
+ */
 	function resetPassword($id)
 	{
 		$result = $this->Manage_model->resetPwd($id);

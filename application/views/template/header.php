@@ -21,7 +21,6 @@
 	<script src="<?php echo base_url('assets/js/leaflet.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/popper-1.12.9.js'); ?>" charset="utf-8"></script>
 	<script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
-	<script src="<?php echo base_url('assets/js/notify.js'); ?>"></script>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+	<!-- <script src="<?php echo base_url('assets/js/notify.js'); ?>"></script> -->
 
 </head>
