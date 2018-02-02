@@ -35,6 +35,7 @@ sftp-config*.json
 
 ## emacs temp files
 *.php~
+*.sh~
 \#*\#
 
 ## SyncToy config files
@@ -46,6 +47,6 @@ application/tests/*
 !application/tests/models
 .gitkeep
 
-## Documentations
+## Documentations & versioning filter
 /build/
 /application/docs
