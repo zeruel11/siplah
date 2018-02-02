@@ -54,7 +54,7 @@
 								<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 								<a class="btn btn-outline-success<?= ($row['dateDeleted']!=NULL)?' disabled" aria-disabled="true':''?>" href="<?php echo base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button"><?= ($row['dateDeleted']!=NULL)?'Renovasi Telah Selesai':'Selesai Renovasi' ?></a>
 								<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
-								<a class="btn btn-outline-danger" href="<?php echo base_url('renovasi/del/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus Data Renovasi</a>
+								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
 							</div>
 						<?php } elseif ($userLogin['userLevel']==3) { ?>
 						<a class="btn btn-outline-info small-btn mr-3" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
@@ -70,6 +70,29 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="modalHapus<?php echo $dataRenovasi[$r]['idProposal'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modalDeleteTitle">Perhatian!</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								Apakah anda yakin ingin menghapus renovasi?<br>
+								<strong>Data akan dihapus secara permanen!!</strong>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+								<a class="btn btn-danger" href="<?php echo base_url('renovasi/del/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Hapus</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<?php $r++; } ?>
 		<?php } else { ?>
 			<h4 class="card-text">Gedung <?php echo $dataRenovasi[0]['namaGedung']; ?> belum memiliki data renovasi</h4>

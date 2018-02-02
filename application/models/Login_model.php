@@ -6,7 +6,7 @@ class Login_model extends CI_Model {
 	{
 		parent::__construct();
 	}*/
-	
+
 	function login($username, $password)
 	{
 		$this->db->select('uid, username, password, user_level, namaLengkap');
@@ -22,6 +22,13 @@ class Login_model extends CI_Model {
 		} else {
 			return false;
 		}
+	}
+
+	function chPwd(int $id, array $data)
+	{
+		$this->db->where('uid', $id);
+		$this->db->update('user', $data);
+		return $this->db->affected_rows();;
 	}
 
 }

@@ -505,11 +505,11 @@ class Beranda extends CI_Controller
 						$this->load->view('masuk/pekerjaan_form', $data);
 						$this->load->view('template/footer', $data);
 				} else {
-						$data = array(
+						$send = array(
 						'detailPekerjaan'=>$this->input->post('detailPekerjaanForm'),
 						'status'=>'0'
 						);
-						$result = $this->Beranda_model->updatePekerjaan($kerja, $data);
+						$result = $this->Beranda_model->updatePekerjaan($kerja, $send);
 						if ($result==1) {
 								$this->session->set_flashdata('message', 'Pekerjaan telah diupdate');
 						}
@@ -537,6 +537,13 @@ class Beranda extends CI_Controller
 				}
 
 				redirect($this->session->userdata['refered_from']['url']);
+		}
+
+		function testing()
+		{
+			$this->load->view('template/header');
+			$this->load->view('template/modal');
+			// $this->load->view('beranda_view');
 		}
 
 }

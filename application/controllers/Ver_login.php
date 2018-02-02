@@ -63,6 +63,18 @@ class Ver_login extends CI_Controller {
 
 	}
 
+	function changepwd(int $id)
+	{
+		$send = array(
+						'password'=>$this->input->post(md5('sandiLewat'))
+						);
+		$result = $this->Login_model->chPwd((int)$id, $send);
+		if ($result==1) {
+			$this->session->set_flashdata('message', 'Password anda berhasil diubah');
+		}
+		redirect('beranda','refresh');
+	}
+
 }
 
 /* End of file ver_login.php */
