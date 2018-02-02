@@ -17,10 +17,10 @@ class Ver_login extends CI_Controller {
  * validate login
  * @method index
  * @return mixed user data
+ * @todo change to use CI form validator
  */
 	function index()
 	{
-		// TODO: change to use CI form validator
 		// Validation variable
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
