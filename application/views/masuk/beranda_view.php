@@ -38,10 +38,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				Masukkan password lama anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******"></input>
+				Masukkan password lama anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******" required oninvalid="this.setCustomValidity('Masukkan password lama')" oninput="setCustomValidity('')"></input>
 			</div>
 			<div class="modal-body">
-				Masukkan password baru anda: <input type="password" id="sandiLewatBaru" name="sandiLewatBaru" placeholder="******"></input>
+				Masukkan password baru anda: <input type="password" id="sandiLewatBaru" name="sandiLewatBaru" placeholder="******" required oninvalid="this.setCustomValidity('Masukkan password baru')" oninput="setCustomValidity('')"></input>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary">OK</button>
