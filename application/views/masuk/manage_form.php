@@ -23,7 +23,13 @@
 	</div>
 	<div class="form-group">
 		<label for="user_levelForm">User Level:</label>
-		<input type="text" class="form-control" id="user_levelForm" name="user_levelForm" placeholder="User Level"></input>
+		<select class="form-control" id="user_levelForm" name="user_levelForm">
+      <option value="1">Admin</option>
+      <option value="2">Pegawai SIMRI</option>
+      <option value="3">WR II</option>
+      <option value="4">SARPRAS</option>
+      <option value="5">Unit Fakultas/Jurusan</option>
+    </select>
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 	</form>

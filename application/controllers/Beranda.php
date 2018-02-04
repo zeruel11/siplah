@@ -11,7 +11,7 @@ class Beranda extends CI_Controller
 		// public $foo;
 
 		/**
-		 * load default model dan library CI, check user login
+		 * load default model dan library CI, check user login, dan ambil message
 		 * @method __construct
 		 */
 		function __construct()
@@ -25,10 +25,11 @@ class Beranda extends CI_Controller
 						$this->data['userLogin'] = $this->session->userdata('logged_in');
 				} elseif ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'beranda' && $this->uri->uri_string() != 'login' && ! preg_match('/^gedung\/\d+/', $this->uri->uri_string())) {
 						// $this->data['message'] = "Anda belum login";
-						$this->session->set_flashdata('warn', 'Anda belum login');
+						// $this->session->set_flashdata('warn', 'Anda belum login');
+						$this->session->set_flashdata('warn', 'logged_out');
 						// if ($_SERVER['URI_REQUEST'] != "/siplah/beranda") header("Location: /siplah/beranda");
 						// redirect('beranda', 'location', 301);
-						if ($this->uri->uri_string() != '') {
+						if ($this->uri->uri_string() != '' || $this->uri->uri_string() != 'beranda') {
 								redirect('');
 						}
 				}
@@ -37,6 +38,11 @@ class Beranda extends CI_Controller
 				}
 		}
 
+/**
+ * dashboard utama, load peta, list gedung, dan total luas terbangun
+ * @method index
+ * @return array data
+ */
 		public function index()
 		{
 				$data = $this->data;
@@ -44,15 +50,15 @@ class Beranda extends CI_Controller
 				// if ($this->session->flashdata('message')) {
 				//     $data['message'] = $this->session->flashdata('message');
 				// }
-				if ($this->session->flashdata('warn')) {
-						$data['warn'] = $this->session->flashdata('warn');
-				}
 				if ($this->session->flashdata('cari')) {
 						$data['listGedung'] = $this->session->flashdata('cari');
 				} else {
 						$data['listGedung'] = $this->Beranda_model->getListGedung('full');
 				}
 				if (isset($this->data['userLogin'])) {
+					if ($this->session->userdata('pwd')) {
+						$data['modal'] = $this->load->view('template/modal_password', NULL, TRUE);
+					}
 						if ($data['userLogin']['userLevel']==4) {
 								// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
 								if ($this->session->flashdata('cari')) {
@@ -80,6 +86,10 @@ class Beranda extends CI_Controller
 						}
 				} else {
 						// $data['userLogin'] = "false";
+						if ($this->session->flashdata('warn')=='logged_out') {
+							$data['warn'] = $this->session->flashdata('warn');
+							$data['modal'] = $this->load->view('template/modal_logout', NULL, TRUE);
+						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
 						$this->load->view('beranda_view', $data);
@@ -146,11 +156,12 @@ class Beranda extends CI_Controller
 		public function masuk()
 		{
 				if ($this->session->userdata('logged_in')) {
-						redirect('beranda', 'refresh');
+					$this->session->set_flashdata('message', 'Anda sudah login...');
+					redirect('beranda', 'refresh');
 				} else {
-						$data['validLogin']=$this->session->flashdata('validUser');
-						// $this->load->helper(array('form'));
-						$this->load->view('login_view', $data);
+					$data['validLogin'] = $this->session->flashdata('validUser');
+					// $this->load->helper(array('form'));
+					$this->load->view('login_view', $data);
 				}
 		}
 
@@ -542,8 +553,10 @@ class Beranda extends CI_Controller
 		function testing()
 		{
 			$this->load->view('template/header');
-			$this->load->view('template/modal');
-			// $this->load->view('beranda_view');
+			// the "TRUE" argument tells it to return the content, rather than display it immediately
+			$data['modal'] = $this->load->view('template/modal', NULL, TRUE);
+			// $this->load->view('template/modal');
+			$this->load->view('beranda_view', $data);
 		}
 
 }

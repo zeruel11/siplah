@@ -1,16 +1,13 @@
 <body>
 
+<?= isset($modal)?$modal:'' ?>
+
 	<div class="container-fluid mt-2">
 		<div class="row">
 			<div class="col-lg-8"><div id="image-map"></div></div>
 			<!-- <div class="col-lg-3"></div> -->
 			<div class="col-lg-4">
-				<?php if (isset($warn)) {
-			    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>'.$warn.'</div>';
-			} elseif (isset($message)) {
+				<?php if (isset($message)) {
                 echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

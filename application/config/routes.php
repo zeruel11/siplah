@@ -70,3 +70,6 @@ $route['manage/user_baru'] = 'manage/createUser';
 $route['manage/user_update/(:num)'] = 'manage/updateUser/$1';
 $route['ajuan'] = 'beranda/tambahRenovasi';
 $route['renovasi/ed/(:num)'] = 'beranda/ubahRenovasi/$1';
+
+// redirect direct access
+$route['renovasi'] = 'beranda';

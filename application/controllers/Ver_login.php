@@ -25,6 +25,11 @@ class Ver_login extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 
+		//check password default
+		if ($password=='123qwe') {
+			$this->session->set_flashdata('warn', 'default');
+		}
+
 		// Query db
 		$result = $this->login_model->login($username, $password);
 
@@ -39,13 +44,14 @@ class Ver_login extends CI_Controller {
 				);
 
 				$this->session->set_userdata( 'logged_in', $sess_array );
+				$this->session->set_userdata('pwd', 'changed');
 			}
 			// return true;
 			redirect('beranda', 'refresh');
 		} else {
 			// return false;
 			$this->session->set_flashdata('validUser', 'false');
-			redirect('beranda/masuk', 'refresh');
+			redirect('login', 'refresh');
 		}
 
 	}
