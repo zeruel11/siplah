@@ -23,7 +23,7 @@ class Beranda extends CI_Controller
 				$this->load->library('pagination');
 				if ($this->session->userdata('logged_in')) {
 						$this->data['userLogin'] = $this->session->userdata('logged_in');
-				} elseif ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'beranda' && $this->uri->uri_string() != 'login' && ! preg_match('/^gedung\/\d+/', $this->uri->uri_string())) {
+				} elseif ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'beranda' && $this->uri->uri_string() != 'login' && $this->uri->uri_string() != 'search' && ! preg_match('/^gedung\/\d+/', $this->uri->uri_string())) {
 						// $this->data['message'] = "Anda belum login";
 						// $this->session->set_flashdata('warn', 'Anda belum login');
 						$this->session->set_flashdata('warn', 'logged_out');
@@ -33,9 +33,7 @@ class Beranda extends CI_Controller
 								redirect('');
 						}
 				}
-				if ($this->session->flashdata('message')) {
-						$this->data['message'] = $this->session->flashdata('message');
-				}
+				$this->data['message'] = $this->session->flashdata('message');
 		}
 
 /**
@@ -53,6 +51,7 @@ class Beranda extends CI_Controller
 				if ($this->session->flashdata('cari')) {
 						$data['listGedung'] = $this->session->flashdata('cari');
 				} else {
+						$data['invalid'] = $this->session->flashdata('invalid');
 						$data['listGedung'] = $this->Beranda_model->getListGedung('full');
 				}
 				if (isset($this->data['userLogin'])) {
@@ -135,14 +134,14 @@ class Beranda extends CI_Controller
 				$this->form_validation->set_rules('cari_gedung', 'Search', 'required');
 
 				if ($this->form_validation->run() == false) {
-						$this->session->set_flashdata('message', "Harap masukkan <strong>nama gedung</strong>");
+						$this->session->set_flashdata('invalid', "Harap masukkan <strong>nama gedung</strong>");
 				} else {
 						$search = $this->input->post('cari_gedung');
 						$result = $this->Beranda_model->searchListGedungByName($search);
 						if ($result) {
 								$this->session->set_flashdata('cari', $result);
 						} else {
-								$this->session->set_flashdata('message', "Gedung tidak ditemukan. Apakah anda yakin <strong>nama gedung</strong> benar?");
+								$this->session->set_flashdata('invalid', "Gedung tidak ditemukan. Apakah anda yakin <strong>nama gedung</strong> benar?");
 						}
 				}
 
@@ -554,9 +553,9 @@ class Beranda extends CI_Controller
 		{
 			$this->load->view('template/header');
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
-			$data['modal'] = $this->load->view('template/modal', NULL, TRUE);
+			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
 			// $this->load->view('template/modal');
-			$this->load->view('beranda_view', $data);
+			$this->load->view('test');
 		}
 
 }

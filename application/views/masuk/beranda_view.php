@@ -6,11 +6,11 @@
 	<p class="blockquote text-success"><?php echo "-- Total luas gedung terbangun: ".$luasTotal[0]->luas." m<sup>2</sup> --"; ?></p>
 </div>
 <div class="col-lg-4">
-	<?php if (isset($message)) {
-		echo '<div class="alert alert-primary fade show animated fadeInUp" role="alert">
+	<?php if (isset($invalid)) {
+		echo '<div class="alert alert-primary fade show animated fadeInDown" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
-		</button>'.$message.'</div>';
+		</button>'.$invalid.'</div>';
 } ?>
 	<div class="card">
 		<ul class="list-group list-group-flush">
@@ -28,7 +28,7 @@
 </div>
 </div>
 
-<form name="modalPassword" id="modalPassword" method="post" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" aria-hidden="true" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
+<form name="modalPassword" id="modalPassword" method="post" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -38,7 +38,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				Masukkan password anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******"></input>
+				Masukkan password lama anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******"></input>
+			</div>
+			<div class="modal-body">
+				Masukkan password baru anda: <input type="password" id="sandiLewatBaru" name="sandiLewatBaru" placeholder="******"></input>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary">OK</button>
@@ -48,26 +51,57 @@
 </form>
 
 <script type="text/javascript">
-	$('#passwordPopup').on('click', function() {
-		$('#modalPassword').modal({
-			show: true,
-			focus: true,
-			keyboard: false
-		})
+	function whichTransitionEvent() {
+		var t,
+			el = document.createElement("fakeelement");
+
+		var transitions = {
+			"transition": "transitionend",
+			"OTransition": "oTransitionEnd",
+			"MozTransition": "transitionend",
+			"WebkitTransition": "webkitTransitionEnd"
+		}
+
+		for (t in transitions) {
+			if (el.style[t] !== undefined) {
+				return transitions[t];
+			}
+		}
+	}
+
+	var transitionEvent = whichTransitionEvent();
+
+	$("#passwordPopup").click(function() {
+		$('#modalReminder').modal('hide');
+		$(this).one(transitionEvent,
+			function(event) {
+				$('#modalPassword').modal({
+					show: true,
+					focus: true,
+					keyboard: false
+				});
+		});
 	});
-	$('#modalPassword').on('shown.bs.modal', function () {
+
+	$('#modalPassword').on('show.bs.modal', function() {
+		$('#modalPassword').removeClass("zoomOut");
+		$('#modalPassword').addClass("zoomIn");
+	});
+	$('#modalPassword').on('shown.bs.modal', function() {
 		$('#sandiLewat').focus();
-		$('.modal .modal-dialog').attr('class', 'modal-dialog zoomIn animated');
 	});
 	$('#modalPassword').on('hide.bs.modal', function() {
-		$('.modal .modal-dialog').attr('class', 'modal-dialog zoomOut animated');
+		$('#modalPassword').removeClass("zoomIn");
+		$('#modalPassword').addClass("zoomOut");
 	});
 </script>
 
 <script>
-setTimeout(function () {
-	$(".alert").alert('close')
-}, 3500);
+$(window).on('load', function(event) {
+	setTimeout(function () {
+		$(".alert").alert('close')
+	}, 3500);
+})
 
 $(function () {
 		$('body').on('close.bs.alert', function(e){

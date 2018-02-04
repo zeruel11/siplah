@@ -31,13 +31,13 @@ class Login_model extends CI_Model {
 	}
 
 /**
- * db reset password
+ * db change password
  * @method chPwd
  * @param  int    $id   uid
- * @param  array  $data default password
+ * @param  array  $data password
  * @return int       affected rows
  */
-	function chPwd($id, array $data)
+	function chPwd(int $id, array $data)
 	{
 		$this->db->where('uid', $id);
 		$this->db->update('user', $data);

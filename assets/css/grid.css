@@ -83,6 +83,16 @@ main {
   width:170px;
 }
 
+/* animation */
+.modal.fade{
+  opacity:1;
+}
+.modal.fade .modal-dialog {
+   -webkit-transform: translate(0);
+   -moz-transform: translate(0);
+   transform: translate(0);
+}
+
 #image-map {
   margin: 0;
   background: #000000;

@@ -12,7 +12,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" id="cancelModal" data-dismiss="modal">Cancel</button>
-				<button type="button" id="passwordPopup" class="btn btn-primary" data-dismiss="modal">OK</button>
+				<button type="button" id="passwordPopup" class="btn btn-primary">Ganti Sekarang</button>
 			</div>
 		</div>
 	</div>
@@ -29,6 +29,8 @@
 		})
 	});
 	$('#modalReminder').on('hide.bs.modal', function () {
-		$('.modal .modal-dialog').attr('class', 'modal-dialog zoomOut animated');
+		// $('.modal .modal-dialog').attr('class', 'modal-dialog zoomOut animated');
+		$('#modalReminder').removeClass("bounceIn");
+		$('#modalReminder').addClass("zoomOut");
 	});
 </script>

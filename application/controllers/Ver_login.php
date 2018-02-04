@@ -25,11 +25,6 @@ class Ver_login extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 
-		//check password default
-		if ($password=='123qwe') {
-			$this->session->set_userdata('pwd', 'changed');
-		}
-
 		// Query db
 		$result = $this->Login_model->login($username, $password);
 
@@ -38,12 +33,16 @@ class Ver_login extends CI_Controller {
 			foreach ($result as $row) {
 				$sess_array = array(
 					'uid' => $row->uid,
-					// 'username' => $row->username,
+					'username' => $row->username,
 					'userLevel' => $row->user_level,
 					'namaLengkap' => $row->namaLengkap
 				);
 
 				$this->session->set_userdata( 'logged_in', $sess_array );
+			}
+			//check password default
+			if ($password=='123qwe') {
+				$this->session->set_userdata('pwd', 'changed');
 			}
 			// return true;
 			redirect('beranda', 'refresh');
@@ -63,13 +62,20 @@ class Ver_login extends CI_Controller {
  */
 	function changepwd($id)
 	{
-		$send = array(
-						'password'=>$this->input->post(md5('sandiLewat'))
-						);
-		$result = $this->Login_model->chPwd((int)$id, $send);
-		if ($result==1) {
-			$this->session->set_flashdata('message', 'Password anda berhasil diubah');
-			$this->session->unset_userdata('pwd');
+		// $user = ;
+		// $oldPwd = ;
+		$test = $this->Login_model->login($this->session->userdata['logged_in']['username'], $this->input->post('sandiLewat'));
+		if ($test) {
+			$send = array(
+							'password'=>md5($this->input->post('sandiLewatBaru'))
+							);
+			$result = $this->Login_model->chPwd((int)$id, $send);
+			if ($result==1) {
+				$this->session->set_flashdata('message', 'Password anda berhasil diubah');
+				$this->session->unset_userdata('pwd');
+			}
+		} else {
+			$this->session->set_flashdata('message', 'Password anda salah!');
 		}
 		redirect('beranda','refresh');
 	}

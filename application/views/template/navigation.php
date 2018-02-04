@@ -23,6 +23,7 @@
 		} ?></a>
 	<?php if (isset($userLogin)) {
 				?>
+				<button tupe="button" class="btn btn-primary mr-2" id="passwordChange" data-toggle="modal" data-target="#modalPassword" data-backdrop="static" data-keyboard="false">Ganti Password</button>
 				<div class="btn-group">
 					<a class="btn btn-primary" href="<?= base_url('logout') ?>" role="button">Logout</a>
 					<?php if ($userLogin['userLevel']==1) { ?>
