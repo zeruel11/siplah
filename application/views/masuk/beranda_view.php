@@ -1,3 +1,5 @@
+<?php $this->output->enable_profiler(TRUE); ?>
+<?= isset($modal)?$modal:'' ?>
 <div class="col-lg-6 col-lg-offset-2 mb-5">
 	<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 	<div id="image-map"></div>
@@ -26,8 +28,43 @@
 </div>
 </div>
 
+<form name="modalPassword" id="modalPassword" method="post" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" aria-hidden="true" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalImportant">Ganti password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Masukkan password anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******"></input>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">OK</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	$('#passwordPopup').on('click', function() {
+		$('#modalPassword').modal({
+			show: true,
+			focus: true,
+			keyboard: false
+		})
+	});
+	$('#modalPassword').on('shown.bs.modal', function () {
+		$('#sandiLewat').focus();
+		$('.modal .modal-dialog').attr('class', 'modal-dialog zoomIn animated');
+	});
+	$('#modalPassword').on('hide.bs.modal', function() {
+		$('.modal .modal-dialog').attr('class', 'modal-dialog zoomOut animated');
+	});
+</script>
+
 <script>
-// $('.alert').addClass('animated fadeInUp');
 setTimeout(function () {
 	$(".alert").alert('close')
 }, 3500);

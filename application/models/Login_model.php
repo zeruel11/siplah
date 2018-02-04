@@ -37,11 +37,11 @@ class Login_model extends CI_Model {
  * @param  array  $data default password
  * @return int       affected rows
  */
-	function chPwd(int $id, array $data)
+	function chPwd($id, array $data)
 	{
 		$this->db->where('uid', $id);
 		$this->db->update('user', $data);
-		return $this->db->affected_rows();;
+		return $this->db->affected_rows();
 	}
 
 }

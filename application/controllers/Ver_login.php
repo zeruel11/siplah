@@ -10,7 +10,7 @@ class Ver_login extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('login_model');
+		$this->load->model('Login_model');
 	}
 
 /**
@@ -27,11 +27,11 @@ class Ver_login extends CI_Controller {
 
 		//check password default
 		if ($password=='123qwe') {
-			$this->session->set_flashdata('warn', 'default');
+			$this->session->set_userdata('pwd', 'changed');
 		}
 
 		// Query db
-		$result = $this->login_model->login($username, $password);
+		$result = $this->Login_model->login($username, $password);
 
 		if ($result) {
 			$sess_array = array();
@@ -44,7 +44,6 @@ class Ver_login extends CI_Controller {
 				);
 
 				$this->session->set_userdata( 'logged_in', $sess_array );
-				$this->session->set_userdata('pwd', 'changed');
 			}
 			// return true;
 			redirect('beranda', 'refresh');
@@ -62,7 +61,7 @@ class Ver_login extends CI_Controller {
  * @param  int       $id uid
  * @return string        status
  */
-	function changepwd(int $id)
+	function changepwd($id)
 	{
 		$send = array(
 						'password'=>$this->input->post(md5('sandiLewat'))
@@ -70,6 +69,7 @@ class Ver_login extends CI_Controller {
 		$result = $this->Login_model->chPwd((int)$id, $send);
 		if ($result==1) {
 			$this->session->set_flashdata('message', 'Password anda berhasil diubah');
+			$this->session->unset_userdata('pwd');
 		}
 		redirect('beranda','refresh');
 	}
