@@ -557,14 +557,8 @@ class Beranda extends CI_Controller
 			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
 			// $this->load->view('template/modal');
 			// $this->load->view('test');
-			// require('vendor/autoload.php');
-			// ob_end_clean();
-			// $objWriter->save('php://output', 'xls');
-			// use PhpOffice\PhpSpreadsheet\Spreadsheet;
-			// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-      //
-	   	$spreadsheet = new Spreadsheet();
+	   	// $spreadsheet = new Spreadsheet();
 	   	// $sheet = $spreadsheet->getActiveSheet();
 	   	// $sheet->setCellValue('A1', 'Hello World !');
       //
