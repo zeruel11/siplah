@@ -303,6 +303,7 @@ class Beranda extends CI_Controller
 
 				$this->load->library('form_validation');
 				$this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
+				// $this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 				$this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
 
 				if ($this->form_validation->run() == false) {

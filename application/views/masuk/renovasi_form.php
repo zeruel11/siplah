@@ -8,7 +8,8 @@
 	<!-- <input type="hidden" value="<?php echo $idGedung; ?>" name="idGedung" /> -->
 	<div class="form-group">
 		<label for="judulProposalForm">Judul Ajuan Renovasi</label>
-		<input type="text" class="form-control" id="judulProposalForm" name="judulProposalForm" placeholder="Masukkan judul renovasi"></input>
+		<input type="text" class="form-control<?= (form_error('username'))?' is-invalid':''  ?>" id="judulProposalForm" name="judulProposalForm" placeholder="Masukkan judul renovasi"></input>
+		<div class="invalid-feedback">Masukkan Judul.</div>
 	</div>
 	<div class="form-group">
 		<label for="deskripsiProposalForm">Deskripsi Renovasi</label>
