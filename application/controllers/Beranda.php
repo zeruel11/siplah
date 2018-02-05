@@ -550,13 +550,26 @@ class Beranda extends CI_Controller
 				redirect($this->session->userdata['refered_from']['url']);
 		}
 
-		function testing()
+		public function testing()
 		{
-			$this->load->view('template/header');
+			// $this->load->view('template/header');
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
 			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
 			// $this->load->view('template/modal');
-			$this->load->view('test');
+			// $this->load->view('test');
+			// require('vendor/autoload.php');
+			// ob_end_clean();
+			// $objWriter->save('php://output', 'xls');
+			// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+			// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+      //
+	   	$spreadsheet = new Spreadsheet();
+	   	// $sheet = $spreadsheet->getActiveSheet();
+	   	// $sheet->setCellValue('A1', 'Hello World !');
+      //
+	   	// $writer = new Xlsx($spreadsheet);
+	   	// $writer->save('hello world.xlsx');
 		}
 
 }

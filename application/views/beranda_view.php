@@ -1,5 +1,5 @@
 <body>
-
+<?php $this->output->enable_profiler(TRUE); ?>
 <?= isset($modal)?$modal:'' ?>
 
 	<div class="container-fluid mt-2">
