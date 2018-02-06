@@ -1,3 +1,14 @@
+/**********************************************************************************
+
+	Project Name: siplah
+	Project Description:
+	File Name:
+	Author:
+	Author URI:
+	Version:
+
+**********************************************************************************/
+
 /*.wrapper{
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -75,24 +86,34 @@ main {
   /* border-right: 1px solid #000; */
 }
 
+/**
+ * custom buttons for login SARPRAS
+ */
 .small-btn {
   width:220px;
 }
-
 .mini-btn {
   width:170px;
 }
 
-/* animation */
+/**
+ * animation control
+ * also define when animation ends
+ */
 .modal.fade{
   opacity:1;
 }
-.modal.fade .modal-dialog {
+
+.modal.fade,
+.modal-dialog {
    -webkit-transform: translate(0);
    -moz-transform: translate(0);
    transform: translate(0);
 }
 
+/**
+ * style for leaflet image map
+ */
 #image-map {
   margin: 0;
   background: #000000;
