@@ -16,20 +16,18 @@
 								<?php if ($userLogin['userLevel']==4) {
 									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(2)=='pekerjaan')?base_url():"").'">Renovasi Tersedia</a>';
 								} else {
-									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/ALL').'">Renovasi</a>';
+									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/ALL').'">'.(($this->uri->uri_string()=='' || $this->uri->uri_string()=='beranda' || $this->uri->segment(2)=='ALL')?"Semua Renovasi":"Renovasi").' <span class="badge badge-info">'.$jumlah.'</span></a>';
 								}
 								 ?>
 							</li>
 							<?php } elseif ($userLogin['userLevel']==3) { ?>
 							<li class="nav-item">
-								<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='proposal')?" active":"").'" href="'.base_url('renovasi/proposal').'">Data Renovasi Belum Disetujui</a>'; ?>
+								<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='proposal')?" active":"").'" href="'.base_url('renovasi/proposal').'">Data Renovasi Belum Disetujui <span class="badge badge-info">'.$jumlahBelum.'</span></a>'; ?>
 							</li>
 							<li class="nav-item">
-								<?php echo '<a class="nav-link mt-2'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='kerja')?" active":"").'" href="'.base_url('renovasi/kerja').'">Data Renovasi Telah Disetujui</a>'; ?>
+								<?php echo '<a class="nav-link mt-2'.(($this->uri->segment(1)=='renovasi' && $this->uri->segment(2)=='kerja')?" active":"").'" href="'.base_url('renovasi/kerja').'">Data Renovasi Telah Disetujui <span class="badge badge-info">'.$jumlahSetuju.'</span></a>'; ?>
 							</li>
 							<?php } ?>
-
-						<?php // var_dump($userLogin) ?>
 					</ul>
 					<!-- <ul class="nav nav-pills flex-column">
 						<li class="nav-item">

@@ -34,6 +34,9 @@ class Beranda extends CI_Controller
 						}
 				}
 				$this->data['message'] = $this->session->flashdata('message');
+				$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
+				$this->data['jumlahBelum'] = $this->Beranda_model->jumlahRenovasi('0');
+				$this->data['jumlahSetuju'] = $this->Beranda_model->jumlahRenovasi('2');
 		}
 
 /**
@@ -56,32 +59,45 @@ class Beranda extends CI_Controller
 				}
 				if (isset($this->data['userLogin'])) {
 					if ($this->session->userdata('pwd')) {
-						$data['modal'] = $this->load->view('template/modal_password', NULL, TRUE);
+						$data['pwd'] = $this->session->userdata('pwd');
 					}
+					$data['modal'] = $this->load->view('template/modal_password', $data, TRUE);
 						if ($data['userLogin']['userLevel']==4) {
-								// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
-								if ($this->session->flashdata('cari')) {
-										$data['listGedung'] = $this->session->flashdata('cari');
-								} else {
-										$data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
-								}
-								$this->load->view('template/header', $data);
-								$this->load->view('template/navigation', $data);
-								$this->load->view('template/menu', $data);
-								$this->load->view('masuk/beranda_view', $data);
-								$this->load->view('template/footer', $data);
-						} elseif ($data['userLogin']['userLevel']==1 || $data['userLogin']['userLevel']==2 || $data['userLogin']['userLevel']==3 || $data['userLogin']['userLevel']==5) {
-								if ($this->session->flashdata('cari')) {
-										$data['listGedung'] = $this->session->flashdata('cari');
-								} else {
-										$data['listGedung'] = $this->Beranda_model->getListGedung('full');
-								}
-								$this->load->view('template/header', $data);
-								$this->load->view('template/navigation', $data);
-								$this->load->view('template/menu', $data);
-								$this->load->view('masuk/beranda_view', $data);
-								$this->load->view('template/footer', $data);
-								// redirect('index.php/beranda/master','refresh');
+							// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
+							if ($this->session->flashdata('cari')) {
+									$data['listGedung'] = $this->session->flashdata('cari');
+							} else {
+									$data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
+							}
+							$this->load->view('template/header', $data);
+							$this->load->view('template/navigation', $data);
+							$this->load->view('template/menu', $data);
+							$this->load->view('masuk/beranda_view', $data);
+							$this->load->view('template/footer', $data);
+						} elseif ($data['userLogin']['userLevel']==1 || $data['userLogin']['userLevel']==2 || $data['userLogin']['userLevel']==5) {
+							if ($this->session->flashdata('cari')) {
+									$data['listGedung'] = $this->session->flashdata('cari');
+							} else {
+									$data['listGedung'] = $this->Beranda_model->getListGedung('full');
+							}
+							$this->load->view('template/header', $data);
+							$this->load->view('template/navigation', $data);
+							$this->load->view('template/menu', $data);
+							$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+							$this->load->view('masuk/beranda_view', $data);
+
+							// redirect('index.php/beranda/master','refresh');
+						} elseif ($data['userLogin']['userLevel']==3) {
+							if ($this->session->flashdata('cari')) {
+									$data['listGedung'] = $this->session->flashdata('cari');
+							} else {
+									$data['listGedung'] = $this->Beranda_model->getListGedung('full');
+							}
+							$this->load->view('template/header', $data);
+							$this->load->view('template/navigation', $data);
+							$this->load->view('template/menu', $data);
+							$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+							$this->load->view('masuk/beranda_view', $data);
 						}
 				} else {
 						// $data['userLogin'] = "false";
@@ -91,8 +107,9 @@ class Beranda extends CI_Controller
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
+						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 						$this->load->view('beranda_view', $data);
-						$this->load->view('template/footer', $data);
+						// $data['footer'] = $this->load->view('template/footer', $data, TRUE);
 				}
 		}
 

@@ -27,6 +27,8 @@
 	</div>
 </div>
 
+<?= isset($footer)?$footer:'' ?>
+
 <script>
 $(window).on('load', function(event) {
 	setTimeout(function () {

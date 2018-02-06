@@ -54,6 +54,15 @@ class Beranda_model extends CI_Model
 			return $result->result();
 		}
 
+		function jumlahRenovasi($jumlah)
+		{
+			if ($jumlah!='ALL') {
+				$this->db->where('status', $jumlah);
+			}
+			$result = $this->db->get('proposal');
+			return $result->num_rows();
+		}
+
 /**
  * database search
  * @method searchListGedungByName
