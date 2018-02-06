@@ -19,8 +19,9 @@
 	<!-- core javascript import -->
 	<script src="<?php echo base_url('assets/js/jquery-3.2.1.min.js'); ?>" charset="utf-8"></script>
 	<script src="<?php echo base_url('assets/js/leaflet.js'); ?>"></script>
-	<script src="<?php echo base_url('assets/js/popper-1.12.9.js'); ?>" charset="utf-8"></script>
+	<script src="<?php echo base_url('assets/js/popper.min.js'); ?>" charset="utf-8"></script>
 	<script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('assets/js/jquery.validate.min.js'); ?>" type="text/javascript"></script>
 	<!-- <script src="<?php echo base_url('assets/js/notify.js'); ?>"></script> -->
 
 </head>

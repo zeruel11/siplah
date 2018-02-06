@@ -282,9 +282,22 @@ class Beranda extends CI_Controller
 				$this->session->set_userdata('refered_from_renovasi', base_url().$this->uri->uri_string());
 				// $this->session->set_userdata('gedung', $data['dataRenovasi']);
 
+				// $idModal=0;
+				// $s=0;
+				// foreach ($data['dataRenovasi'] as $row) {
+				// 	$idModal = $row['idProposal'];
+				// 	$data[;]
+
+				// 	// $idModal++;
+				// }
+
 				$this->load->view('template/header', $data);
 				$this->load->view('template/navigation', $data);
 				$this->load->view('template/menu', $data);
+				foreach ($data['dataRenovasi'] as $row) {
+					$data['idModal'] = $row['idProposal'];
+					$data['modal'][$row['idProposal']] = $this->load->view('template/modal_delete', $data, TRUE);
+				}
 				$this->load->view('masuk/renovasi_view', $data);
 				$this->load->view('template/footer', $data);
 		}
@@ -463,6 +476,10 @@ class Beranda extends CI_Controller
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
 						$this->load->view('template/menu', $data);
+						foreach ($data['dataPekerjaan'] as $row) {
+							$data['idModal'] = $row['idPekerjaan'];
+							$data['modal'][$row['idPekerjaan']] = $this->load->view('template/modal_delete', $data, TRUE);
+						}
 						$this->load->view('masuk/pekerjaan_view', $data);
 						$this->load->view('template/footer', $data);
 				}
@@ -489,7 +506,12 @@ class Beranda extends CI_Controller
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
 				$this->load->library('form_validation');
-				$this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
+				$this->form_validation->set_rules('detailPekerjaanForm', 'detail pekerjaan', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Masukkan {field} yang harus dilakukan'
+				));
+				$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
 				if ($this->form_validation->run() == false) {
 						$this->load->view('template/header', $data);
@@ -540,7 +562,12 @@ class Beranda extends CI_Controller
 				$data['mode'] = "edit";
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
-				$this->form_validation->set_rules('detailPekerjaanForm', 'Detail Pekerjaan', 'required');
+				$this->form_validation->set_rules('detailPekerjaanForm', 'detail pekerjaan', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Masukkan {field} yang harus dilakukan'
+				));
+				$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 				// $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'You must provide a %s.'));
 
 				if ($this->form_validation->run() == false) {

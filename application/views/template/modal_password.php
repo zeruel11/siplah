@@ -79,7 +79,7 @@
 
 	var transitionEvent = whichTransitionEvent();
 
-	$("#passwordPopup").click(function() {
+	$("#passwordPopup").on('click', function() {
 		$('#modalReminder').modal('hide');
 		$(this).one(transitionEvent,
 			function(event) {
@@ -103,6 +103,113 @@
 		$('#modalPassword').addClass("zoomOut");
 	});
 </script>
+
+<!-- <script type="text/javascript">
+	$(#test).click(function () {
+		$.ajax({
+    url: base_url+"index.php/Ver_login/changepwd/"+userLogin['uid'],
+    type: "POST",
+    data: {
+    	username: userLogin['username'],
+    	password: $("#sandiLewat").val()
+    },
+    sucesss: function(data) {
+    	alert(data);
+        // if (data == false) {
+        // 	$("#ajax_div").html("Username is taken, choose another!");
+        // }
+        // else {
+        // 	$("#ajax_div").html("Username is free");
+        // }
+    }
+});
+	})
+</script> -->
+<!-- <script type="text/javascript">
+	$("#modalPassword").validate({
+        rules: {
+            sandiLewat: {
+                required: true,
+                remote: {
+                    url: base_url+"Ver_login"+$userLogin['uid'],
+                    type: "post"
+                 }
+            }
+        },
+        messages: {
+            sandiLewat: {
+                required: "Please Enter Email!",
+                remote: "Email already in use!"
+            }
+        }
+    });
+</script> -->
+<!-- <script type="text/javascript">
+	// var base_url = <?= base_url() ?>;
+	$().ready(function() {
+
+    $.validator.addMethod("checkPass",
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "Ver_login", // script to validate in server side
+                data: {sandiLewat: value},
+                success: function(data) {
+                    result = (data == true) ? true : false;
+                }
+            });
+            // return true if username is exist in database
+            return result;
+        },
+        "This username is already taken! Try another."
+    );
+
+    // validate signup form on keyup and submit
+    $("#modalPassword").validate({
+        rules: {
+            "sandiLewat": {
+                required: true,
+                checkPass: true
+            }
+        }
+    });
+});
+</script> -->
+<!-- <script type="text/javascript">
+	$.validator.addMethod("checkExists", function(value, element)
+{
+    var inputElem = $('#modalPassword :input[name="sandiLewat"]'),
+        data = { "password" : inputElem.val() },
+        eReport = ''; //error report
+
+    $.ajax(
+    {
+        type: "POST",
+        url: base_url+"Ver_login",
+        dataType: "json",
+        data: data,
+        success: function(returnData)
+        {
+            if (returnData!== 'true')
+            {
+              return '<p>This email address is already registered.</p>';
+            }
+            else
+            {
+               return true;
+            }
+        },
+        error: function(xhr, textStatus, errorThrown)
+        {
+            alert('ajax loading error... ... '+url + query);
+            return false;
+        }
+    });
+
+}, '');
+</script> -->
 
 <script>
 $(window).on('load', function(event) {

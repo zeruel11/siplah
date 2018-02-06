@@ -170,7 +170,7 @@ class Beranda_model extends CI_Model
 		{
 			$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$data['idGedung']."', '".$data['judulProposal']."', '".$data['deskripsiProposal']."', CURDATE())";
 			$this->db->query($sql);
-				return $this->db->affected_rows();
+			return $this->db->affected_rows();
 		}
 
 /**

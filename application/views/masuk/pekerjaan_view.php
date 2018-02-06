@@ -19,34 +19,12 @@
 					<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 						<span class="btn-group float-right" role="group">
 							<a class="btn btn-outline-warning" href="edit/<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Ubah</a>
-							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>">Hapus</button>
+							<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?= $dataPekerjaan[$k]['idPekerjaan'] ?>">Hapus</button>
 						</span>
 					<?php } ?>
 				</li>
-
-				<!-- Modal -->
-				<div class="modal fade" id="modalHapus<?php echo $dataPekerjaan[$k]['idPekerjaan'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="modalDeleteTitle">Perhatian!</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								Apakah anda yakin ingin menghapus pekerjaan?
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-								<a class="btn btn-danger" href="<?php echo base_url('beranda/hapusPekerjaan/').$dataPekerjaan[$k]['idPekerjaan'] ?>" role="button">Hapus</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<?php $k++;
-
-			} ?>
+				<?= isset($modal)?$modal[$row['idPekerjaan']]:"" ?>
+				<?php $k++; } ?>
 		</ul>
 		<?php $bar = round($b/$k, 2)*100; ?>
 	<h6>Progress:</h6>

@@ -44,11 +44,11 @@ class Ver_login extends CI_Controller {
 			if ($password=='123qwe') {
 				$this->session->set_userdata('pwd', 'changed');
 			}
-			// return true;
+			echo true;
 			redirect('beranda', 'refresh');
 		} else {
-			// return false;
 			$this->session->set_flashdata('validUser', 'false');
+			echo false;
 			redirect('login', 'refresh');
 		}
 
@@ -74,10 +74,12 @@ class Ver_login extends CI_Controller {
 				$this->session->set_flashdata('message', 'Password anda berhasil diubah');
 				$this->session->unset_userdata('pwd');
 			}
+			echo "true";
 		} else {
 			$this->session->set_flashdata('message', 'Password anda salah!');
+			redirect('beranda','refresh');
+			echo "false";
 		}
-		redirect('beranda','refresh');
 	}
 
 }
