@@ -302,9 +302,17 @@ class Beranda extends CI_Controller
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
 				$this->load->library('form_validation');
-				$this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
-				// $this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
-				$this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
+				$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Harap masukkan judul'
+				));
+				$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Harap masukkan deskripsi renovasi'
+				));
+				$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
 				if ($this->form_validation->run() == false) {
 						$this->load->view('template/header', $data);
@@ -341,8 +349,17 @@ class Beranda extends CI_Controller
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
 				$this->load->library('form_validation');
-				$this->form_validation->set_rules('judulProposalForm', 'Judul Proposal', 'required');
-				$this->form_validation->set_rules('deskripsiProposalForm', 'Deskripsi Proposal', 'required');
+				$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Harap masukkan judul'
+				));
+				$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
+					'required', 'callback__regex_check'
+				), array(
+					'required' => 'Harap masukkan deskripsi renovasi'
+				));
+				$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
 				if ($this->form_validation->run() == false) {
 						if ($this->input->post()) {
@@ -548,6 +565,16 @@ class Beranda extends CI_Controller
 				}
 
 				redirect($this->session->userdata['refered_from']['url']);
+		}
+
+		function _regex_check(string $form_value)
+		{
+			if (preg_match('/^([[:alpha:]]|\W)+[[:alpha:]]+/', $form_value)) {
+				return true;
+			} else {
+				$this->form_validation->set_message('_regex_check', 'Harap masukkan {field}');
+				return false;
+			}
 		}
 
 		public function testing()
