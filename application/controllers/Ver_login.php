@@ -44,11 +44,11 @@ class Ver_login extends CI_Controller {
 			if ($password=='123qwe') {
 				$this->session->set_userdata('pwd', 'changed');
 			}
-			echo true;
+			echo "true";
 			redirect('beranda', 'refresh');
 		} else {
 			$this->session->set_flashdata('validUser', 'false');
-			echo false;
+			echo "false";
 			redirect('login', 'refresh');
 		}
 
@@ -62,23 +62,56 @@ class Ver_login extends CI_Controller {
  */
 	function changepwd($id)
 	{
+		$data['userLogin'] = $this->session->userdata('logged_in');
+		$data['cancel'] = base_url();
 		// $user = ;
 		// $oldPwd = ;
-		$test = $this->Login_model->login($this->session->userdata['logged_in']['username'], $this->input->post('sandiLewat'));
-		if ($test) {
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('sandiLewat', 'password lama', array(
+			'callback__check_pass'
+		));
+		$this->form_validation->set_rules('sandiLewatBaru', 'password baru', array(
+			'required', 'min_length[6]'
+		), array(
+			'required' => 'Harap masukkan {field}',
+			'min_length' => 'Password minimal 6 karakter'
+		));
+		$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('template/header', $data);
+			$this->load->view('template/navigation', $data);
+			$this->load->view('masuk/password_form', $data);
+			$this->load->view('template/footer', $data);
+		} else {
 			$send = array(
-							'password'=>md5($this->input->post('sandiLewatBaru'))
-							);
+			'password'=>md5($this->input->post('sandiLewatBaru'))
+			);
 			$result = $this->Login_model->chPwd((int)$id, $send);
 			if ($result==1) {
 				$this->session->set_flashdata('message', 'Password anda berhasil diubah');
 				$this->session->unset_userdata('pwd');
+			} else {
+				$this->session->set_flashdata('message', 'Perubahan password gagal, mohon coba kembali');
 			}
-			echo "true";
-		} else {
-			$this->session->set_flashdata('message', 'Password anda salah!');
 			redirect('beranda','refresh');
-			echo "false";
+			// echo "false";
+		}
+	}
+
+	function _check_pass(string $pass)
+	{
+		if ($pass==NULL) {
+			$this->form_validation->set_message('_check_pass', 'Harap masukkan {field}');
+			return false;
+		} else {
+			$test = $this->Login_model->login($this->session->userdata['logged_in']['username'], $pass);
+			if ($test==false) {
+				$this->form_validation->set_message('_check_pass', 'Password lama anda salah!');
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 

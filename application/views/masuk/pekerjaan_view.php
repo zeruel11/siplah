@@ -32,16 +32,17 @@
 		<?php echo '<div class="progress-bar" style="width: '.$bar.'%" role="progressbar" aria-valuenow="'.$bar.'" aria-valuemin="0" aria-valuemax="100">'.$bar.'%</div>'; ?>
 	</div>
 		<?php } else { ?>
-		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> belum memiliki daftar pekerjaan</h4>
+		<h4 class="card-text">Proposal <?php echo $dataPekerjaan[0]['judulProposal']; ?> <strong style="color: red">belum memiliki daftar pekerjaan</strong></h4>
 		<p class="card-text"><?php echo $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 		<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 		<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<?php }
 	if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 		<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
-		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	<?php } ?>
+	<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 </div>
+<?= $footer ?>
 
 <script>
 setTimeout(function () {

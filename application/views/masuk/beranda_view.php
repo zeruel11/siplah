@@ -28,7 +28,7 @@
 </div>
 </div>
 
-<?= isset($footer)?$footer:'' ?>
+<?= $footer ?>
 
 <script>
 	var gedungIcon = L.icon({

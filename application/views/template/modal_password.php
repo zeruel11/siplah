@@ -8,17 +8,17 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				Password Anda baru saja direset, harap segera melakukan <strong>penggantian password</strong>
+				Password Anda baru saja direset, harap segera melakukan <a id="close" target="_blank" href="<?= base_url('gantipassword').$userLogin['uid'] ?>">penggantian password</a>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" id="cancelModal" data-dismiss="modal">Cancel</button>
-				<button type="button" id="passwordPopup" class="btn btn-primary">Ganti Sekarang</button>
+				<button type="button" class="btn btn-secondary" id="cancelModal" data-dismiss="modal">OK</button>
+				<!-- <button type="button" id="passwordPopup" class="btn btn-primary">Ganti Sekarang</button> -->
 			</div>
 		</div>
 	</div>
 </div>
 
-<form name="modalPassword" id="modalPassword" method="post" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
+<!-- <form name="modalPassword" id="modalPassword" method="post" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 	</div>
-</form>
+</form> -->
 
 <?php if (isset($pwd)): ?>
 	<script type="text/javascript">
@@ -53,55 +53,58 @@
 <?php endif; ?>
 
 <script type="text/javascript">
+$('#close').on('click', function() {
+	$('#modalReminder').modal('hide');
+})
 	$('#modalReminder').on('hide.bs.modal', function () {
 		// $('.modal .modal-dialog').attr('class', 'modal-dialog zoomOut animated');
 		$('#modalReminder').removeClass("bounceIn");
 		$('#modalReminder').addClass("zoomOut");
 	});
 
-	function whichTransitionEvent() {
-		var t,
-			el = document.createElement("fakeelement");
+	// function whichTransitionEvent() {
+	// 	var t,
+	// 		el = document.createElement("fakeelement");
+  //
+	// 	var transitions = {
+	// 		"transition": "transitionend",
+	// 		"OTransition": "oTransitionEnd",
+	// 		"MozTransition": "transitionend",
+	// 		"WebkitTransition": "webkitTransitionEnd"
+	// 	}
+  //
+	// 	for (t in transitions) {
+	// 		if (el.style[t] !== undefined) {
+	// 			return transitions[t];
+	// 		}
+	// 	}
+	// }
+  //
+	// var transitionEvent = whichTransitionEvent();
 
-		var transitions = {
-			"transition": "transitionend",
-			"OTransition": "oTransitionEnd",
-			"MozTransition": "transitionend",
-			"WebkitTransition": "webkitTransitionEnd"
-		}
-
-		for (t in transitions) {
-			if (el.style[t] !== undefined) {
-				return transitions[t];
-			}
-		}
-	}
-
-	var transitionEvent = whichTransitionEvent();
-
-	$("#passwordPopup").on('click', function() {
-		$('#modalReminder').modal('hide');
-		$(this).one(transitionEvent,
-			function(event) {
-				$('#modalPassword').modal({
-					show: true,
-					focus: true,
-					keyboard: false
-				});
-		});
-	});
-
-	$('#modalPassword').on('show.bs.modal', function() {
-		$('#modalPassword').removeClass("zoomOut");
-		$('#modalPassword').addClass("zoomIn");
-	});
-	$('#modalPassword').on('shown.bs.modal', function() {
-		$('#sandiLewat').focus();
-	});
-	$('#modalPassword').on('hide.bs.modal', function() {
-		$('#modalPassword').removeClass("zoomIn");
-		$('#modalPassword').addClass("zoomOut");
-	});
+	// $("#passwordPopup").on('click', function() {
+	// 	$('#modalReminder').modal('hide');
+	// 	$(this).one(transitionEvent,
+	// 		function(event) {
+	// 			$('#modalPassword').modal({
+	// 				show: true,
+	// 				focus: true,
+	// 				keyboard: false
+	// 			});
+	// 	});
+	// });
+  //
+	// $('#modalPassword').on('show.bs.modal', function() {
+	// 	$('#modalPassword').removeClass("zoomOut");
+	// 	$('#modalPassword').addClass("zoomIn");
+	// });
+	// $('#modalPassword').on('shown.bs.modal', function() {
+	// 	$('#sandiLewat').focus();
+	// });
+	// $('#modalPassword').on('hide.bs.modal', function() {
+	// 	$('#modalPassword').removeClass("zoomIn");
+	// 	$('#modalPassword').addClass("zoomOut");
+	// });
 </script>
 
 <!-- <script type="text/javascript">
@@ -210,19 +213,3 @@
 
 }, '');
 </script> -->
-
-<script>
-$(window).on('load', function(event) {
-	setTimeout(function () {
-		$(".alert").alert('close')
-	}, 3500);
-})
-
-$(function () {
-		$('body').on('close.bs.alert', function(e){
-				e.preventDefault();
-				e.stopPropagation();
-				$(e.target).slideUp();
-		});
-});
-</script>

@@ -54,10 +54,14 @@ class Beranda_model extends CI_Model
 			return $result->result();
 		}
 
-		function jumlahRenovasi($jumlah)
+		function jumlahRenovasi(string $status)
 		{
-			if ($jumlah!='ALL') {
-				$this->db->where('status', $jumlah);
+			if ($status!='ALL') {
+				$orStatus = explode("|", $status);
+				$this->db->where('status', $orStatus[0]);
+				foreach ($orStatus as $whereClause) {
+					$this->db->or_where('status', $whereClause);
+				}
 			}
 			$result = $this->db->get('proposal');
 			return $result->num_rows();
@@ -119,18 +123,18 @@ class Beranda_model extends CI_Model
 		{
 			if ($mode==1) {
 				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
-						$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
-						$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
 				$this->db->from('proposal');
 				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
-						$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
 				if ($ged!='ALL') {
 								// $this->db->where(array('dateDeleted' => NULL));
 					$this->db->where('gedung.idGedung', $ged);
 				} else {
-								$this->db->where('proposal.idProposal is NOT NULL', NULL, FALSE);
-						}
-						$this->db->group_by('idProposal');
+					$this->db->where('proposal.idProposal is NOT NULL', NULL, FALSE);
+				}
+				$this->db->group_by('idProposal');
 				$this->db->order_by('namaGedung', 'asc');
 			$this->db->order_by('dateCreated', 'asc');
 			} elseif ($mode==2) {
@@ -139,16 +143,38 @@ class Beranda_model extends CI_Model
 				$this->db->where('idProposal', $ged);
 				$this->db->order_by('idProposal', 'asc');
 			} elseif ($mode==3) {
-				$this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
+				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated');
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
 				$this->db->from('proposal');
 				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
-				$this->db->where('status', 0);
+				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+				$this->db->where(array(
+					'proposal.status' => 0,
+					'dateDeleted' => NULL
+				));
+				$this->db->group_by('idProposal');
 				$this->db->order_by('idProposal', 'asc');
 			} elseif ($mode==4) {
-				$this->db->select('idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, status, alokasiDana, dateCreated');
+				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
 				$this->db->from('proposal');
 				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
-				$this->db->where('status', 2);
+				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+				$this->db->where('proposal.status', 2);
+				$this->db->or_where('proposal.status', 6);
+				$this->db->group_by('idProposal');
+				$this->db->order_by('idProposal', 'asc');
+			} elseif ($mode==5) {
+				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
+				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
+				$this->db->from('proposal');
+				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
+				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
+				$this->db->where('proposal.status', 2);
+				$this->db->group_by('idProposal');
 				$this->db->order_by('idProposal', 'asc');
 			}
 

@@ -25,6 +25,7 @@
 		<!-- </ul> -->
 	<!-- </div> -->
 	<button type="submit" class="btn btn-success mt-2">Cek Pekerjaan Selesai</button>
+	<a type="button" class="btn btn-secondary float-right mt-2" href="<?= $back ?>">Kembali</a>
 </form>
 </div>
 </div>

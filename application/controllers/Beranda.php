@@ -36,7 +36,8 @@ class Beranda extends CI_Controller
 				$this->data['message'] = $this->session->flashdata('message');
 				$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
 				$this->data['jumlahBelum'] = $this->Beranda_model->jumlahRenovasi('0');
-				$this->data['jumlahSetuju'] = $this->Beranda_model->jumlahRenovasi('2');
+				$this->data['jumlahSetuju'] = $this->Beranda_model->jumlahRenovasi('2|6');
+				$this->data['jumlahTersedia'] = $this->Beranda_model->jumlahRenovasi('2');
 		}
 
 /**
@@ -72,8 +73,8 @@ class Beranda extends CI_Controller
 							$this->load->view('template/header', $data);
 							$this->load->view('template/navigation', $data);
 							$this->load->view('template/menu', $data);
+							$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 							$this->load->view('masuk/beranda_view', $data);
-							$this->load->view('template/footer', $data);
 						} elseif ($data['userLogin']['userLevel']==1 || $data['userLogin']['userLevel']==2 || $data['userLogin']['userLevel']==5) {
 							if ($this->session->flashdata('cari')) {
 									$data['listGedung'] = $this->session->flashdata('cari');
@@ -239,14 +240,13 @@ class Beranda extends CI_Controller
 		function dataRenovasi($ged)
 		{
 				$data = $this->data;
-				if ($this->session->flashdata('message')) {
-					$data['message'] = $this->session->flashdata('message');
-				}
 
 				if ($ged=='proposal') {
 						$result = $this->Beranda_model->getListRenovasi($ged, 3);
 				} elseif ($ged=='kerja') {
 						$result = $this->Beranda_model->getListRenovasi($ged, 4);
+				} elseif ($ged=='available') {
+					$result = $this->Beranda_model->getListRenovasi($ged, 5);
 				} else {
 						$result = $this->Beranda_model->getListRenovasi($ged, 1);
 				}
@@ -260,7 +260,7 @@ class Beranda extends CI_Controller
 								}
 								$date = new DateTime($row['dateCreated']);
 								$data['dataRenovasi'][$d]['dateCreated'] = $date->format('d-m-Y');
-								if ($row['dateDeleted']!=NULL) {
+								if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
 										$date = new DateTime($row['dateDeleted']);
 										$data['dataRenovasi'][$d]['dateDeleted'] = $date->format('d-m-Y');
 								}
@@ -298,8 +298,8 @@ class Beranda extends CI_Controller
 					$data['idModal'] = $row['idProposal'];
 					$data['modal'][$row['idProposal']] = $this->load->view('template/modal_delete', $data, TRUE);
 				}
+				$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 				$this->load->view('masuk/renovasi_view', $data);
-				$this->load->view('template/footer', $data);
 		}
 
 		/**
@@ -480,8 +480,8 @@ class Beranda extends CI_Controller
 							$data['idModal'] = $row['idPekerjaan'];
 							$data['modal'][$row['idPekerjaan']] = $this->load->view('template/modal_delete', $data, TRUE);
 						}
+						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 						$this->load->view('masuk/pekerjaan_view', $data);
-						$this->load->view('template/footer', $data);
 				}
 
 				// $p=0; $b=0;

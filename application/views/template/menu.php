@@ -14,7 +14,7 @@
 							<?php if ($userLogin['userLevel']=='1' || $userLogin['userLevel']=='2' || $userLogin['userLevel']=='4' || $userLogin['userLevel']=='5') { ?>
 							<li class="nav-item">
 								<?php if ($userLogin['userLevel']==4) {
-									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->segment(2)=='pekerjaan')?base_url():"").'">Renovasi Tersedia</a>';
+									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/available').'">Renovasi Tersedia <span class="badge badge-info">'.$jumlahTersedia.'</span></a>';
 								} else {
 									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/ALL').'">'.(($this->uri->uri_string()=='' || $this->uri->uri_string()=='beranda' || $this->uri->segment(2)=='ALL')?"Semua Renovasi":"Renovasi").' <span class="badge badge-info">'.$jumlah.'</span></a>';
 								}

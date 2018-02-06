@@ -1,4 +1,4 @@
-	<?php // $this->output->enable_profiler(TRUE); ?>
+	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
 		<?php if (isset($message)) {
 				echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
@@ -17,7 +17,7 @@
 						<div class="card-block col-lg-6 w-50">
 							<h5 class="card-title"><?php echo $row['judulProposal']; ?></h5>
 
-							<?php if ($row['dateDeleted']!=NULL) {
+							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
 											echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
 									} elseif ($row['deskripsiProposal']!=NULL) {
 										echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'].'</p>';
@@ -27,13 +27,13 @@
 						</div>
 						<div class="card-block col-lg-6 p-1 w-50 text-right">
 							<p class="card-subtitle text-muted">Tanggal Mulai Renovasi: <?= $row['dateCreated']?></p>
-							<p class="card-subtitle text-muted">Tanggal Selesai Renovasi: <?= ($row['dateDeleted']!=NULL)?$dataRenovasi[$r]['dateDeleted']:"-"?></p>
+							<p class="card-subtitle text-muted">Tanggal Selesai Renovasi: <?= (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL)?$dataRenovasi[$r]['dateDeleted']:"-"?></p>
 						</div>
 					</div>
 					<div class="row no-gutters pl-1">
 						<div class="card-block col-lg-6 pr-3">
 							<div class="progress">
-								<?php if ($row['dateDeleted']!=NULL) {
+								<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
 									echo '<div class="progress-bar progress-bar-striped bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>';
 								} elseif (isset($row['progress'])) {
 									if ($row['progress']==0) {
@@ -48,18 +48,21 @@
 								} ?>
 							</div>
 						</div>
+						<!-- definisi button -->
 						<div class="card-block col-lg-6 text-right">
 						<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 							<div class="btn-group float-right" role="group">
 								<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-								<a class="btn btn-outline-success<?= ($row['dateDeleted']!=NULL)?' disabled" aria-disabled="true':''?>" href="<?php echo base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button"><?= ($row['dateDeleted']!=NULL)?'Renovasi Telah Selesai':'Selesai Renovasi' ?></a>
+								<?php if ($row['status']!=6): ?>
+									<a class="btn btn-outline-success" href="<?php echo base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Selesai Renovasi</a>
+								<?php endif; ?>
 								<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
 								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
 							</div>
 						<?php } elseif ($userLogin['userLevel']==3) { ?>
-						<a class="btn btn-outline-info small-btn mr-3" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-							<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3){ ?>
-							<div class="btn-group float-right" role="group">
+						<div class="btn-group float-right" role="group">
+						<a class="btn btn-outline-info small-btn" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3 && $dataRenovasi[$r]['status']!=6){ ?>
 								<a class="btn btn-outline-success mini-btn" href="<?php echo base_url()."renovasi/setuju/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Setujui renovasi</a>
 								<a class="btn btn-outline-danger mini-btn" href="<?php echo base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
 							</div>
@@ -88,6 +91,7 @@
 			</div>
 		</div>
 	</div>
+	<?= $footer ?>
 
 	<script>
 	// $('.alert').addClass('animated fadeInUp');
