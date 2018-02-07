@@ -1,5 +1,5 @@
 <head>
-	<!-- css imports -->
+	<!-- core css imports -->
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
 
 	<!-- core javascript import -->
@@ -40,26 +40,8 @@
 								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?php echo $all_user[$u]['uid'] ?>">Delete User</button>
 							</div></th>
 						</tr>
-						<!-- Modal Delete -->
-						<div class="modal fade" id="modalHapus<?php echo $all_user[$u]['uid'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="modalDeleteTitle">Perhatian!</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										Apakah anda yakin ingin menghapus user?
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-										<a class="btn btn-danger" href="<?php echo base_url('manage/deleteUser/').$all_user[$u]['uid'] ?>" role="button">Delete User</a>
-									</div>
-								</div>
-							</div>
-						</div>
+						<?= isset($modal)?$modal:NULL ?>
+
 						<!-- Modal Reset -->
 						<div class="modal fade" id="modalReset<?php echo $all_user[$u]['uid'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalResetTitle" aria-hidden="true">
 							<div class="modal-dialog" role="document">

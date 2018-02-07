@@ -4,7 +4,6 @@
 	<div class="col-lg-3"></div>
 	<div class="col-lg-6">
 <form name="input" method="post" action="<?= (($mode=="insert")?base_url('index.php/Beranda/tambahPekerjaan'):base_url('index.php/Beranda/ubahPekerjaan').'/'.$dataPekerjaan[0]['idPekerjaan']) ?>">
-	<!-- <input type="hidden" value="<?php echo $idProposal; ?>" name="idProposal" /> -->
 	<?php if ($mode=="edit"): ?>
 		<div class="form-group">
 		<label for="judulProposal">Proposal</label>

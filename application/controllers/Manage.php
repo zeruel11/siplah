@@ -37,6 +37,8 @@ class Manage extends CI_Controller {
 				} else {
 					$data['all_user'][$u]['userLevel']='Pengguna Lain';
 				}
+				$data['idModal'] = $row['uid'];
+				$data['modal'][$row['uid']] = $this->load->view('template/modal_delete', $data, TRUE);
 				$u++;
 			}
 			if ($this->session->flashdata('message')) {

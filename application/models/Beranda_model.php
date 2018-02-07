@@ -128,7 +128,6 @@ class Beranda_model extends CI_Model
 				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
 				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
 				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
-				$this->db->from('proposal');
 				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
 				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
 				switch ($mode) {
@@ -154,8 +153,9 @@ class Beranda_model extends CI_Model
 						break;
 				}
 				$this->db->group_by('idProposal');
+				$this->db->order_by('namaGedung', 'asc');
 			}
-			$this->db->order_by('namaGedung', 'asc');
+			$this->db->from('proposal');
 			$this->db->order_by('dateCreated', 'asc');
 
 			$query = $this->db->get();

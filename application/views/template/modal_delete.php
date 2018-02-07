@@ -9,12 +9,12 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								Apakah anda yakin ingin menghapus <?= ($this->uri->segment(2)=="pekerjaan")?"pekerjaan":"renovasi" ?>?<br>
-								<strong>Data akan dihapus secara permanen!!</strong>
+								Apakah anda yakin ingin menghapus <?= ($this->uri->segment(1)=="renovasi")?(($this->uri->segment(2)=="pekerjaan")?"pekerjaan":"renovasi"):"user" ?>?<br>
+								<strong style="color: red">Data akan dihapus secara permanen!!</strong>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-								<a class="btn btn-danger" href="<?= (($this->uri->segment(2)=="pekerjaan")?base_url('beranda/hapusPekerjaan/'):base_url('renovasi/del/')).$idModal ?>" role="button">Hapus</a>
+								<a class="btn btn-danger" href="<?= (($this->uri->segment(1)=="renovasi")?(($this->uri->segment(2)=="pekerjaan")?base_url('beranda/hapusPekerjaan/'):base_url('renovasi/del/')):base_url('manage/deleteUser/')).$idModal ?>" role="button">Hapus</a>
 							</div>
 						</div>
 					</div>

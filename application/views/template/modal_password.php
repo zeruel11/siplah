@@ -40,19 +40,17 @@
 	</div>
 </form> -->
 
-<?php if (isset($pwd)): ?>
-	<script type="text/javascript">
+<script type="text/javascript">
+	<?php if (isset($pwd)): ?>
 	$(window).on('load', function(){
 	$('#modalReminder').modal({
 		show: true,
 		focus: true,
 		keyboard: false
-	})
-});
-	</script>
-<?php endif; ?>
+		})
+	});
+	<?php endif; ?>
 
-<script type="text/javascript">
 $('#close').on('click', function() {
 	$('#modalReminder').modal('hide');
 })
@@ -61,51 +59,51 @@ $('#close').on('click', function() {
 		$('#modalReminder').removeClass("bounceIn");
 		$('#modalReminder').addClass("zoomOut");
 	});
-
-	// function whichTransitionEvent() {
-	// 	var t,
-	// 		el = document.createElement("fakeelement");
-  //
-	// 	var transitions = {
-	// 		"transition": "transitionend",
-	// 		"OTransition": "oTransitionEnd",
-	// 		"MozTransition": "transitionend",
-	// 		"WebkitTransition": "webkitTransitionEnd"
-	// 	}
-  //
-	// 	for (t in transitions) {
-	// 		if (el.style[t] !== undefined) {
-	// 			return transitions[t];
-	// 		}
-	// 	}
-	// }
-  //
-	// var transitionEvent = whichTransitionEvent();
-
-	// $("#passwordPopup").on('click', function() {
-	// 	$('#modalReminder').modal('hide');
-	// 	$(this).one(transitionEvent,
-	// 		function(event) {
-	// 			$('#modalPassword').modal({
-	// 				show: true,
-	// 				focus: true,
-	// 				keyboard: false
-	// 			});
-	// 	});
-	// });
-  //
-	// $('#modalPassword').on('show.bs.modal', function() {
-	// 	$('#modalPassword').removeClass("zoomOut");
-	// 	$('#modalPassword').addClass("zoomIn");
-	// });
-	// $('#modalPassword').on('shown.bs.modal', function() {
-	// 	$('#sandiLewat').focus();
-	// });
-	// $('#modalPassword').on('hide.bs.modal', function() {
-	// 	$('#modalPassword').removeClass("zoomIn");
-	// 	$('#modalPassword').addClass("zoomOut");
-	// });
 </script>
+	<!-- function whichTransitionEvent() {
+		var t,
+			el = document.createElement("fakeelement");
+
+		var transitions = {
+			"transition": "transitionend",
+			"OTransition": "oTransitionEnd",
+			"MozTransition": "transitionend",
+			"WebkitTransition": "webkitTransitionEnd"
+		}
+
+		for (t in transitions) {
+			if (el.style[t] !== undefined) {
+				return transitions[t];
+			}
+		}
+	}
+
+	var transitionEvent = whichTransitionEvent();
+
+	$("#passwordPopup").on('click', function() {
+		$('#modalReminder').modal('hide');
+		$(this).one(transitionEvent,
+			function(event) {
+				$('#modalPassword').modal({
+					show: true,
+					focus: true,
+					keyboard: false
+				});
+		});
+	});
+
+	$('#modalPassword').on('show.bs.modal', function() {
+		$('#modalPassword').removeClass("zoomOut");
+		$('#modalPassword').addClass("zoomIn");
+	});
+	$('#modalPassword').on('shown.bs.modal', function() {
+		$('#sandiLewat').focus();
+	});
+	$('#modalPassword').on('hide.bs.modal', function() {
+		$('#modalPassword').removeClass("zoomIn");
+		$('#modalPassword').addClass("zoomOut");
+	}); -->
+
 
 <!-- <script type="text/javascript">
 	$(#test).click(function () {

@@ -31,7 +31,7 @@
 							<span class="sr-only">Manage User</span>
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="<?= base_url('manage') ?>">Manage User</a>
+						<a class="dropdown-item" target="_blank" href="<?= base_url('manage') ?>">Manage User</a>
 						<a class="dropdown-item" href="<?= base_url('manage/user_baru') ?>">Tambah User</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a>
