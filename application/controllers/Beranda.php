@@ -240,15 +240,19 @@ class Beranda extends CI_Controller
 		function dataRenovasi($ged)
 		{
 				$data = $this->data;
-
-				if ($ged=='proposal') {
+				switch ($ged) {
+					case 'proposal':
+						$result = $this->Beranda_model->getListRenovasi($ged, 2);
+						break;
+					case 'kerja':
 						$result = $this->Beranda_model->getListRenovasi($ged, 3);
-				} elseif ($ged=='kerja') {
+						break;
+					case 'available':
 						$result = $this->Beranda_model->getListRenovasi($ged, 4);
-				} elseif ($ged=='available') {
-					$result = $this->Beranda_model->getListRenovasi($ged, 5);
-				} else {
+						break;
+					default:
 						$result = $this->Beranda_model->getListRenovasi($ged, 1);
+						break;
 				}
 				$data['dataRenovasi'] = $result;
 
@@ -374,7 +378,7 @@ class Beranda extends CI_Controller
 		function ubahRenovasi($renovasi)
 		{
 				$data = $this->data;
-				$data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 2);
+				$data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 0);
 				$data['mode'] = "edit";
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
