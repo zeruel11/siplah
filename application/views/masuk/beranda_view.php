@@ -6,22 +6,22 @@
 	<p class="blockquote text-success"><?php echo "-- Total luas gedung terbangun: ".$luasTotal[0]->luas." m<sup>2</sup> --"; ?></p>
 </div>
 <div class="col-lg-4">
-	<?php if (isset($invalid)) {
-		echo '<div class="alert alert-primary fade show animated fadeInDown" role="alert">
+	<?php if (isset($invalid)): ?>
+	<div class="alert alert-primary fade show animated fadeInDown" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
-		</button>'.$invalid.'</div>';
-} ?>
+		</button><?= $invalid ?></div>
+	<?php endif ?>
 	<div class="card">
 		<ul class="list-group list-group-flush">
-			<?php $g=0; foreach ($listGedung as $row) { ?>
+			<?php $g=0; foreach ($listGedung as $row): ?>
 			<li class="list-group-item list-group-item-action">
-				<a class="card-link" href="<?php echo base_url()."gedung/".$row['idGedung']; ?>">
-					<?php echo $row['namaGedung']; ?>
+				<a class="card-link" href="<?= base_url()."gedung/".$row['idGedung']; ?>">
+					<?= $row['namaGedung']; ?>
 				</a>
-				<a class="btn btn-outline-primary btn-sm float-right" href="<?php echo base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
+				<a class="btn btn-outline-primary btn-sm float-right" href="<?= base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>
 			</li>
-			<?php $g++; } ?>
+		<?php $g++; endforeach ?>
 		</ul>
 	</div>
 </div>

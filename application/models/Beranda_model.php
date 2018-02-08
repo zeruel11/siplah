@@ -14,7 +14,7 @@ class Beranda_model extends CI_Model
  * @param  mixed        $mode list gedung yang diambil
  * @return array              sql result
  */
-		public function getListGedung($mode)
+		public function getListGedung($mode = 'full')
 		{
 			if ($mode=='sarpras') {
 				$this->db->select('gedung.idGedung, kodeGedung, namaGedung, luasGedung, x, y');
@@ -22,7 +22,10 @@ class Beranda_model extends CI_Model
 				$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
 				$this->db->join('proposal', 'proposal.idGedung = gedung.idGedung', 'right');
 				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
-				$this->db->where('pekerjaan.status', '0');
+				$this->db->where(array(
+					'proposal.status' => '2',
+					'pekerjaan.status' => '0'
+				));
 				$this->db->order_by('namaGedung', 'asc');
 				$this->db->group_by('idGedung');
 				$this->db->limit(8);
@@ -49,16 +52,27 @@ class Beranda_model extends CI_Model
  */
 		public function totalLuas()
 		{
-			$sql = "SELECT SUM(luasGedung) AS luas FROM gedung";
-			$result = $this->db->query($sql);
+			// $sql = "SELECT SUM(luasGedung) AS luas FROM gedung";
+			$this->db->select_sum('luasGedung', 'luas');
+			$result = $this->db->get('gedung');
 			return $result->result();
 		}
 
-		function jumlahRenovasi(string $status)
+		function jumlahRenovasi($status)
 		{
-			if ($status!='ALL') {
+			if (is_int($status)) {
+				$this->db->where('idGedung', $status);
+			} elseif ($status=='spr') {
+				$this->db->select('idGedung');
+				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
+				$this->db->where(array(
+					'proposal.status' => '2',
+					'pekerjaan.status' => '0'
+				));
+				$this->db->group_by('idGedung');
+			} elseif ($status!='ALL') {
 				$orStatus = explode("|", $status);
-				$this->db->where('status', $orStatus[0]);
+				// $this->db->where('status', $orStatus[0]);
 				foreach ($orStatus as $whereClause) {
 					$this->db->or_where('status', $whereClause);
 				}
@@ -112,14 +126,20 @@ class Beranda_model extends CI_Model
 			}
 		}
 
+		function deleteGedung(ing $ged)
+		{
+			$this->db->delete('gedung', array('idGedung' => $ged));
+			return $this->db->affected_rows();
+		}
+
 /**
  * database read list renovasi/proposal
  * @method getListRenovasi
  * @param  string           $ged  idGedung, 'ALL'
- * @param  int             $mode which proposal to get
+ * @param  string             $mode which proposal to get
  * @return array                data renovasi/proposal
  */
-		function getListRenovasi(string $ged, int $mode)
+		function getListRenovasi(string $ged, $mode)
 		{
 			if ($mode==0) {
 					$this->db->select('idProposal, judulProposal, deskripsiProposal, status');

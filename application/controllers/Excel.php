@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Excel extends CI_Controller
 {
-    public function downloadExcel()
+    function downloadExcel()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -30,14 +30,19 @@ class Excel extends CI_Controller
         $writer->save('php://output');
     }
 
-		public function writeExcel()
+		function writeExcel()
 		{
 			$spreadsheet = new Spreadsheet();
 			$sheet = $spreadsheet->getActiveSheet();
 			$sheet->setCellValue('A1', 'Hello World !');
 
-			// $writer = new Xlsx($spreadsheet);
-			// $writer->save('files/excel/hello world.xlsx');
+			$writer = new Xlsx($spreadsheet);
+			$writer->save('files/excel/hello world.xlsx');
+		}
+
+		function readExcel($value='')
+		{
+			# code...
 		}
 }
 

@@ -1,5 +1,5 @@
+	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10">
-		<?php $this->output->enable_profiler(TRUE); ?>
 		<?php if (isset($message)) {
 				echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -42,6 +42,8 @@
 	<?php } ?>
 	<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 </div>
+</div>
+</main>
 <?= $footer ?>
 
 <script>

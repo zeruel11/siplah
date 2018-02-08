@@ -5,7 +5,7 @@
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 				</button>'.$message.'</div>';
-		} if ($dataRenovasi[0]['idProposal']!=null) {
+		} if (isset($dataRenovasi) && $dataRenovasi[0]['idProposal']!=null) {
 			$r=0; foreach ($dataRenovasi as $row) {
 				if ($r==0) {
 					echo '<h3 class="card-title mt-3">Gedung '.$row['namaGedung'] .'</h3>';
@@ -15,7 +15,7 @@
 				<div class="card mt-2">
 					<div class="row no-gutters">
 						<div class="card-block col-lg-6 w-50">
-							<h5 class="card-title"><?php echo $row['judulProposal']; ?></h5>
+							<h5 class="card-title"><?= $row['judulProposal']; ?></h5>
 
 							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
 											echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
@@ -52,23 +52,23 @@
 						<div class="card-block col-lg-6 text-right">
 						<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
 							<div class="btn-group float-right" role="group">
-								<a class="btn btn-outline-info" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+								<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 								<?php if ($row['status']!=6): ?>
-									<a class="btn btn-outline-success" href="<?php echo base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Selesai Renovasi</a>
+									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Selesai Renovasi</a>
 								<?php endif; ?>
-								<a class="btn btn-outline-warning" href="<?php echo base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
-								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?php echo $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
+								<a class="btn btn-outline-warning" href="<?= base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
+								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?= $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
 							</div>
 						<?php } elseif ($userLogin['userLevel']==3) { ?>
 						<div class="btn-group float-right" role="group">
-						<a class="btn btn-outline-info small-btn" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+						<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 							<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3 && $dataRenovasi[$r]['status']!=6){ ?>
-								<a class="btn btn-outline-success mini-btn" href="<?php echo base_url()."renovasi/setuju/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Setujui renovasi</a>
-								<a class="btn btn-outline-danger mini-btn" href="<?php echo base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
+								<a class="btn btn-outline-success mini-btn" href="<?= base_url()."renovasi/setuju/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Setujui renovasi</a>
+								<a class="btn btn-outline-danger mini-btn" href="<?= base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
 							</div>
 							<?php }
 						} else { ?>
-							<a class="btn btn-outline-info small-btn" href="<?php echo base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 						<?php } ?>
 						</div>
 					</div>
@@ -78,12 +78,12 @@
 
 				<?php $r++; } ?>
 		<?php } else { ?>
-			<h4 class="card-text">Gedung <?php echo $dataRenovasi[0]['namaGedung']; ?> belum memiliki data renovasi</h4>
+			<h4 class="card-text"><?= (isset($dataRenovasi)?'Gedung '.$dataRenovasi[0]['namaGedung'].' belum memiliki data renovasi':'Data renovasi tidak tersedia/belum disetujui') ?></h4>
 		<?php } ?>
 		<div class="row">
 			<div class="col-lg-9">
 		<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) && $this->uri->segment(2)!='ALL') { ?>
-			<a class="btn btn-outline-success mt-3" href="<?php echo base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
+			<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
 		<?php } ?>
 			</div>
 			<div class="col-lg-3">
@@ -91,6 +91,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+</main>
 	<?= $footer ?>
 
 	<script>
