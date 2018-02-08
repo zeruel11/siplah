@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- Modal Delete -->
 				<div class="modal fade" id="modalHapus<?= $idModal ?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">

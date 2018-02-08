@@ -39,6 +39,7 @@ class Manage extends CI_Controller {
 				}
 				$data['idModal'] = $row['uid'];
 				$data['modal'][$row['uid']] = $this->load->view('template/modal_delete', $data, TRUE);
+				$data['modalR'][$row['uid']] = $this->load->view('template/modal_reset', $data, TRUE);
 				$u++;
 			}
 			if ($this->session->flashdata('message')) {
