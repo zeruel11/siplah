@@ -26,4 +26,5 @@
 	<a type="button" class="btn btn-secondary float-right mt-2" href="<?= $back ?>">Kembali</a>
 </form>
 </div>
-</div>
+</main>
+<?= (isset($footer))?$footer:'' ?>

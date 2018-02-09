@@ -152,7 +152,42 @@ class Beranda extends CI_Controller
 
 		function tambahGedung()
 		{
-			# code...
+			$data = $this->data;
+			$data['mode']="insert";
+			$data['cancel'] = $this->session->userdata['refered_from']['url'];
+
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan judul'
+			));
+			$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan deskripsi renovasi'
+			));
+			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
+
+			if ($this->form_validation->run() == false) {
+					$this->load->view('template/header', $data);
+					$this->load->view('template/navigation', $data);
+					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+					$this->load->view('masuk/gedung_form', $data);
+			} else {
+					// $id = $data['gedung_renovasi'][0]['idGedung'];
+					$send = array(
+					'idGedung'=>$this->session->userdata['refered_from']['id'],
+					'judulProposal'=>$this->input->post('judulProposalForm'),
+					'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+					);
+					$result = $this->Beranda_model->createGedung($send);
+					if ($result==1) {
+						$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
+					}
+
+					redirect($this->session->userdata['refered_from']['url']);
+			}
 		}
 
 		function ubahGedung($ged)
@@ -357,9 +392,10 @@ class Beranda extends CI_Controller
 
 				$this->load->library('form_validation');
 				$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
-					'required', 'callback__regex_check'
+					'required', 'callback__regex_check', 'min_length[5]'
 				), array(
-					'required' => 'Harap masukkan judul'
+					'required' => 'Harap masukkan judul',
+					'min_length' => 'Judul harus lebih deskriptif'
 				));
 				$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
 					'required', 'callback__regex_check'
@@ -404,9 +440,10 @@ class Beranda extends CI_Controller
 
 				$this->load->library('form_validation');
 				$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
-					'required', 'callback__regex_check'
+					'required', 'callback__regex_check', 'min_length[5]'
 				), array(
-					'required' => 'Harap masukkan judul'
+					'required' => 'Harap masukkan judul',
+					'min_length' => 'Judul harus lebih deskriptif'
 				));
 				$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
 					'required', 'callback__regex_check'
@@ -497,8 +534,8 @@ class Beranda extends CI_Controller
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
 						$this->load->view('template/menu', $data);
+						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 						$this->load->view('masuk/pekerjaan_ceklis', $data);
-						$this->load->view('template/footer', $data);
 				} else {
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
@@ -506,15 +543,6 @@ class Beranda extends CI_Controller
 						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 						$this->load->view('masuk/pekerjaan_view', $data);
 				}
-
-				// $p=0; $b=0;
-				// foreach ($data['dataPekerjaan'] as $row) {
-				//     if ($data['dataPekerjaan'][$b]['status']=='1') {
-				//         $b++;
-				//     }
-				//     $p++;
-				// }
-				// $data['proses'] = round($b/count($data['dataPekerjaan']), 2)*100;
 		}
 
 		/**
@@ -604,7 +632,7 @@ class Beranda extends CI_Controller
 						'detailPekerjaan'=>$this->input->post('detailPekerjaanForm'),
 						'status'=>'0'
 						);
-						$result = $this->Beranda_model->updatePekerjaan($kerja, $send);
+						$result = $this->Beranda_model->updatePekerjaan($send, $kerja);
 						if ($result==1) {
 								$this->session->set_flashdata('message', 'Pekerjaan telah diupdate');
 						}
@@ -621,17 +649,29 @@ class Beranda extends CI_Controller
 		{
 				$data=$this->data;
 				$check = $this->input->post('pekerjaanCheck');
-				foreach ($check as $id) {
-						$send = array(
-						'status'=>1
-					);
-						$result = $this->Beranda_model->donePekerjaan((int)$id, $send);
-				}
-				if ($result==1) {
+
+				$send = array();
+     		foreach($check as $key=>$value) {
+     		    $send[] = array(
+     		    	'idPekerjaan'=>$value,
+     		    	'status'=>'1'
+     		    );
+     		}
+
+				$result = $this->Beranda_model->updatePekerjaan($send);
+
+				// $data['test'] = $result;
+				// $this->load->view('test', $data, FALSE);
+				if ($result>0) {
 						$this->session->set_flashdata('message', 'Update pekerjaan selesai');
 				}
 
 				redirect($this->session->userdata['refered_from']['url']);
+		}
+
+		function unggahPekerjaan($file)
+		{
+			$file;
 		}
 
 		function _regex_check(string $form_value)
@@ -650,7 +690,7 @@ class Beranda extends CI_Controller
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
 			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
 			// $this->load->view('template/modal');
-			// $this->load->view('test');
+			$this->load->view('test');
 
 	   	// $spreadsheet = new Spreadsheet();
 	   	// $sheet = $spreadsheet->getActiveSheet();

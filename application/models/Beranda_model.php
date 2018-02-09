@@ -126,10 +126,20 @@ class Beranda_model extends CI_Model
 			}
 		}
 
-		function deleteGedung(ing $ged)
+		function deleteGedung(int $ged)
 		{
 			$this->db->delete('gedung', array('idGedung' => $ged));
 			return $this->db->affected_rows();
+		}
+
+		function createGedung()
+		{
+			# code...
+		}
+
+		function updateGedung(int $ged)
+		{
+			# code...
 		}
 
 /**
@@ -278,18 +288,15 @@ class Beranda_model extends CI_Model
 			return $this->db->affected_rows();
 		}
 
-		function donePekerjaan($id, $data)
+		function updatePekerjaan($data, $kerja = NULL)
 		{
-			$this->db->where('idPekerjaan', $id);
-			$this->db->update('pekerjaan', $data);
+			if ($kerja!=NULL) {
+				$this->db->where('idPekerjaan', $kerja);
+				$this->db->update('pekerjaan', $data);
 				return $this->db->affected_rows();
-		}
-
-		function updatePekerjaan($kerja, $data)
-		{
-			$this->db->where('idPekerjaan', $kerja);
-			$this->db->update('pekerjaan', $data);
-			return $this->db->affected_rows();
+			} else {
+				return $this->db->update_batch('pekerjaan', $data, 'idPekerjaan');
+			}
 		}
 
 		function cekPekerjaan($kerja)

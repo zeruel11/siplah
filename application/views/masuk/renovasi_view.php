@@ -67,9 +67,11 @@
 								<a class="btn btn-outline-danger mini-btn" href="<?= base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
 							</div>
 							<?php }
-						} else { ?>
-							<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-						<?php } ?>
+						} elseif($userLogin['userLevel']==4) { ?>
+							<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Ceklis Pekerjaan</a>
+						<?php } else { ?>
+						<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
