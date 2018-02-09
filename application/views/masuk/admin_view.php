@@ -1,11 +1,11 @@
 <head>
 	<!-- core css imports -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/bootstrap.min.css"/>
 
 	<!-- core javascript import -->
-	<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" charset="utf-8"></script>
-	<script src="<?php echo base_url(); ?>assets/js/popper.min.js" charset="utf-8"></script>
-	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="<?= base_url(); ?>assets/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+	<script src="<?= base_url(); ?>assets/js/popper.min.js" charset="utf-8"></script>
+	<script src="<?= base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -30,14 +30,14 @@
 				<tbody>
 					<?php $u=0; foreach ($all_user as $row) { ?>
 						<tr>
-							<th><?php echo $all_user[$u]['uid']; ?></th>
-							<th><?php echo $all_user[$u]['username']; ?></th>
-							<th><?php echo $all_user[$u]['namaLengkap']; ?></th>
-							<th><?php echo $all_user[$u]['userLevel']; ?></th>
+							<th><?= $all_user[$u]['uid']; ?></th>
+							<th><?= $all_user[$u]['username']; ?></th>
+							<th><?= $all_user[$u]['namaLengkap']; ?></th>
+							<th><?= $all_user[$u]['userLevel']; ?></th>
 							<th><div class="btn-group" role="group" aria-label="Basic example">
-								<a class="btn btn-primary" href="<?php echo base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
-								<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalReset<?php echo $all_user[$u]['uid'] ?>">Reset Password</button>
-								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?php echo $all_user[$u]['uid'] ?>">Delete User</button>
+								<a class="btn btn-primary" href="<?= base_url('manage/updateUser/').$all_user[$u]['uid'] ?>" role="button">Update User</a>
+								<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalReset<?= $all_user[$u]['uid'] ?>">Reset Password</button>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus<?= $all_user[$u]['uid'] ?>">Delete User</button>
 							</div></th>
 						</tr>
 
@@ -50,8 +50,8 @@
 			</table>
 	<?php } ?>
 
-	<a class="btn btn-success" href="<?php echo base_url('manage/user_baru') ?>" role="button">Add User</a>
-	<a class="btn btn-secondary float-right" href="<?php echo base_url('beranda') ?>" role="button">HOME</a>
+	<a class="btn btn-success" href="<?= base_url('manage/user_baru') ?>" role="button">Add User</a>
+	<a class="btn btn-secondary float-right" href="<?= base_url('beranda') ?>" role="button">HOME</a>
 </main>
 </body>
 

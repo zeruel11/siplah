@@ -146,8 +146,8 @@ class Beranda extends CI_Controller
 				if ($this->session->userdata('logged_in')) {
 						$this->load->view('template/menu', $data);
 				}
-				$this->load->view('data_gedung_view', $data);
-				$this->load->view('template/footer', $data);
+				$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+				$this->load->view('gedung_view', $data);
 		}
 
 		function tambahGedung()
