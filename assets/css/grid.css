@@ -112,6 +112,29 @@ main {
 }
 
 /**
+ * file upload
+ */
+#customFile .custom-file-control:lang(en)::after {
+  content: "Pilih file excel";
+}
+
+#customFile .custom-file-control:lang(en)::before {
+  content: "Browse...";
+}
+
+/*when a value is selected, this class removes the content */
+#customFile .custom-file-control.selected:lang(en)::after {
+  content: "" !important;
+}
+
+.custom-file {
+  overflow: hidden;
+}
+.custom-file-control {
+  white-space: nowrap;
+}
+
+/**
  * style for leaflet image map
  */
 #image-map {

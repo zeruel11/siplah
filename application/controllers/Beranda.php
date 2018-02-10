@@ -669,11 +669,6 @@ class Beranda extends CI_Controller
 				redirect($this->session->userdata['refered_from']['url']);
 		}
 
-		function unggahPekerjaan($file)
-		{
-			$file;
-		}
-
 		function _regex_check(string $form_value)
 		{
 			if (preg_match('/^([[:alpha:]]|\W+[[:alpha:]]+)/', $form_value)) {
@@ -686,11 +681,15 @@ class Beranda extends CI_Controller
 
 		public function testing()
 		{
+			$data=$this->data;
 			// $this->load->view('template/header');
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
 			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
 			// $this->load->view('template/modal');
-			$this->load->view('test');
+			$this->load->view('template/header', $data);
+      $this->load->view('template/navigation', $data);
+      $this->load->view('template/modal_upload', $data);
+      $this->load->view('template/footer');
 
 	   	// $spreadsheet = new Spreadsheet();
 	   	// $sheet = $spreadsheet->getActiveSheet();
