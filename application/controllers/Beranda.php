@@ -114,7 +114,7 @@ class Beranda extends CI_Controller
 						// $data['userLogin'] = "false";
 						if ($this->session->flashdata('warn')=='logged_out') {
 							$data['warn'] = $this->session->flashdata('warn');
-							$data['modal'] = $this->load->view('template/modal_logout', NULL, TRUE);
+							$data['modal'] = $this->load->view('template/modal_logged_out', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
