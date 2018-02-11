@@ -50,3 +50,6 @@ application/tests/*
 ## Documentations & versioning filter
 /build/
 /application/docs
+
+## Uploaded files
+## /files/
