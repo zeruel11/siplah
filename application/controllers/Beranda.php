@@ -541,6 +541,7 @@ class Beranda extends CI_Controller
 						$this->load->view('template/navigation', $data);
 						$this->load->view('template/menu', $data);
 						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+						$data['modalUnggah'] = $this->load->view('template/modal_upload', $data, TRUE);
 						$this->load->view('masuk/pekerjaan_view', $data);
 				}
 		}
@@ -667,6 +668,17 @@ class Beranda extends CI_Controller
 				}
 
 				redirect($this->session->userdata['refered_from']['url']);
+		}
+
+		function unggahPekerjaan()
+		{
+			$data=$this->data;
+			$data['cancel'] = $this->session->userdata['refered_from']['url'];
+
+			$this->load->view('template/header', $data);
+			$this->load->view('template/navigation', $data);
+			$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+			$data['modal'] = $this->load->view('template/modal_upload', $data, TRUE);
 		}
 
 		function _regex_check(string $form_value)

@@ -1,4 +1,6 @@
-changed redirection method to userdata, also affected how id is passed.
-added alert for CUD
+- changed redirection method to userdata, also affected how id is passed.
+- added alert for CUD
 
-added feature to reset user password
+- added feature to reset user password
+
+- added feature to upload excel for list pekerjaan

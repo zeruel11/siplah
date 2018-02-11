@@ -38,12 +38,14 @@
 		<?php endif ?>
 		<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
 			<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
-			<a class="btn btn-outline-success mt-3" href="unggah" role="button">Unggah Pekerjaan</a>
+			<!-- <a class="btn btn-outline-success mt-3" href="unggah" role="button">Unggah Pekerjaan</a> -->
+			<button type="button" class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#modalUnggah">Unggah Pekerjaan</button>
 		<?php endif ?>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	</div>
 </div>
 </main>
+<?= isset($modalUnggah)?$modalUnggah:"" ?>
 <?= $footer ?>
 
 <script>
