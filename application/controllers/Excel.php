@@ -15,6 +15,7 @@ public $data;
 	{
 		parent::__construct();
 		$this->load->library('upload');
+		$this->load->model('Excel_model');
 		if ($this->session->userdata('logged_in')) {
 			$this->data['userLogin'] = $this->session->userdata('logged_in');
 		} elseif ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'beranda' && $this->uri->uri_string() != 'login' && $this->uri->uri_string() != 'search' && ! preg_match('/^gedung\/\d+/', $this->uri->uri_string())) {
@@ -118,21 +119,31 @@ public function index()
       	$highestColumn = $sheet->getHighestColumn();
       	$colNumber = Coordinate::columnIndexFromString($highestColumn);
 
-      	// $data['test'] = $highestColumn;
-
-      	// if ($highestColumn>1) {
-      		for ($col=1; $col <= $colNumber; $col++) {
-      			if ($sheet->getCellByColumnAndRow($col, 1)->getValue()=='Deskripsi Pekerjaan') {
-      				$data['test'] = 'true';
-
-      			}
+      	// Find column 'deskripsi pekerjaan'
+      	for ($col=1; $col <= $colNumber; $col++) {
+      		$check = $sheet->getCellByColumnAndRow($col, 1)->getValue();
+      		if ($check=='Deskripsi Pekerjaan' || $check=='deskripsi pekerjaan') {
+      			$header = $col;
       		}
-      	// } else {
-      	// 	$data['test'] = 'not found';
-      		$this->load->view('test', $data, FALSE);
-      	// }
+      	}
 
-      	// $this->Excel_model->importPekerjaan();
+      	$proposalId = (int)$this->session->userdata['refered_from']['id'];
+
+      	$send = array();
+      	for ($row=2; $row <= $highestRow; $row++) {
+      		$list = $sheet->getCellByColumnAndRow($header, $row)->getValue();
+      		$send[] = array(
+      			'idProposal'=>$proposalId,
+      			'detailPekerjaan'=>$list
+      		);
+      	}
+      	// $this->load->view('test', $data, FALSE);
+
+      	$result = $this->Excel_model->importPekerjaan($send);
+      	if ($result>0) {
+      		$this->session->set_flashdata('message', 'Upload excel berhasil');
+      	}
+      	redirect($this->session->userdata['refered_from']['url'],'refresh');
       }
 		}
 }

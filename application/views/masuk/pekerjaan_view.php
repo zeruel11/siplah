@@ -4,7 +4,7 @@
 			<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-				</button><?= $message ?></div>'
+				</button><?= $message ?></div>
 		<?php endif ?>
 		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL): ?>
 			<h4 class="card-title">Renovasi: <?= $dataPekerjaan[0]['judulProposal']; ?></h4>
