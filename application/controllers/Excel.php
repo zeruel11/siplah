@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class Excel extends CI_Controller
 {
@@ -27,6 +28,17 @@ public $data;
 						// }
 				}
 	}
+
+public function index()
+{
+	$data=$this->data;
+
+	$this->load->view('template/header', $data);
+  $this->load->view('template/navigation', $data);
+  $this->load->view('template/footer', NULL, TRUE);
+  $this->load->view('template/modal_upload', $data);
+}
+
     function downloadExcel()
     {
         $spreadsheet = new Spreadsheet();
@@ -82,14 +94,45 @@ public $data;
       }
       else{
       	$data['upload_data'] = $this->upload->data('file_name');
-      	$new_name = $this->upload->data('file_path').'/uid'.$data['userLogin']['uid'].'_('.time().')_'.$this->upload->data('orig_name');
+      	$new_name = $this->upload->data('file_path').'uid'.$data['userLogin']['uid'].'_('.time().')_'.$this->upload->data('orig_name');
       	rename(
 				    $this->upload->data('full_path'),
 				    $new_name
 				);
       	// $this->session->set_flashdata('message', $result);
-      	$this->load->view('success', $data, FALSE);
+      	// $this->load->view('success', $data, FALSE);
       	// redirect('beranda','refresh');
+
+      	$inputFileName = $new_name;
+      	try {
+      		$inputFileType = IOFactory::identify($inputFileName);
+      		$reader = IOFactory::createReader($inputFileType);
+      		$spreadsheet = $reader->load($inputFileName);
+      	} catch (Exception $e) {
+      		// delete_files($new_name);
+      		die('Error loading file "'.$data['upload_data'].'": '.$e->getMessage());
+      	}
+
+      	$sheet = $spreadsheet->getSheet(0);
+      	$highestRow = $sheet->getHighestRow();
+      	$highestColumn = $sheet->getHighestColumn();
+      	$colNumber = Coordinate::columnIndexFromString($highestColumn);
+
+      	// $data['test'] = $highestColumn;
+
+      	// if ($highestColumn>1) {
+      		for ($col=1; $col <= $colNumber; $col++) {
+      			if ($sheet->getCellByColumnAndRow($col, 1)->getValue()=='Deskripsi Pekerjaan') {
+      				$data['test'] = 'true';
+
+      			}
+      		}
+      	// } else {
+      	// 	$data['test'] = 'not found';
+      		$this->load->view('test', $data, FALSE);
+      	// }
+
+      	// $this->Excel_model->importPekerjaan();
       }
 		}
 }
