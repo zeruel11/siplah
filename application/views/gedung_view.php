@@ -10,7 +10,7 @@
 				</ul>
 				<?php if (isset($userLogin)): ?>
 					<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
-						<a class="btn btn-primary mt-2" href="<?= base_url() ?>" role="button">Ubah Data Gedung</a>
+						<a class="btn btn-primary mt-2" href="<?= base_url('gedung/edit').$detailGedung[0]['idGedung'] ?>" role="button">Ubah Data Gedung</a>
 					<?php endif ?>
 					<a class="btn btn-info mt-2" href="<?= base_url('renovasi/').$detailGedung[0]['idGedung'] ?>" role="button">Data Renovasi</a>
 				<?php endif ?>

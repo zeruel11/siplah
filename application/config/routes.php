@@ -55,6 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'beranda/masuk';
 $route['logout'] = 'beranda/keluar';
 $route['gedung/(:num)'] = 'beranda/detailGedung/$1';
+$route['gedung/edit(:num)'] = 'beranda/ubahGedung/$1';
 // $route['renovasi/proposal'] = 'beranda/dataRenovasi/$1';
 // $route['renovasi/kerja'] = 'beranda/dataRenovasi/$1';
 $route['renovasi/(:any)'] = 'beranda/dataRenovasi/$1';

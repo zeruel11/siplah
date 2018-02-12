@@ -89,7 +89,7 @@ class Beranda extends CI_Controller
 					// if ($this->session->userdata('pwd')) {
 						$data['pwd'] = $this->session->userdata('pwd');
 					// }
-					$data['modal'] = $this->load->view('template/modal_password', $data, TRUE);
+					$data['modal'] = $this->load->view('masuk/modal/modal_password', $data, TRUE);
 					if ($data['userLogin']['userLevel']==4) {
 						// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
 						$this->load->view('template/header', $data);
@@ -114,7 +114,7 @@ class Beranda extends CI_Controller
 						// $data['userLogin'] = "false";
 						if ($this->session->flashdata('warn')=='logged_out') {
 							$data['warn'] = $this->session->flashdata('warn');
-							$data['modal'] = $this->load->view('template/modal_logged_out', NULL, TRUE);
+							$data['modal'] = $this->load->view('masuk/modal/modal_logged_out', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
@@ -133,12 +133,16 @@ class Beranda extends CI_Controller
 		function detailGedung($ged)
 		{
 				$data = $this->data;
-				$result = $this->Beranda_model->getDataGedung($ged);
+				$array = array(
+					'url' => base_url().$this->uri->uri_string()
+				);
+				$this->session->set_userdata('refered_from', $array);
 
+				$result = $this->Beranda_model->getDataGedung($ged);
 				if ($result) {
 						$data['detailGedung'] = $result;
 				} else {
-						$data['detailGedung'] = null;
+						$data['detailGedung'] = NULL;
 				}
 
 				$this->load->view('template/header', $data);
@@ -157,15 +161,30 @@ class Beranda extends CI_Controller
 			$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('judulProposalForm', 'judul proposal', array(
+			$this->form_validation->set_rules('namaGedungForm', 'nama gedung', array(
 				'required', 'callback__regex_check'
 			), array(
-				'required' => 'Harap masukkan judul'
+				'required' => 'Harap masukkan {field}'
 			));
-			$this->form_validation->set_rules('deskripsiProposalForm', 'deskripsi proposal', array(
+			$this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
 				'required', 'callback__regex_check'
 			), array(
-				'required' => 'Harap masukkan deskripsi renovasi'
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('luasGedungForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('tinggiGedungForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('jumlahLantaiForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
 			));
 			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
@@ -175,7 +194,6 @@ class Beranda extends CI_Controller
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 					$this->load->view('masuk/gedung_form', $data);
 			} else {
-					// $id = $data['gedung_renovasi'][0]['idGedung'];
 					$send = array(
 					'idGedung'=>$this->session->userdata['refered_from']['id'],
 					'judulProposal'=>$this->input->post('judulProposalForm'),
@@ -192,7 +210,59 @@ class Beranda extends CI_Controller
 
 		function ubahGedung($ged)
 		{
-			# code...
+			$data = $this->data;
+			$data['mode']="edit";
+			$data['cancel'] = $this->session->userdata['refered_from']['url'];
+
+			$result = $this->Beranda_model->getDataGedung($ged);
+			$data['dataGedung'] = $result;
+
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('namaGedungForm', 'nama gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('luasGedungForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('tinggiGedungForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_rules('jumlahLantaiForm', 'kode gedung', array(
+				'required', 'callback__regex_check'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
+			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
+
+			if ($this->form_validation->run() == false) {
+					$this->load->view('template/header', $data);
+					$this->load->view('template/navigation', $data);
+					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+					$this->load->view('masuk/gedung_form', $data);
+			} else {
+					$send = array(
+					'idGedung'=>$this->session->userdata['refered_from']['id'],
+					'judulProposal'=>$this->input->post('judulProposalForm'),
+					'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+					);
+					$result = $this->Beranda_model->createGedung($send);
+					if ($result==1) {
+						$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
+					}
+
+					redirect($this->session->userdata['refered_from']['url']);
+			}
 		}
 
 		function hapusGedung($ged)
@@ -350,7 +420,7 @@ class Beranda extends CI_Controller
 
 						foreach ($data['dataRenovasi'] as $row) {
 							$data['idModal'] = $row['idProposal'];
-							$data['modal'][$row['idProposal']] = $this->load->view('template/modal_delete', $data, TRUE);
+							$data['modal'][$row['idProposal']] = $this->load->view('masuk/modal/modal_delete', $data, TRUE);
 						}
 				}
 
@@ -526,7 +596,7 @@ class Beranda extends CI_Controller
 										$data['dataPekerjaan'][$d]['dateDeleted'] = $date->format('d-m-Y');
 								}
 								$data['idModal'] = $row['idPekerjaan'];
-								$data['modal'][$row['idPekerjaan']] = $this->load->view('template/modal_delete', $data, TRUE);
+								$data['modal'][$row['idPekerjaan']] = $this->load->view('masuk/modal/modal_delete', $data, TRUE);
 								$d++;
 						}
 				}
@@ -541,7 +611,7 @@ class Beranda extends CI_Controller
 						$this->load->view('template/navigation', $data);
 						$this->load->view('template/menu', $data);
 						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-						$data['modalUnggah'] = $this->load->view('template/modal_upload', $data, TRUE);
+						$data['modalUnggah'] = $this->load->view('masuk/modal/modal_upload', $data, TRUE);
 						$this->load->view('masuk/pekerjaan_view', $data);
 				}
 		}
@@ -670,17 +740,6 @@ class Beranda extends CI_Controller
 				redirect($this->session->userdata['refered_from']['url']);
 		}
 
-		function unggahPekerjaan()
-		{
-			$data=$this->data;
-			$data['cancel'] = $this->session->userdata['refered_from']['url'];
-
-			$this->load->view('template/header', $data);
-			$this->load->view('template/navigation', $data);
-			$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-			$data['modal'] = $this->load->view('template/modal_upload', $data, TRUE);
-		}
-
 		function _regex_check(string $form_value)
 		{
 			if (preg_match('/^([[:alpha:]]|\W+[[:alpha:]]+)/', $form_value)) {
@@ -696,11 +755,11 @@ class Beranda extends CI_Controller
 			$data=$this->data;
 			// $this->load->view('template/header');
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
-			// $data['modal'] = $this->load->view('template/modal', NULL, TRUE);
-			// $this->load->view('template/modal');
+			// $data['modal'] = $this->load->view('masuk/modal/modal', NULL, TRUE);
+			// $this->load->view('masuk/modal/modal');
 			$this->load->view('template/header', $data);
       $this->load->view('template/navigation', $data);
-      $this->load->view('template/modal_upload', $data);
+      $this->load->view('masuk/modal/modal_upload', $data);
       $this->load->view('template/footer');
 
 	   	// $spreadsheet = new Spreadsheet();

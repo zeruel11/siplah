@@ -27,6 +27,7 @@ class Excel extends CI_Controller
 						redirect('');
 						// }
 				}
+				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 		}
 
 		// public function index()
@@ -37,7 +38,7 @@ class Excel extends CI_Controller
 		// 		$this->load->view('template/header', $data);
 		// 		$this->load->view('template/navigation', $data);
 		// 		$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-		// 		$data['modal'] = $this->load->view('template/modal_upload', $data, TRUE);
+		// 		$data['modal'] = $this->load->view('masuk/modal/modal_upload', $data, TRUE);
 		// }
 
 		public function downloadExcel()
@@ -54,12 +55,12 @@ class Excel extends CI_Controller
 				header('Cache-Control: max-age=1');
 
 				// If you're serving to IE over SSL, then the following may be needed
-								header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-								header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-								header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-								header('Pragma: public'); // HTTP/1.0
+				header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+				header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+				header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+				header('Pragma: public'); // HTTP/1.0
 
-								$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+				$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
 				$writer->save('php://output');
 		}
 
@@ -76,14 +77,11 @@ class Excel extends CI_Controller
 		public function readExcel()
 		{
 				$data = $this->data;
-				$data['cancel'] = $this->session->userdata['refered_from']['url'];
-				// $fileName = time() . $_FILES['excelFileForm']['name'];
 
 				$config['upload_path'] = './files/excel/';
-				// $config['file_name'] = $fileName;
-				// $config['encrypt_name'] = TRUE;
 				$config['allowed_types'] = 'xls|xlsx|csv';
 				$config['max_size'] = 10000;
+				// $config['encrypt_name'] = TRUE;
 
 				$this->upload->initialize($config);
 
@@ -94,9 +92,9 @@ class Excel extends CI_Controller
 						$data['upload_data'] = $this->upload->data('file_name');
 						$new_name = $this->upload->data('file_path').'uid'.$data['userLogin']['uid'].'_('.time().')_'.$this->upload->data('orig_name');
 						rename(
-										$this->upload->data('full_path'),
-										$new_name
-								);
+								$this->upload->data('full_path'),
+								$new_name
+						);
 						// $this->session->set_flashdata('message', $result);
 						// $this->load->view('success', $data, FALSE);
 						// redirect('beranda','refresh');
