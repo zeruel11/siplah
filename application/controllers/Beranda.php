@@ -133,10 +133,6 @@ class Beranda extends CI_Controller
 		function detailGedung($ged)
 		{
 				$data = $this->data;
-				$array = array(
-					'url' => base_url().$this->uri->uri_string()
-				);
-				$this->session->set_userdata('refered_from', $array);
 
 				$result = $this->Beranda_model->getDataGedung($ged);
 				if ($result) {
@@ -144,6 +140,12 @@ class Beranda extends CI_Controller
 				} else {
 						$data['detailGedung'] = NULL;
 				}
+
+				$array = array(
+					'id' => $data['detailGedung'][0]['idGedung'],
+					'url' => base_url().$this->uri->uri_string()
+				);
+				$this->session->set_userdata('refered_from', $array);
 
 				$this->load->view('template/header', $data);
 				$this->load->view('template/navigation', $data);
@@ -208,13 +210,13 @@ class Beranda extends CI_Controller
 			}
 		}
 
-		function ubahGedung($ged)
+		function ubahGedung(string $ged)
 		{
 			$data = $this->data;
 			$data['mode']="edit";
 			$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
-			$result = $this->Beranda_model->getDataGedung($ged);
+			$result = $this->Beranda_model->getDataGedung($ged, 'edit');
 			$data['dataGedung'] = $result;
 
 			$this->load->library('form_validation');
@@ -223,29 +225,29 @@ class Beranda extends CI_Controller
 			), array(
 				'required' => 'Harap masukkan {field}'
 			));
-			$this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
-			), array(
-				'required' => 'Harap masukkan {field}'
-			));
+			// $this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
+			// 	'required', 'callback__regex_check'
+			// ), array(
+			// 	'required' => 'Harap masukkan {field}'
+			// ));
 			$this->form_validation->set_rules('luasGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
 			$this->form_validation->set_rules('tinggiGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
 			$this->form_validation->set_rules('jumlahLantaiForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
 			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
-			if ($this->form_validation->run() == false) {
+			if ($this->form_validation->run() == FALSE) {
 					$this->load->view('template/header', $data);
 					$this->load->view('template/navigation', $data);
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
@@ -253,10 +255,13 @@ class Beranda extends CI_Controller
 			} else {
 					$send = array(
 					'idGedung'=>$this->session->userdata['refered_from']['id'],
-					'judulProposal'=>$this->input->post('judulProposalForm'),
-					'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+					'namaGedung'=>$this->input->post('namaGedungForm'),
+					'kodeGedung'=>$this->input->post('kodeGedungForm'),
+					'luasGedung'=>$this->input->post('luasGedungForm'),
+					'tinggiGedung'=>$this->input->post('tinggiGedungForm'),
+					'jumlahLantai'=>$this->input->post('jumlahLantaiForm'),
 					);
-					$result = $this->Beranda_model->createGedung($send);
+					$result = $this->Beranda_model->updateGedung((int)$ged, $send);
 					if ($result==1) {
 						$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
 					}

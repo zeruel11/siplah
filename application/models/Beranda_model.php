@@ -110,10 +110,14 @@ class Beranda_model extends CI_Model
  * @param  int           $ged idGedung
  * @return array             data gedung
  */
-		public function getDataGedung(int $ged)
+		public function getDataGedung(int $ged, $mode = NULL)
 		{
-				// $sql = "SELECT * FROM siplah WHERE idGedung='$ged' ORDER BY idRuang";
-			$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung');
+			if ($mode!=NULL) {
+				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung, x, y');
+				$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
+			} else {
+				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung');
+			}
 			$this->db->from('gedung');
 			$this->db->where('idGedung', $ged);
 				// $this->db->order_by('title', 'desc');
@@ -137,7 +141,24 @@ class Beranda_model extends CI_Model
 			# code...
 		}
 
-		function updateGedung(int $ged)
+		function updateGedung(int $ged, array $data)
+		{
+			$this->db->where('idGedung', $ged);
+			$this->db->update('gedung', $data);
+			return $this->db->affected_rows();
+		}
+
+		function createCoordinate()
+		{
+			# code...
+		}
+
+		function updateCoordinate($coord)
+		{
+			# code...
+		}
+
+		function deleteCoordinate($coord)
 		{
 			# code...
 		}

@@ -1,7 +1,7 @@
 <?php $this->output->enable_profiler(TRUE); ?>
 <div class="container-fluid">
 	<div class="row">
-	<div class="col-lg-3"></div>
+	<div class="col-lg-5"><div id="image-map"></div></div>
 	<div class="col-lg-6">
 <form class="needs-validation" id="input" name="input" method="post" action="<?= ($mode=="insert")?base_url('index.php/Beranda/tambahGedung'):base_url('index.php/Beranda/ubahGedung/').$dataGedung[0]['idGedung'] ?>" novalidate>
 	<div class="form-group">
@@ -34,11 +34,68 @@
 		<?= form_error('jumlahLantaiForm') ?>
 		<div class="valid-feedback">Jumlah lantai OK</div>
 	</div>
+	<div class="form-group">
+		<label for="koordinatForm">Lokasi Gedung</label>
+		<input type="text" class="form-control<?= (form_error('koordinatForm'))?' is-invalid':(set_value('koordinatForm')?' is-valid':'') ?>" id="koordinatForm" name="koordinatForm" placeholder="Masukkan judul renovasi" value="<?= ($mode=="insert")?"":(set_value('koordinatForm')==NULL || set_value('koordinatForm')=='')?$dataGedung[0]['x'].' , '.$dataGedung[0]['y']:set_value('koordinatForm') ?>"></input>
+		<?= form_error('koordinatForm') ?>
+		<div class="valid-feedback">Jumlah lantai OK</div>
+	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 	<a class="btn btn-secondary float-right" href="<?= $cancel ?>" role="button">Cancel</a>
 </form>
 </div>
-<div class="col-lg-3"></div>
 </div>
 </div>
 <?= isset($footer)?$footer:NULL ?>
+
+<script>
+	var gedungIcon = L.icon({
+		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
+		// shadowUrl: '',
+		iconSize: [30, 30],
+		// shadowSize: "value",
+		iconAnchor: [15, 15],
+		// shadowAnchor: "value",
+		popupAnchor: [-1, -1]
+	});
+	var map = L.map('image-map', {
+		minZoom: 1,
+		maxZoom: 5,
+		center: [0, 0],
+		zoom: 1,
+		crs: L.CRS.Simple,
+		zoomControl: false,
+		attributionControl:false
+	});
+	L.control.zoom({
+		position:'bottomleft'
+	}).addTo(map);
+	// dimensions of the image
+	var w = 2500,
+	h = 3500,
+	url = '<?php echo base_url(); ?>assets/img/allits.png';
+	// calculate the edges of the image, in coordinate space
+	var southWest = map.unproject([0, h], map.getMaxZoom()-1);
+	var northEast = map.unproject([w, 0], map.getMaxZoom()-1);
+	var bounds = new L.LatLngBounds(southWest, northEast);
+	// add the image overlay, so that it covers the entire map
+	var image = L.imageOverlay(url, bounds).addTo(map);
+	// tell leaflet that the map is exactly as big as the image
+	map.fitBounds(bounds);
+
+  function onMapClick(e) {
+  	var mapWidth=map._container.offsetWidth;
+    var mapHeight=map._container.offsetHeight;
+    console.log(e.latlng.lat);
+    console.log(e.latlng.lng);
+    console.log(e);
+  }
+  map.on('contextmenu', onMapClick);
+
+  <?php $l = 0; foreach ( $dataGedung as $lokasi ) {
+		if ($lokasi['x']!=NULL) { ?>
+      var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+      L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br>");
+    <?php }
+  $l++; } ?>
+</script>
