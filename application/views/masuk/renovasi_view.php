@@ -54,7 +54,7 @@
 							<div class="btn-group float-right" role="group">
 								<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 								<?php if ($row['status']!=6): ?>
-									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button">Selesai Renovasi</a>
+									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button" data-toggle="tooltip" data-placement="top" title="Tandai renovasi telah selesai">Selesai Renovasi</a>
 								<?php endif; ?>
 								<a class="btn btn-outline-warning" href="<?= base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
 								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?= $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
@@ -110,4 +110,8 @@
 					$(e.target).slideUp();
 			});
 	});
+
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+	})
 	</script>

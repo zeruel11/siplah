@@ -168,25 +168,25 @@ class Beranda extends CI_Controller
 			), array(
 				'required' => 'Harap masukkan {field}'
 			));
-			$this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+			// $this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
+			// 	'required', 'callback__regex_check'
+			// ), array(
+			// 	'required' => 'Harap masukkan {field}'
+			// ));
+			$this->form_validation->set_rules('luasGedungForm', 'luas gedung', array(
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
-			$this->form_validation->set_rules('luasGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+			$this->form_validation->set_rules('tinggiGedungForm', 'tinggi gedung', array(
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
-			$this->form_validation->set_rules('tinggiGedungForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
+			$this->form_validation->set_rules('jumlahLantaiForm', 'jumlah lantai', array(
+				'decimal'
 			), array(
-				'required' => 'Harap masukkan {field}'
-			));
-			$this->form_validation->set_rules('jumlahLantaiForm', 'kode gedung', array(
-				'required', 'callback__regex_check'
-			), array(
-				'required' => 'Harap masukkan {field}'
+				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
 			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
@@ -197,9 +197,11 @@ class Beranda extends CI_Controller
 					$this->load->view('masuk/gedung_form', $data);
 			} else {
 					$send = array(
-					'idGedung'=>$this->session->userdata['refered_from']['id'],
-					'judulProposal'=>$this->input->post('judulProposalForm'),
-					'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+					'namaGedung'=>$this->input->post('namaGedungForm'),
+					'kodeGedung'=>$this->input->post('kodeGedungForm'),
+					'luasGedung'=>$this->input->post('luasGedungForm'),
+					'tinggiGedung'=>$this->input->post('tinggiGedungForm'),
+					'jumlahLantai'=>$this->input->post('jumlahLantaiForm')
 					);
 					$result = $this->Beranda_model->createGedung($send);
 					if ($result==1) {
@@ -225,22 +227,17 @@ class Beranda extends CI_Controller
 			), array(
 				'required' => 'Harap masukkan {field}'
 			));
-			// $this->form_validation->set_rules('kodeGedungForm', 'kode gedung', array(
-			// 	'required', 'callback__regex_check'
-			// ), array(
-			// 	'required' => 'Harap masukkan {field}'
-			// ));
-			$this->form_validation->set_rules('luasGedungForm', 'kode gedung', array(
+			$this->form_validation->set_rules('luasGedungForm', 'luas gedung', array(
 				'decimal'
 			), array(
 				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
-			$this->form_validation->set_rules('tinggiGedungForm', 'kode gedung', array(
+			$this->form_validation->set_rules('tinggiGedungForm', 'tinggi gedung', array(
 				'decimal'
 			), array(
 				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
-			$this->form_validation->set_rules('jumlahLantaiForm', 'kode gedung', array(
+			$this->form_validation->set_rules('jumlahLantaiForm', 'jumlah lantai', array(
 				'decimal'
 			), array(
 				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
@@ -259,7 +256,7 @@ class Beranda extends CI_Controller
 					'kodeGedung'=>$this->input->post('kodeGedungForm'),
 					'luasGedung'=>$this->input->post('luasGedungForm'),
 					'tinggiGedung'=>$this->input->post('tinggiGedungForm'),
-					'jumlahLantai'=>$this->input->post('jumlahLantaiForm'),
+					'jumlahLantai'=>$this->input->post('jumlahLantaiForm')
 					);
 					$result = $this->Beranda_model->updateGedung((int)$ged, $send);
 					if ($result==1) {

@@ -1,4 +1,4 @@
-<?= // isset($error)?var_dump($error):'' ?>
+<!-- <?= isset($error)?var_dump($error):'' ?> -->
 <?php // $this->output->enable_profiler(TRUE); ?>
 <!-- <div class="container-fluid">
 	<div class="row mt-3">
@@ -35,6 +35,9 @@
 					<input type="file" class="custom-file-input" id="excelFileForm" name="excelFileForm" aria-describedby="fileHelp" onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
 					<span class="custom-file-control form-control-file"></span>
 				</label>
+			</div>
+			<div class="modal-body text-info">
+				<p>FIle excel harus memiliki kolom berjudul "deskripsi pekerjaan" atau hanya berisi 1 kolom berisi list pekerjaan tanpa judul</p>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" value="upload" class="btn btn-primary">Submit</button>

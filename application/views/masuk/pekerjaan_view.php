@@ -39,7 +39,9 @@
 		<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
 			<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
 			<!-- <a class="btn btn-outline-success mt-3" href="unggah" role="button">Unggah Pekerjaan</a> -->
-			<button type="button" class="btn btn-outline-success mt-3" data-toggle="modal" data-target="#modalUnggah">Unggah Pekerjaan</button>
+			<span data-toggle="modal" data-target="#modalUnggah">
+				<button type="button" class="btn btn-outline-success mt-3" data-toggle="tooltip" data-placement="right" title="Unggah list pekerjaan dalam bentuk excel">Unggah Pekerjaan</button>
+			</span>
 		<?php endif ?>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	</div>
@@ -60,4 +62,8 @@ $(function () {
 				$(e.target).slideUp();
 		});
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>

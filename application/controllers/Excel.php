@@ -105,7 +105,7 @@ class Excel extends CI_Controller
 								$reader = IOFactory::createReader($inputFileType);
 								$spreadsheet = $reader->load($inputFileName);
 						} catch (Exception $e) {
-								// delete_files($new_name);
+								unlink($new_name);
 								die('Error loading file "'.$data['upload_data'].'": '.$e->getMessage());
 						}
 
@@ -126,7 +126,7 @@ class Excel extends CI_Controller
 								}
 						}
 
-						if ($header) {
+						if (isset($header)) {
 							for ($row=2; $row <= $highestRow; $row++) {
 									$list = $sheet->getCellByColumnAndRow($header, $row)->getValue();
 									$send[] = array(
@@ -140,9 +140,11 @@ class Excel extends CI_Controller
 									$this->session->set_flashdata('message', 'Upload excel berhasil');
 							} else {
 									$this->session->set_flashdata('message', 'File gagal diproses, mohon coba kembali');
+									unlink($new_name);
 							}
 						} else {
 							$this->session->set_flashdata('message', 'Format file pekerjaan yang anda unggah salah');
+							unlink($new_name);
 						}
 				}
 				redirect($this->session->userdata['refered_from']['url'], 'refresh');
