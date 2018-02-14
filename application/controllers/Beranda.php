@@ -223,24 +223,25 @@ class Beranda extends CI_Controller
 
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('namaGedungForm', 'nama gedung', array(
-				'required', 'callback__regex_check'
+				'required', 'regex_match[/^([[:alpha:]]|\W+[[:alpha:]]+)/]'
 			), array(
-				'required' => 'Harap masukkan {field}'
+				'required' => 'Harap masukkan {field}',
+				'regex_match' => 'Format {field} salah'
 			));
 			$this->form_validation->set_rules('luasGedungForm', 'luas gedung', array(
-				'decimal'
+				'regex_match[/(^\d+|^\d+[.]\d+)+$/]'
 			), array(
-				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
+				'regex_match' => 'Harap masukkan {field} dalam bentuk desimal'
 			));
 			$this->form_validation->set_rules('tinggiGedungForm', 'tinggi gedung', array(
-				'decimal'
+				'regex_match[/(^\d+|^\d+[.]\d+)+$/]'
 			), array(
-				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
+				'regex_match' => 'Format {field} salah'
 			));
 			$this->form_validation->set_rules('jumlahLantaiForm', 'jumlah lantai', array(
-				'decimal'
+				'integer'
 			), array(
-				'decimal' => 'Harap masukkan {field} dalam bentuk desimal'
+				'integer' => 'Format {field} salah'
 			));
 			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
@@ -250,7 +251,8 @@ class Beranda extends CI_Controller
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 					$this->load->view('masuk/gedung_form', $data);
 			} else {
-					$send = array(
+				$data['test'] = $koord = explode(' , ', $this->input->post('koordinatForm'));
+					$data['testing'] = $send = array(
 					'idGedung'=>$this->session->userdata['refered_from']['id'],
 					'namaGedung'=>$this->input->post('namaGedungForm'),
 					'kodeGedung'=>$this->input->post('kodeGedungForm'),
@@ -258,12 +260,22 @@ class Beranda extends CI_Controller
 					'tinggiGedung'=>$this->input->post('tinggiGedungForm'),
 					'jumlahLantai'=>$this->input->post('jumlahLantaiForm')
 					);
-					$result = $this->Beranda_model->updateGedung((int)$ged, $send);
-					if ($result==1) {
-						$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
-					}
+					// $send1 = array(
+					// 	'x'=>$this->input->post('x'),
+					// 	'y'=>$this->input->post('y'),
+					// 	'label'=>$this->input->post('namaGedungForm')
+					// );
+					// $result = $this->Beranda_model->updateGedung((int)$ged, $send1, 'koor');
 
-					redirect($this->session->userdata['refered_from']['url']);
+					// if ($result==1) {
+					// 	$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
+					// 	$result = $this->Beranda_model->updateGedung((int)$ged, $send);
+					// } else {
+					// 	$this->session->set_flashdata('message', 'Data gagal diubah, mohon coba kembali');
+					// }
+
+					// redirect($this->session->userdata['refered_from']['url']);
+				$this->load->view('test', $data, FALSE);
 			}
 		}
 

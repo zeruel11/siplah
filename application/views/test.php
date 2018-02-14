@@ -1,4 +1,5 @@
 <?php isset($test)?var_dump($test):'' ?>
+<?php isset($testing)?var_dump($testing):'' ?>
 <?php $this->output->enable_profiler(TRUE); ?>
 <?= CI_VERSION ?><br>
 <!-- <?= time() ?><br> -->

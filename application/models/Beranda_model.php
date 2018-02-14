@@ -136,15 +136,21 @@ class Beranda_model extends CI_Model
 			return $this->db->affected_rows();
 		}
 
-		function createGedung()
+		function createGedung(array $data)
 		{
-			# code...
+			$this->db->insert('koordinat', $data);
+			return $this->db->insert_id();
 		}
 
-		function updateGedung(int $ged, array $data)
+		function updateGedung(int $ged, array $data, string $mode = 'ged')
 		{
-			$this->db->where('idGedung', $ged);
-			$this->db->update('gedung', $data);
+			if ($mode=='koor') {
+				$this->db->where('idKoord', $ged);
+				$this->db->update('koordinat', $data);
+			} else {
+				$this->db->where('idGedung', $ged);
+				$this->db->update('gedung', $data);
+			}
 			return $this->db->affected_rows();
 		}
 
