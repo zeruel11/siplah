@@ -1,4 +1,12 @@
 <div class="col-lg-5">
+	<?php if (isset($message)): ?>
+		<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+				</button>
+				<?= $message ?>
+		</div>
+	<?php endif ?>
 	<div class="card-body">
 	<?php if ($detailGedung!=null): ?>
 			<h4 class="card-title">Gedung <?= $detailGedung[0]['namaGedung'].(($detailGedung[0]['kategoriGedung']==1)?" - Gedung Pendidikan":"") ?></h4>
@@ -20,3 +28,22 @@
 	</div>
 </div>
 <?= $footer ?>
+
+<script>
+	// $('.alert').addClass('animated fadeInUp');
+	setTimeout(function () {
+		$(".alert").alert('close')
+	}, 3500);
+
+	$(function () {
+			$('body').on('close.bs.alert', function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					$(e.target).slideUp();
+			});
+	});
+
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>

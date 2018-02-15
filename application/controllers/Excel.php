@@ -30,17 +30,6 @@ class Excel extends CI_Controller
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 		}
 
-		// public function index()
-		// {
-		// 		$data=$this->data;
-		// 		$data['cancel'] = $this->session->userdata['refered_from']['url'];
-    //
-		// 		$this->load->view('template/header', $data);
-		// 		$this->load->view('template/navigation', $data);
-		// 		$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-		// 		$data['modal'] = $this->load->view('masuk/modal/modal_upload', $data, TRUE);
-		// }
-
 		public function downloadExcel()
 		{
 				$spreadsheet = new Spreadsheet();

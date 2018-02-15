@@ -218,8 +218,12 @@ class Beranda extends CI_Controller
 			$data['mode']="edit";
 			$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
-			$result = $this->Beranda_model->getDataGedung($ged, 'edit');
-			$data['dataGedung'] = $result;
+			$data['dataGedung'] = $this->Beranda_model->getDataGedung($ged, 'edit');
+			$from_db = array(
+				'x' => $data['dataGedung'][0]['x'],
+				'y' => $data['dataGedung'][0]['y']
+			);
+			// $this->session->set_userdata('loc', $array);
 
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('namaGedungForm', 'nama gedung', array(
@@ -243,6 +247,11 @@ class Beranda extends CI_Controller
 			), array(
 				'integer' => 'Format {field} salah'
 			));
+			$this->form_validation->set_rules('koordinatForm', 'lokasi gedung', array(
+				'required'
+			), array(
+				'required' => 'Harap masukkan {field}'
+			));
 			$this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
 
 			if ($this->form_validation->run() == FALSE) {
@@ -251,31 +260,41 @@ class Beranda extends CI_Controller
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 					$this->load->view('masuk/gedung_form', $data);
 			} else {
-				$data['test'] = $koord = explode(' , ', $this->input->post('koordinatForm'));
-					$data['testing'] = $send = array(
+					$kode = ($this->input->post('kodeGedungForm')=='')?NULL:$this->input->post('kodeGedungForm');
+					$luas = ($this->input->post('luasGedungForm')=='')?NULL:floatval($this->input->post('luasGedungForm'));
+					$tinggi = ($this->input->post('tinggiGedungForm')=='')?NULL:floatval($this->input->post('tinggiGedungForm'));
+					$kategori = ($this->input->post('kategoriCheck')==NULL)?0:(int)$this->input->post('kategoriCheck');
+
+					$send = array(
 					'idGedung'=>$this->session->userdata['refered_from']['id'],
 					'namaGedung'=>$this->input->post('namaGedungForm'),
-					'kodeGedung'=>$this->input->post('kodeGedungForm'),
-					'luasGedung'=>$this->input->post('luasGedungForm'),
-					'tinggiGedung'=>$this->input->post('tinggiGedungForm'),
-					'jumlahLantai'=>$this->input->post('jumlahLantaiForm')
+					'kodeGedung'=>$kode,
+					'luasGedung'=>$luas,
+					'tinggiGedung'=>$tinggi,
+					'jumlahLantai'=>(int)$this->input->post('jumlahLantaiForm'),
+					'kategoriGedung'=>$kategori
 					);
-					// $send1 = array(
-					// 	'x'=>$this->input->post('x'),
-					// 	'y'=>$this->input->post('y'),
-					// 	'label'=>$this->input->post('namaGedungForm')
-					// );
-					// $result = $this->Beranda_model->updateGedung((int)$ged, $send1, 'koor');
+					$result = $this->Beranda_model->updateGedung((int)$ged, $send);
 
-					// if ($result==1) {
-					// 	$this->session->set_flashdata('message', 'Gedung telah ditambahkan');
-					// 	$result = $this->Beranda_model->updateGedung((int)$ged, $send);
-					// } else {
-					// 	$this->session->set_flashdata('message', 'Data gagal diubah, mohon coba kembali');
-					// }
+					$koord = explode(' , ', $this->input->post('koordinatForm'));
+					if ($koord[0]!=$from_db['x'] || $koord[1]!=$from_db['y']) {
+						$send = array(
+							'x' => $koord[0],
+							'y' => $koord[1],
+							'label' => $this->input->post('namaGedungForm')
+						);
+						$result = $this->Beranda_model->updateGedung((int)$ged, $send, 'koor');
+					}
 
-					// redirect($this->session->userdata['refered_from']['url']);
-				$this->load->view('test', $data, FALSE);
+					if ($result==1) {
+						$this->session->set_flashdata('message', 'Data gedung berhasil dirubah');
+					} else {
+						$this->session->set_flashdata('message', 'Data gedung gagal diubah, mohon coba kembali');
+					}
+
+					redirect($this->session->userdata['refered_from']['url']);
+					// $data['test'] = $send;
+					// $this->load->view('test', $data, FALSE);
 			}
 		}
 

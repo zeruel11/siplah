@@ -16,7 +16,7 @@
 		<ul class="list-group list-group-flush">
 			<?php $g=0; foreach ($listGedung as $row): ?>
 			<li class="list-group-item list-group-item-action">
-				<a class="card-link" href="<?= base_url()."gedung/".$row['idGedung']; ?>">
+				<a class="card-link" target="_blank" href="<?= base_url()."gedung/".$row['idGedung']; ?>">
 					<?= $row['namaGedung']; ?>
 				</a>
 				<a class="btn btn-outline-primary btn-sm float-right" href="<?= base_url('renovasi/').$row['idGedung'] ?>">Renovasi</a>

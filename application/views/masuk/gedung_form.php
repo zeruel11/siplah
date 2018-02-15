@@ -22,8 +22,8 @@
 	<div class="col-lg-4">
 		<div class="form-check vertical-center ml-3">
 			<label class="form-check-label" for="kategoriCheck">Gedung pendidikan</label>
-  		<input class="form-check-input" type="checkbox" value="" id="kategoriCheck">
-</div>
+  		<input class="form-check-input" type="checkbox" value="1" id="kategoriCheck" name="kategoriCheck"<?= ($dataGedung[0]['kategoriGedung']=='1')?' checked':'' ?>>
+		</div>
 	</div>
 	</div>
 	<div class="form-group">
