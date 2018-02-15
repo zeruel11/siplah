@@ -100,8 +100,20 @@
     console.log(e.latlng.lat);
     console.log(e.latlng.lng);
     console.log(e);
+    // var x = e.latlng.lat;
+    // var x = e.latlng.lng;
+    // console.log(var(x));
+    $("#koordinatForm").val(e.latlng.lat+" , "+e.latlng.lng);
+
+    // var marker1 = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
+    // var r = confirm("Apakah ingin menambah lokasi ?");
+    // if (r == true) {
+    //     window.location = "form_kondisi_tanah.php?lat="+e.latlng.lat+"&long="+e.latlng.lng;
+    // } else {
+    //     window.location = "peta.php";
+    // }
   }
-  map.on('contextmenu', onMapClick);
+  map.on('click', onMapClick);
 
   <?php $l = 0; foreach ( $dataGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>

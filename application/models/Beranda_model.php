@@ -113,7 +113,7 @@ class Beranda_model extends CI_Model
 		public function getDataGedung(int $ged, $mode = NULL)
 		{
 			if ($mode!=NULL) {
-				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung, x, y');
+				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung, x, y, koordGedung');
 				$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
 			} else {
 				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, tinggiGedung, jumlahLantai, kategoriGedung');
@@ -136,10 +136,15 @@ class Beranda_model extends CI_Model
 			return $this->db->affected_rows();
 		}
 
-		function createGedung(array $data)
+		function createGedung(array $data, string $mode = 'ged')
 		{
-			$this->db->insert('koordinat', $data);
-			return $this->db->insert_id();
+			if ($mode=='koor') {
+				$this->db->insert('koordinat', $data);
+				return $this->db->insert_id();
+			} else {
+				$this->db->insert('gedung', $data);
+				return $this->db->affected_rows();
+			}
 		}
 
 		function updateGedung(int $ged, array $data, string $mode = 'ged')
@@ -154,20 +159,20 @@ class Beranda_model extends CI_Model
 			return $this->db->affected_rows();
 		}
 
-		function createCoordinate()
-		{
-			# code...
-		}
+		// function createCoordinate()
+		// {
+		// 	# code...
+		// }
 
-		function updateCoordinate($coord)
-		{
-			# code...
-		}
+		// function updateCoordinate($coord)
+		// {
+		// 	# code...
+		// }
 
-		function deleteCoordinate($coord)
-		{
-			# code...
-		}
+		// function deleteCoordinate($coord)
+		// {
+		// 	# code...
+		// }
 
 /**
  * database read list renovasi/proposal

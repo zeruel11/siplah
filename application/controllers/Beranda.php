@@ -221,7 +221,8 @@ class Beranda extends CI_Controller
 			$data['dataGedung'] = $this->Beranda_model->getDataGedung($ged, 'edit');
 			$from_db = array(
 				'x' => $data['dataGedung'][0]['x'],
-				'y' => $data['dataGedung'][0]['y']
+				'y' => $data['dataGedung'][0]['y'],
+				'id' => $data['dataGedung'][0]['koordGedung']
 			);
 			// $this->session->set_userdata('loc', $array);
 
@@ -283,7 +284,7 @@ class Beranda extends CI_Controller
 							'y' => $koord[1],
 							'label' => $this->input->post('namaGedungForm')
 						);
-						$result = $this->Beranda_model->updateGedung((int)$ged, $send, 'koor');
+						$result = $this->Beranda_model->updateGedung((int)$from_db['id'], $send, 'koor');
 					}
 
 					if ($result==1) {
@@ -293,6 +294,7 @@ class Beranda extends CI_Controller
 					}
 
 					redirect($this->session->userdata['refered_from']['url']);
+					// $data['testing'] = $koord;
 					// $data['test'] = $send;
 					// $this->load->view('test', $data, FALSE);
 			}
