@@ -24,6 +24,7 @@
 		<?php $g++; endforeach ?>
 		</ul>
 	</div>
+	<a class="btn btn-primary float-right mt-2" href="gedung/tambah" role="button">Tambah data gedung</a>
 </div>
 </div>
 </div>

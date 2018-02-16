@@ -22,37 +22,37 @@
 	<div class="col-lg-4">
 		<div class="form-check vertical-center ml-3">
 			<label class="form-check-label" for="kategoriCheck">Gedung pendidikan</label>
-  		<input class="form-check-input" type="checkbox" value="1" id="kategoriCheck" name="kategoriCheck"<?= ($dataGedung[0]['kategoriGedung']=='1')?' checked':'' ?>>
+  		<input class="form-check-input" type="checkbox" value="1" id="kategoriCheck" name="kategoriCheck"<?= (isset($dataGedung) && $dataGedung[0]['kategoriGedung']=='1')?' checked':'' ?>>
 		</div>
 	</div>
 	</div>
 	<div class="form-group">
 		<label for="luasGedungForm">Luas Bangunan</label>
-		<input type="numeric" class="form-control<?= (form_error('luasGedungForm'))?' is-invalid':(set_value('luasGedungForm')?' is-valid':'') ?>" id="luasGedungForm" name="luasGedungForm" placeholder="Masukkan judul renovasi" value="<?= ($mode=="insert")?"":(set_value('luasGedungForm')==NULL || set_value('luasGedungForm')=='')?$dataGedung[0]['luasGedung']:set_value('luasGedungForm') ?>"></input>
+		<input type="numeric" class="form-control<?= (form_error('luasGedungForm'))?' is-invalid':(set_value('luasGedungForm')?' is-valid':'') ?>" id="luasGedungForm" name="luasGedungForm" placeholder="Masukkan luas bangunan" value="<?= ($mode=="insert")?"":(set_value('luasGedungForm')==NULL || set_value('luasGedungForm')=='')?$dataGedung[0]['luasGedung']:set_value('luasGedungForm') ?>"></input>
 		<?= form_error('luasGedungForm') ?>
 		<div class="valid-feedback">Luas bangunan OK</div>
 	</div>
 	<div class="form-group">
 		<label for="tinggiGedungForm">Tinggi Bangunan</label>
-		<input type="numeric" class="form-control<?= (form_error('tinggiGedungForm'))?' is-invalid':(set_value('tinggiGedungForm')?' is-valid':'') ?>" id="tinggiGedungForm" name="tinggiGedungForm" placeholder="Masukkan judul renovasi" value="<?= ($mode=="insert")?"":(set_value('tinggiGedungForm')==NULL || set_value('tinggiGedungForm')=='')?$dataGedung[0]['tinggiGedung']:set_value('tinggiGedungForm') ?>"></input>
+		<input type="numeric" class="form-control<?= (form_error('tinggiGedungForm'))?' is-invalid':(set_value('tinggiGedungForm')?' is-valid':'') ?>" id="tinggiGedungForm" name="tinggiGedungForm" placeholder="Masukkan tinggi bangunan" value="<?= ($mode=="insert")?"":(set_value('tinggiGedungForm')==NULL || set_value('tinggiGedungForm')=='')?$dataGedung[0]['tinggiGedung']:set_value('tinggiGedungForm') ?>"></input>
 		<?= form_error('tinggiGedungForm') ?>
 		<div class="valid-feedback">Tinggi bangunan OK</div>
 	</div>
 	<div class="form-group">
 		<label for="jumlahLantaiForm">Jumlah Lantai</label>
-		<input type="numeric" class="form-control<?= (form_error('jumlahLantaiForm'))?' is-invalid':(set_value('jumlahLantaiForm')?' is-valid':'') ?>" id="jumlahLantaiForm" name="jumlahLantaiForm" placeholder="Masukkan judul renovasi" value="<?= ($mode=="insert")?"":(set_value('jumlahLantaiForm')==NULL || set_value('jumlahLantaiForm')=='')?$dataGedung[0]['jumlahLantai']:set_value('jumlahLantaiForm') ?>"></input>
+		<input type="numeric" class="form-control<?= (form_error('jumlahLantaiForm'))?' is-invalid':(set_value('jumlahLantaiForm')?' is-valid':'') ?>" id="jumlahLantaiForm" name="jumlahLantaiForm" placeholder="Masukkan jumlah lantai gedung" value="<?= ($mode=="insert")?"":(set_value('jumlahLantaiForm')==NULL || set_value('jumlahLantaiForm')=='')?$dataGedung[0]['jumlahLantai']:set_value('jumlahLantaiForm') ?>"></input>
 		<?= form_error('jumlahLantaiForm') ?>
 		<div class="valid-feedback">Jumlah lantai OK</div>
 	</div>
 	<div class="form-group">
 		<label for="koordinatForm">Lokasi Gedung</label>
-		<input type="text" class="form-control<?= (form_error('koordinatForm'))?' is-invalid':(set_value('koordinatForm')?' is-valid':'') ?>" id="koordinatForm" name="koordinatForm" placeholder="Masukkan judul renovasi" value="<?= ($mode=="insert")?"":(set_value('koordinatForm')==NULL || set_value('koordinatForm')=='')?$dataGedung[0]['x'].' , '.$dataGedung[0]['y']:set_value('koordinatForm') ?>" readonly></input>
+		<input type="text" class="form-control<?= (form_error('koordinatForm'))?' is-invalid':(set_value('koordinatForm')?' is-valid':'') ?>" id="koordinatForm" name="koordinatForm" aria-describedby="lokasiHelp" value="<?= ($mode=="insert")?"":(set_value('koordinatForm')==NULL || set_value('koordinatForm')=='')?$dataGedung[0]['x'].' , '.$dataGedung[0]['y']:set_value('koordinatForm') ?>" readonly></input>
+		<small id="lokasiHelp" class="form-text text-muted">Untuk <?= ($mode=='edit')?"mengubah":"menambah" ?> lokasi gedung lakukan klik pada peta.</small>
 		<?= form_error('koordinatForm') ?>
-		<div class="valid-feedback">Jumlah lantai OK</div>
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 	<button type="reset" class="btn btn-secondary" value="Reset">Reset</button>
-	<a class="btn btn-dark float-right" href="<?= $cancel ?>" role="button">Cancel</a>
+	<a class="btn btn-dark float-right" href="<?= ($mode=='insert')?base_url():$cancel ?>" role="button">Cancel</a>
 </form>
 </div>
 </div>
@@ -100,9 +100,6 @@
     console.log(e.latlng.lat);
     console.log(e.latlng.lng);
     console.log(e);
-    // var x = e.latlng.lat;
-    // var x = e.latlng.lng;
-    // console.log(var(x));
     $("#koordinatForm").val(e.latlng.lat+" , "+e.latlng.lng);
 
     // var marker1 = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
@@ -114,11 +111,12 @@
     // }
   }
   map.on('click', onMapClick);
-
-  <?php $l = 0; foreach ( $dataGedung as $lokasi ) {
+<?php if ($mode=='edit'): ?>
+	<?php $l = 0; foreach ( $dataGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
       var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
       L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br>");
     <?php }
   $l++; } ?>
+<?php endif ?>
 </script>

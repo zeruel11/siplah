@@ -4,8 +4,8 @@
 
 	<div class="container-fluid mt-2">
 		<div class="row">
-			<div class="col-lg-8"><div id="image-map"></div></div>
-			<!-- <div class="col-lg-3"></div> -->
+			<div class="col-lg-8">
+				<div id="image-map" class="sidebar-map"></div></div>
 			<div class="col-lg-4">
 				<?php if (isset($invalid)) {
                 echo '<div class="alert alert-primary fade show animated fadeInDown" role="alert">
@@ -27,6 +27,9 @@
 	</div>
 </div>
 
+
+
+
 <?= isset($footer)?$footer:'' ?>
 
 <script>
@@ -44,6 +47,11 @@ $(function () {
 		});
 });
 </script>
+
+<!-- <script>
+        var marker = L.marker([51.2, 7]).addTo(map);
+        var sidebar = L.control.sidebar('sidebar').addTo(map);
+    </script> -->
 
 <script>
 	var gedungIcon = L.icon({
@@ -65,7 +73,7 @@ $(function () {
 		attributionControl:false
 	});
 	L.control.zoom({
-		position:'bottomleft'
+		position:'topright'
 	}).addTo(map);
 	// dimensions of the image
 	var w = 2500,
@@ -88,6 +96,7 @@ $(function () {
     console.log(e);
   }
   map.on('contextmenu', onMapClick);
+
   <?php $l = 0; foreach ( $listGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
       var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
