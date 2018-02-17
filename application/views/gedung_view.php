@@ -1,4 +1,5 @@
 <div class="col-lg-5">
+	<?= var_dump($detailGedung) ?>
 	<?php if (isset($message)): ?>
 		<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">

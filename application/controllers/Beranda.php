@@ -111,9 +111,13 @@ class Beranda extends CI_Controller
 						$this->load->view('masuk/beranda_view', $data);
 					}
 				} else {
-						// $data['userLogin'] = "false";
+						// $dg = 0;
+						foreach ($data['listGedung'] as $row) {
+							$data['idModal'] = $row['idGedung'];
+							$data['dataLuar'] = $this->Beranda_model->getDataGedung($row['idGedung']);
+							$data['modalGedung'][$row['idGedung']] = $this->load->view('masuk/modal/modal_gedung', $data, TRUE);
+						}
 						if ($this->session->flashdata('warn')=='logged_out') {
-							$data['warn'] = $this->session->flashdata('warn');
 							$data['modal'] = $this->load->view('masuk/modal/modal_logged_out', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);

@@ -1,7 +1,7 @@
 <body>
 <?php $this->output->enable_profiler(TRUE); ?>
+<!-- <?= var_dump($listGedung) ?> -->
 <?= isset($modal)?$modal:'' ?>
-
 	<div class="container-fluid mt-2">
 		<div class="row">
 			<div class="col-lg-8">
@@ -17,10 +17,10 @@
 					<ul class="list-group list-group-flush">
 						<?php $g=0;
 						foreach ($listGedung as $row) { ?>
-						<a href="<?php echo base_url()."gedung/".$row['idGedung'];	$g++;?>" class="list-group-item list-group-item-action" target="_blank"><?php echo $row['namaGedung']; ?></a>
+						<button class="list-group-item list-group-item-action" data-toggle="modal" data-target="#modalGedung<?= $row['idGedung'] ?>"><?php echo $row['namaGedung']; ?></button>
+						<?= isset($modalGedung)?$modalGedung[$row['idGedung']]:'' ?>
 						<!-- class="btn btn-outline-info btn-sm float-right" -->
-						<?php	}
-					// var_dump($listGedung)?>
+						<?php	} ?>
 				</ul>
 			</div>
 		</div>
