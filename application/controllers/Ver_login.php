@@ -34,7 +34,8 @@ class Ver_login extends CI_Controller {
 				$sess_array = array(
 					'uid' => $row->uid,
 					'username' => $row->username,
-					'userLevel' => $row->user_level,
+					'userLevel' => substr($row->user_level, 0, 1),
+					'userAuth' => substr($row->user_level, 1),
 					'namaLengkap' => $row->namaLengkap
 				);
 
