@@ -181,11 +181,28 @@ class Beranda_model extends CI_Model
  * @param  string             $mode which proposal to get
  * @return array                data renovasi/proposal
  */
-		function getListRenovasi(string $ged, $mode)
+		function getListRenovasi(string $ged, $mode = NULL)
 		{
-			if ($mode==0) {
-					$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
-					$this->db->where('idProposal', $ged);
+			if (!is_numeric($mode)) {
+				switch ($mode) {
+					case 'last':
+						$this->db->select('idProposal, judulProposal, dateDeleted');
+						$this->db->where(array('idGedung' => $ged, 'dateDeleted !=' => NULL));
+						$this->db->order_by('dateDeleted', 'desc');
+						$this->db->limit(1);
+						break;
+					case 'now':
+						$this->db->select('idProposal, judulProposal, dateCreated');
+						$this->db->where(array('dateDeleted' => NULL, 'idGedung' => $ged));
+						$this->db->order_by('dateCreated', 'desc');
+						$this->db->limit(1);
+						break;
+					default:
+						$this->db->select('idProposal, judulProposal, deskripsiProposal, status');
+						$this->db->where('idProposal', $ged);
+						$this->db->order_by('dateCreated', 'asc');
+						break;
+				}
 			} else {
 				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
 				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
@@ -216,9 +233,9 @@ class Beranda_model extends CI_Model
 				}
 				$this->db->group_by('idProposal');
 				$this->db->order_by('namaGedung', 'asc');
+				$this->db->order_by('dateCreated', 'asc');
 			}
 			$this->db->from('proposal');
-			$this->db->order_by('dateCreated', 'asc');
 
 			$query = $this->db->get();
 			if ($query->num_rows()>0) {

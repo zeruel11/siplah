@@ -144,6 +144,12 @@ class Beranda extends CI_Controller
 				} else {
 						$data['detailGedung'] = NULL;
 				}
+				$data['renovasiLast'] = $this->Beranda_model->getListRenovasi($ged, 'last');
+				$data['renovasiNow'] = $this->Beranda_model->getListRenovasi($ged, 'now');
+				if ($data['renovasiLast']!=NULL) {
+					$date = new DateTime($data['renovasiLast'][0]['dateDeleted']);
+					$data['renovasiLast'][0]['dateDeleted'] = $date->format('d-m-Y');
+				}
 
 				$array = array(
 					'id' => $data['detailGedung'][0]['idGedung'],
@@ -543,7 +549,7 @@ class Beranda extends CI_Controller
 		function ubahRenovasi($renovasi)
 		{
 				$data = $this->data;
-				$data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi, 0);
+				$data['dataRenovasi'] = $this->Beranda_model->getListRenovasi((int)$renovasi);
 				$data['mode'] = "edit";
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 

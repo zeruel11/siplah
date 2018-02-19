@@ -100,7 +100,7 @@ $(function () {
   <?php $l = 0; foreach ( $listGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
       var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-      L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
+      L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup('<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalGedung<?= $lokasi['idGedung'] ?>">Data Lengkap</button>');
     <?php }
   $l++; } ?>
 </script>
