@@ -85,10 +85,17 @@ class Beranda extends CI_Controller
 							$data['listGedung'] = $this->Beranda_model->getListGedung();
 						}
 				}
+				$gd=0; foreach ($data['listGedung'] as $row) {
+					if ($row['kategoriGedung']==1) {
+						$data['listGedung'][$gd]['tipeGedung'] = 'university';
+					} else {
+						$data['listGedung'][$gd]['tipeGedung'] = 'building';
+					}
+					$gd++;
+				}
 				if (isset($this->data['userLogin'])) {
-					// if ($this->session->userdata('pwd')) {
-						$data['pwd'] = $this->session->userdata('pwd');
-					// }
+					// $data['pwd'] = $this->session->userdata('pwd');
+					$data['pwd'] = $this->session->flashdata('pwd');
 					$data['modal'] = $this->load->view('masuk/modal/modal_password', $data, TRUE);
 					if ($data['userLogin']['userLevel']==4) {
 						// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
@@ -116,6 +123,7 @@ class Beranda extends CI_Controller
 							$data['idModal'] = $row['idGedung'];
 							$data['dataLuar'] = $this->Beranda_model->getDataGedung($row['idGedung']);
 							$data['modalGedung'][$row['idGedung']] = $this->load->view('masuk/modal/modal_gedung', $data, TRUE);
+							// $dg++;
 						}
 						if ($this->session->flashdata('warn')=='logged_out') {
 							$data['modal'] = $this->load->view('masuk/modal/modal_logged_out', NULL, TRUE);
@@ -234,6 +242,15 @@ class Beranda extends CI_Controller
 				'y' => $data['dataGedung'][0]['y'],
 				'id' => $data['dataGedung'][0]['koordGedung']
 			);
+			switch ($data['dataGedung'][0]['kategoriGedung']) {
+				case 1:
+					$data['dataGedung'][0]['tipeGedung'] = 'university';
+					break;
+
+				case 0:
+					$data['dataGedung'][0]['tipeGedung'] = 'building';
+					break;
+			}
 			// $this->session->set_userdata('loc', $array);
 
 			$this->load->library('form_validation');

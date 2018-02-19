@@ -7,12 +7,12 @@
 			<div class="col-lg-8">
 				<div id="image-map" class="sidebar-map"></div></div>
 			<div class="col-lg-4">
-				<?php if (isset($invalid)) {
-                echo '<div class="alert alert-primary fade show animated fadeInDown" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>'.$invalid.'</div>';
-            } ?>
+				<?php if (isset($invalid)): ?>
+				<div class="alert alert-primary fade show animated fadeInDown" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+					</button><?= $invalid ?></div>
+				<?php endif ?>
 				<div class="card">
 					<ul class="list-group list-group-flush">
 						<?php $g=0;
@@ -100,7 +100,11 @@ $(function () {
   <?php $l = 0; foreach ( $listGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
       var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-      L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup('<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalGedung<?= $lokasi['idGedung'] ?>">Data Lengkap</button>');
+      L.marker(sol, {icon: L.icon.glyph({
+      	prefix: 'mki',
+      	glyph: '<?php echo $lokasi['tipeGedung'] ?>',
+      	glyphSize: '18px'
+      })}).addTo(map).bindPopup('<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalGedung<?= $lokasi['idGedung'] ?>">Data Lengkap</button>');
     <?php }
   $l++; } ?>
 </script>

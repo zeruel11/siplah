@@ -16,27 +16,20 @@ class Beranda_model extends CI_Model
  */
 		public function getListGedung($mode = 'full')
 		{
+			$this->db->select('gedung.idGedung, kodeGedung, namaGedung, luasGedung, x, y, kategoriGedung');
+			$this->db->from('gedung');
+			$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
+			$this->db->order_by('namaGedung', 'asc');
+			$this->db->limit(8);
 			if ($mode=='sarpras') {
-				$this->db->select('gedung.idGedung, kodeGedung, namaGedung, luasGedung, x, y');
-				$this->db->from('gedung');
-				$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
 				$this->db->join('proposal', 'proposal.idGedung = gedung.idGedung', 'right');
 				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
 				$this->db->where(array(
 					'proposal.status' => '2',
 					'pekerjaan.status' => '0'
 				));
-				$this->db->order_by('namaGedung', 'asc');
 				$this->db->group_by('idGedung');
-				$this->db->limit(8);
-			} else {
-				$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, x, y');
-				$this->db->from('gedung');
-				$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
-				$this->db->order_by('namaGedung', 'asc');
-				$this->db->limit(8);
 			}
-
 			$query=$this->db->get();
 			if ($query->num_rows() > 0) {
 				return $query->result_array();
@@ -89,7 +82,7 @@ class Beranda_model extends CI_Model
  */
 		public function searchListGedungByName(string $ged)
 		{
-			$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, label');
+			$this->db->select('idGedung, kodeGedung, namaGedung, luasGedung, jumlahLantai, x, y, kategoriGedung');
 			$this->db->from('gedung');
 			$this->db->join('koordinat', 'koordinat.idKoord = gedung.koordGedung', 'left');
 			$this->db->where("MATCH(namaGedung) AGAINST ('$ged*' IN BOOLEAN MODE)", null, false);
