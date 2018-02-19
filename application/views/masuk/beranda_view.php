@@ -24,7 +24,9 @@
 		<?php $g++; endforeach ?>
 		</ul>
 	</div>
-	<a class="btn btn-primary float-right mt-2" href="gedung/tambah" role="button">Tambah data gedung</a>
+	<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
+		<a class="btn btn-primary float-right mt-2" href="gedung/tambah" role="button">Tambah data gedung</a>
+	<?php endif ?>
 </div>
 </div>
 </div>

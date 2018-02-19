@@ -26,7 +26,7 @@
 					<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
 						<a class="btn btn-primary mt-2" href="<?= base_url('gedung/edit').$detailGedung[0]['idGedung'] ?>" role="button">Ubah Data Gedung</a>
 					<?php endif ?>
-					<a class="btn btn-info mt-2" href="<?= base_url('renovasi/').$detailGedung[0]['idGedung'] ?>" role="button">Data Renovasi Lengkap</a>
+					<a class="btn btn-info mt-2" href="<?= base_url('renovasi/').$detailGedung[0]['idGedung'] ?>" role="button">Data Renovasi<?= ($userLogin['userLevel']==1 || $userLogin['userLevel']==2)?" Lengkap":"" ?></a>
 				<?php endif ?>
 	<?php else: ?>
 		<h4 class="card-text">Gedung tidak ditemukan</h4>
