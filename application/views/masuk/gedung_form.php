@@ -51,7 +51,7 @@
 		<?= form_error('koordinatForm') ?>
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
-	<button type="reset" class="btn btn-secondary" value="Reset">Reset</button>
+	<button type="reset" id="reset" class="btn btn-secondary" value="Reset">Reset</button>
 	<a class="btn btn-dark float-right" href="<?= ($mode=='insert')?base_url():$cancel ?>" role="button">Cancel</a>
 </form>
 </div>
@@ -94,6 +94,8 @@
 	// tell leaflet that the map is exactly as big as the image
 	map.fitBounds(bounds);
 
+	var currentMarker;
+
   function onMapClick(e) {
   	var mapWidth=map._container.offsetWidth;
     var mapHeight=map._container.offsetHeight;
@@ -102,20 +104,51 @@
     console.log(e);
     $("#koordinatForm").val(e.latlng.lat+" , "+e.latlng.lng);
 
-    // var marker1 = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-    // var r = confirm("Apakah ingin menambah lokasi ?");
-    // if (r == true) {
-    //     window.location = "form_kondisi_tanah.php?lat="+e.latlng.lat+"&long="+e.latlng.lng;
-    // } else {
-    //     window.location = "peta.php";
-    // }
-  }
+    if (currentMarker) {
+        currentMarker._icon.style.transition = "transform 0.3s ease-out";
+        // currentMarker._shadow.style.transition = "transform 0.3s ease-out";
+
+    	currentMarker.setLatLng(e.latlng);
+    	currentMarker.setOpacity(100);
+
+        setTimeout(function () {
+            currentMarker._icon.style.transition = null;
+            // currentMarker._shadow.style.transition = null;
+        }, 300);
+        return;
+    }
+    currentMarker = L.marker(e.latlng, {
+    	draggable: true,
+    	icon: L.icon.glyph({
+    		prefix: 'fa',
+    		glyph: 'check',
+    		glyphColor: 'red',
+    		glyphSize: '9px'
+    	}),
+    	title: 'lokasi baru'
+    }).addTo(map).on("click", function () {
+    	e.originalEvent.stopPropagation();
+    });
+
+    currentMarker.on("move", function (event) {
+    	$("#koordinatForm").val(event.latlng.lat+" , "+event.latlng.lng);
+    });
+  };
+
+  $('#reset').on("click", function () {
+  	currentMarker.setOpacity(0);
+  });
   map.on('click', onMapClick);
+
 <?php if ($mode=='edit'): ?>
 	<?php $l = 0; foreach ( $dataGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
       var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-      L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br>");
+      L.marker(sol, {icon: L.icon.glyph({
+      	prefix: 'mki',
+      	glyph: '<?php echo $lokasi['tipeGedung'] ?>',
+      	glyphSize: '18px'
+      }), title: 'lokasi lama'}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b>");
     <?php }
   $l++; } ?>
 <?php endif ?>

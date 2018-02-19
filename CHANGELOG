@@ -4,3 +4,5 @@
 - added feature to reset user password
 
 - added feature to upload excel for list pekerjaan
+
+- changed map marker icons to use MapKeyIcons with Leaflet Icon Glyph plugin

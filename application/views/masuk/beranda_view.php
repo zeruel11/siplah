@@ -32,6 +32,22 @@
 <?= $footer ?>
 
 <script>
+$(window).on('load', function(event) {
+	setTimeout(function () {
+		$(".alert").alert('close')
+	}, 3500);
+})
+
+$(function () {
+		$('body').on('close.bs.alert', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				$(e.target).slideUp();
+		});
+});
+</script>
+
+<script>
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
 		// shadowUrl: '',
@@ -71,7 +87,11 @@
 		if ($lokasi['x']!=NULL) { ?>
 
 	 var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-	 L.marker(sol, {icon: gedungIcon}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
+	 L.marker(sol, {icon: L.icon.glyph({
+      	prefix: 'mki',
+      	glyph: '<?php echo $lokasi['tipeGedung'] ?>',
+      	glyphSize: '18px'
+      })}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
 
 	 <?php }
 	 $l++; } ?>
