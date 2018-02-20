@@ -1,29 +1,29 @@
 	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
-		<?php if (isset($message)) {
-				echo '<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
+		<?php if (isset($message)): ?>
+			<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-				</button>'.$message.'</div>';
-		} if (isset($dataRenovasi) && $dataRenovasi[0]['idProposal']!=null) {
-			$r=0; foreach ($dataRenovasi as $row) {
-				if ($r==0) {
-					echo '<h3 class="card-title mt-3">Gedung '.$row['namaGedung'] .'</h3>';
-				} elseif ($dataRenovasi[$r]['namaGedung']!=$dataRenovasi[$r-1]['namaGedung']) {
-					echo '<h3 class="card-title mt-3">Gedung '.$row['namaGedung'] .'</h3>';
-				} ?>
+				</button><?= $message ?></div>
+		<?php endif ?>
+		<?php if (isset($dataRenovasi) && $dataRenovasi[0]['idProposal']!=null): ?>
+			<?php $r=0; foreach ($dataRenovasi as $row): ?>
+			<?php if ($r==0): ?>
+				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?><a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a></h3>
+			<?php elseif ($dataRenovasi[$r]['namaGedung']!=$dataRenovasi[$r-1]['namaGedung']): ?>
+				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?><a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a></h3>
+			<?php endif ?>
 				<div class="card mt-2">
 					<div class="row no-gutters">
 						<div class="card-block col-lg-6 w-50">
 							<h5 class="card-title"><?= $row['judulProposal']; ?></h5>
-
-							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
-											echo '<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>';
-									} elseif ($row['deskripsiProposal']!=NULL) {
-										echo '<p class="card-subtitle text-muted text-truncate">'.$row['deskripsiProposal'].'</p>';
-									} else {
-										echo '<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>';
-									} ?>
+							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
+								<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>
+							<?php elseif ($row['deskripsiProposal']!=NULL): ?>
+								<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'] ?></p>
+							<?php else: ?>
+								<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>
+							<?php endif ?>
 						</div>
 						<div class="card-block col-lg-6 p-1 w-50 text-right">
 							<p class="card-subtitle text-muted">Tanggal Mulai Renovasi: <?= $row['dateCreated']?></p>
@@ -78,15 +78,17 @@
 
 				<?= isset($modal)?$modal[$row['idProposal']]:"" ?>
 
-				<?php $r++; } ?>
-		<?php } else { ?>
-			<h4 class="card-text"><?= (isset($dataRenovasi)?'Gedung '.$dataRenovasi[0]['namaGedung'].' belum memiliki data renovasi':'Data renovasi tidak tersedia/belum disetujui') ?></h4>
-		<?php } ?>
+				<?php $r++; endforeach ?>
+			<?php else: ?>
+				<h4 class="card-text"><?= (isset($dataRenovasi)?'Gedung '.$dataRenovasi[0]['namaGedung'].' belum memiliki data renovasi':'Data renovasi tidak tersedia/belum disetujui') ?></h4>
+			<?php endif ?>
 		<div class="row">
 			<div class="col-lg-9">
-		<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) && $this->uri->segment(2)!='ALL') { ?>
-			<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
-		<?php } ?>
+				<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) && $this->uri->segment(2)!='ALL'): ?>
+					<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
+				<?php else: ?>
+					<blockquote class="blockquote text-justify text-info">Untuk menambah/mengajukan renovasi silahkan masuk ke gedung terlebih dahulu.</blockquote>
+				<?php endif ?>
 			</div>
 			<div class="col-lg-3">
 

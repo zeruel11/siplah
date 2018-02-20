@@ -478,7 +478,13 @@ class Beranda extends CI_Controller
 								);
 						}
 						$this->session->set_userdata('refered_from', $renovasi);
-						$this->session->set_userdata('refered_from_renovasi', base_url().$this->uri->uri_string());
+						if ($ged!='ALL') {
+							$renovasi = array(
+							'id' => $data['dataRenovasi'][0]['pemilikGedung'],
+							'url' => base_url().$this->uri->uri_string()
+						);
+						}
+						$this->session->set_userdata('refered_from_renovasi', $renovasi);
 
 						foreach ($data['dataRenovasi'] as $row) {
 							$data['idModal'] = $row['idProposal'];
@@ -519,6 +525,12 @@ class Beranda extends CI_Controller
 		function tambahRenovasi()
 		{
 				$data = $this->data;
+
+				// if (($data['userLogin']['userLevel']!=2 || $data['userLogin']['userLevel']!=1) && $data['userLogin']['userAuth']!=) {
+				// 	$this->session->set_flashdata('message', 'Anda tidak diperbolehkan mengajukan renovasi pada gedung yang bukan merupakan bagian dari unit Anda');
+				// 	redirect($this->session->userdata['refered_from']['url']);
+				// }
+
 				$data['mode']="insert";
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
 
@@ -546,8 +558,11 @@ class Beranda extends CI_Controller
 						$send = array(
 						'idGedung'=>$this->session->userdata['refered_from']['id'],
 						'judulProposal'=>$this->input->post('judulProposalForm'),
-						'deskripsiProposal'=>$this->input->post('deskripsiProposalForm')
+						'deskripsiProposal'=>$this->input->post('deskripsiProposalForm'),
+						'pengajuProposal'=>$this->session->userdata['logged_in']['userAuth']
 						);
+						// $data['test'] = $send;
+						// $this->load->view('test', $data, FALSE);
 						$result = $this->Beranda_model->createRenovasi($send);
 						if ($result==1) {
 							$this->session->set_flashdata('message', 'Renovasi berhasil ditambahkan');
@@ -638,7 +653,7 @@ class Beranda extends CI_Controller
 				if ($this->session->flashdata('message')) {
 						$data['message'] = $this->session->flashdata('message');
 				}
-				$data['back'] = $this->session->userdata('refered_from_renovasi');
+				$data['back'] = $this->session->userdata['refered_from_renovasi']['url'];
 				$result = $this->Beranda_model->getPekerjaan((int)$kerja, 1);
 				$data['dataPekerjaan'] = $result;
 

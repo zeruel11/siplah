@@ -197,7 +197,7 @@ class Beranda_model extends CI_Model
 						break;
 				}
 			} else {
-				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, proposal.status, alokasiDana, dateCreated, dateDeleted');
+				$this->db->select('proposal.idProposal, gedung.idGedung, namaGedung, judulProposal, deskripsiProposal, gedung.pemilikGedung, proposal.status, alokasiDana, dateCreated, dateDeleted');
 				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal AND pekerjaan.status=1) as done', false);
 				$this->db->select('(SELECT COUNT(*) FROM pekerjaan WHERE pekerjaan.idProposal = proposal.idProposal) as kerja', false);
 				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'right');
@@ -246,7 +246,7 @@ class Beranda_model extends CI_Model
  */
 		function createRenovasi($data)
 		{
-			$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `dateCreated`) VALUES ('".$data['idGedung']."', '".$data['judulProposal']."', '".$data['deskripsiProposal']."', CURDATE())";
+			$sql = "INSERT INTO `proposal` (`idGedung`, `judulProposal`, `deskripsiProposal`, `pengajuProposal`, `dateCreated`) VALUES ('".$data['idGedung']."', '".$data['judulProposal']."', '".$data['deskripsiProposal']."', '".$data['pengajuProposal']."', CURDATE())";
 			$this->db->query($sql);
 			return $this->db->affected_rows();
 		}
