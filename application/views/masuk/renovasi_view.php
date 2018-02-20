@@ -1,5 +1,6 @@
 	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
+		<?= isset($modal)?$modal:'' ?>
 		<?php if (isset($message)): ?>
 			<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -33,19 +34,19 @@
 					<div class="row no-gutters pl-1">
 						<div class="card-block col-lg-6 pr-3">
 							<div class="progress">
-								<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL) {
-									echo '<div class="progress-bar progress-bar-striped bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>';
-								} elseif (isset($row['progress'])) {
-									if ($row['progress']==0) {
-										echo '<div class="progress-bar bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>';
-									} elseif ($row['progress']==100) {
-										echo '<div class="progress-bar bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>';
-									} else {
-										echo '<div class="progress-bar" style="width: '.$row['progress'].'%" role="progressbar" aria-valuenow="'.$row['progress'].'" aria-valuemin="0" aria-valuemax="100">'.$row['progress'].'%</div>';
-									}
-								} else {
-									echo '<div class="progress-bar progress-bar-striped bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Pekerjaan Kosong</div>';
-								} ?>
+								<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
+									<div class="progress-bar progress-bar-striped bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+								<?php elseif(isset($row['progress'])) : ?>
+									<?php if ($row['progress']==0): ?>
+										<div class="progress-bar bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>
+									<?php elseif($row['progress']==100): ?>
+										<div class="progress-bar bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+									<?php else: ?>
+										<div class="progress-bar" style="width: <?= $row['progress'] ?>%" role="progressbar" aria-valuenow="<?= $row['progress'] ?>" aria-valuemin="0" aria-valuemax="100"><?= $row['progress'] ?>%</div>
+									<?php endif ?>
+								<?php else: ?>
+									<div class="progress-bar progress-bar-striped bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Pekerjaan Kosong</div>
+								<?php endif ?>
 							</div>
 						</div>
 						<!-- definisi button -->

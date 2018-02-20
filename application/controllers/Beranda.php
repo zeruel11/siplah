@@ -46,8 +46,7 @@ class Beranda extends CI_Controller
 						}
 				} elseif ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'beranda' && $this->uri->uri_string() != 'login' && $this->uri->uri_string() != 'search' && ! preg_match('/^gedung\/\d+/', $this->uri->uri_string())) {
 						// $this->data['message'] = "Anda belum login";
-						// $this->session->set_flashdata('warn', 'Anda belum login');
-						$this->session->set_flashdata('warn', 'logged_out');
+						$this->session->set_flashdata('warn', 'Anda belum melakukan login!');
 						// if ($_SERVER['URI_REQUEST'] != "/siplah/beranda") header("Location: /siplah/beranda");
 						// redirect('beranda', 'location', 301);
 						// if ($this->uri->uri_string() != '' || $this->uri->uri_string() != 'beranda') {
@@ -125,8 +124,8 @@ class Beranda extends CI_Controller
 							$data['modalGedung'][$row['idGedung']] = $this->load->view('masuk/modal/modal_gedung', $data, TRUE);
 							// $dg++;
 						}
-						if ($this->session->flashdata('warn')=='logged_out') {
-							$data['modal'] = $this->load->view('masuk/modal/modal_logged_out', NULL, TRUE);
+						if ($this->session->flashdata('warn')) {
+							$data['modal'] = $this->load->view('masuk/modal/modal_warning', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
@@ -468,10 +467,10 @@ class Beranda extends CI_Controller
 								$d++;
 						}
 						if ($ged!='ALL') {
-						$renovasi = array(
-						'id' => $data['dataRenovasi'][0]['idGedung'],
-						'url' => base_url().$this->uri->uri_string()
-						);
+								$renovasi = array(
+								'id' => $data['dataRenovasi'][0]['idGedung'],
+								'url' => base_url().$this->uri->uri_string()
+								);
 						} else {
 								$renovasi = array(
 								'url' => base_url().$this->uri->uri_string(),
@@ -479,10 +478,10 @@ class Beranda extends CI_Controller
 						}
 						$this->session->set_userdata('refered_from', $renovasi);
 						if ($ged!='ALL') {
-							$renovasi = array(
-							'id' => $data['dataRenovasi'][0]['pemilikGedung'],
-							'url' => base_url().$this->uri->uri_string()
-						);
+								$renovasi = array(
+								'id' => $data['dataRenovasi'][0]['pemilikGedung'],
+								'url' => base_url().$this->uri->uri_string()
+								);
 						}
 						$this->session->set_userdata('refered_from_renovasi', $renovasi);
 
@@ -495,6 +494,9 @@ class Beranda extends CI_Controller
 				$this->load->view('template/header', $data);
 				$this->load->view('template/navigation', $data);
 				$this->load->view('template/menu', $data);
+				if ($this->session->flashdata('warn')) {
+							$data['modal'] = $this->load->view('masuk/modal/modal_warning', NULL, TRUE);
+				}
 				$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 				$this->load->view('masuk/renovasi_view', $data);
 		}
@@ -525,11 +527,13 @@ class Beranda extends CI_Controller
 		function tambahRenovasi()
 		{
 				$data = $this->data;
-
-				// if (($data['userLogin']['userLevel']!=2 || $data['userLogin']['userLevel']!=1) && $data['userLogin']['userAuth']!=) {
-				// 	$this->session->set_flashdata('message', 'Anda tidak diperbolehkan mengajukan renovasi pada gedung yang bukan merupakan bagian dari unit Anda');
-				// 	redirect($this->session->userdata['refered_from']['url']);
-				// }
+				if (!$this->session->userdata('refered_from_renovasi')) {
+					redirect('beranda','refresh');
+				}
+				if (($data['userLogin']['userLevel']!=2 || $data['userLogin']['userLevel']!=1) && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
+					$this->session->set_flashdata('warn', 'Anda tidak diperbolehkan mengajukan renovasi pada gedung yang bukan merupakan bagian dari unit Anda');
+					redirect($this->session->userdata['refered_from']['url']);
+				}
 
 				$data['mode']="insert";
 				$data['cancel'] = $this->session->userdata['refered_from']['url'];
