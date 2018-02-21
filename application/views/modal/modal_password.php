@@ -1,3 +1,4 @@
+<!-- Modal Password -->
 <div class="modal animated bounceIn fade" id="modalReminder" tabindex="-1" role="dialog" aria-labelledby="modalImportant" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -18,30 +19,7 @@
 	</div>
 </div>
 
-<!-- <form name="modalPassword" id="modalPassword" method="post" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalImportant" action="<?= base_url('index.php/Ver_login/changepwd/').$userLogin['uid'] ?>">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="modalImportant">Ganti password</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				Masukkan password lama anda: <input type="password" id="sandiLewat" name="sandiLewat" placeholder="******" required oninvalid="this.setCustomValidity('Masukkan password lama')" oninput="setCustomValidity('')"></input>
-			</div>
-			<div class="modal-body">
-				Masukkan password baru anda: <input type="password" id="sandiLewatBaru" name="sandiLewatBaru" placeholder="******" required oninvalid="this.setCustomValidity('Masukkan password baru')" oninput="setCustomValidity('')"></input>
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary">OK</button>
-			</div>
-		</div>
-	</div>
-</form> -->
-
 <script type="text/javascript">
-	<?php if (isset($pwd)): ?>
 	$(window).on('load', function(){
 	$('#modalReminder').modal({
 		show: true,
@@ -49,7 +27,6 @@
 		keyboard: false
 		})
 	});
-	<?php endif; ?>
 
 $('#close').on('click', function() {
 	$('#modalReminder').modal('hide');

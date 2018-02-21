@@ -43,8 +43,8 @@ class Ver_login extends CI_Controller {
 			}
 			//check password default
 			if ($password=='123qwe') {
-				// $this->session->set_userdata('pwd', 'changed');
-				$this->session->set_flashdata('pwd', 'changed');
+				$this->session->set_userdata('defaultPass', 'changed');
+				// $this->session->set_flashdata('defaultPass', 'default');
 			}
 			// echo "true";
 			redirect('beranda', 'refresh');

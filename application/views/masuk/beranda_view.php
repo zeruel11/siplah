@@ -1,5 +1,6 @@
 <?php $this->output->enable_profiler(TRUE); ?>
-<?= isset($modal)?$modal:'' ?>
+
+<?= isset($modalPwd)?$modalPwd:'' ?>
 <div class="col-lg-6 col-lg-offset-2 mb-5">
 	<!-- <a href="#" data-target="#sidebar" data-toggle="collapse"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a> -->
 	<div id="image-map"></div>

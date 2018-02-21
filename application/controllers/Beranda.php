@@ -93,9 +93,10 @@ class Beranda extends CI_Controller
 					$gd++;
 				}
 				if (isset($this->data['userLogin'])) {
-					// $data['pwd'] = $this->session->userdata('pwd');
-					$data['pwd'] = $this->session->flashdata('pwd');
-					$data['modal'] = $this->load->view('modal/modal_password', $data, TRUE);
+					if ($this->session->userdata('defaultPass')) {
+						$data['modalPwd'] = $this->load->view('modal/modal_password', $data, TRUE);
+					}
+					// $data['pwd'] = $this->session->flashdata('defaultPass');
 					if ($data['userLogin']['userLevel']==4) {
 						// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
 						$this->load->view('template/header', $data);

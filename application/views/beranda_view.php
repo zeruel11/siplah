@@ -1,6 +1,5 @@
 <body>
 <?php $this->output->enable_profiler(TRUE); ?>
-<!-- <?= var_dump($listGedung) ?> -->
 <?= isset($modal)?$modal:'' ?>
 	<div class="container-fluid mt-2">
 		<div class="row">
@@ -53,7 +52,7 @@ $(function () {
         var sidebar = L.control.sidebar('sidebar').addTo(map);
     </script> -->
 
-<script>
+<script type="text/javascript">
 	var gedungIcon = L.icon({
 		iconUrl: '<?php echo base_url(); ?>assets/img/gedung.png',
 		// shadowUrl: '',
@@ -97,16 +96,18 @@ $(function () {
   }
   map.on('contextmenu', onMapClick);
 
-  <?php $l = 0; foreach ( $listGedung as $lokasi ) {
+	<?php $l = 0; foreach ( $listGedung as $lokasi ) {
 		if ($lokasi['x']!=NULL) { ?>
-      var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
-      L.marker(sol, {icon: L.icon.glyph({
+
+	 var sol = L.latLng([ <?php echo $lokasi['x'] ?>, <?php echo $lokasi['y'] ?>]);
+	 L.marker(sol, {icon: L.icon.glyph({
       	prefix: 'mki',
       	glyph: '<?php echo $lokasi['tipeGedung'] ?>',
       	glyphSize: '18px'
-      })}).addTo(map).bindPopup('<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?php echo ($lokasi['luasGedung']==0)?"N/A":$lokasi['luasGedung']."m<sup>2</sup>" ?></b><br><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalGedung<?= $lokasi['idGedung'] ?>">Data Lengkap</button>');
-    <?php }
-  $l++; } ?>
+      })}).addTo(map).bindPopup("<b><?= $lokasi['namaGedung'] ?><?php if(isset($lokasi['kodeGedung'])){echo " (".$lokasi['kodeGedung'].")";} ?></b><br><b>Luas Gedung: <?= $lokasi['luasGedung'] ?>m<sup>2</sup></b><br><a href=gedung/<?= $lokasi['idGedung'] ?> target=_blank>Data Lengkap</a>");
+
+	 <?php }
+	 $l++; } ?>
 </script>
 
 </body>
