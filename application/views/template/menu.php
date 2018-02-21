@@ -11,14 +11,13 @@
 						<li class="nav-item">
 							<?php echo '<a class="nav-link'.(($this->uri->segment(1)=='beranda'||$this->uri->segment(1)=='')?" active":($this->uri->segment(1)=='gedung')?" active":"").'" href="'.base_url().'">'.(($this->uri->segment(1)=='gedung')?"Data Gedung":"Overview Gedung").'<span class="sr-only">(current)</span></a>'; ?>
 						</li>
-							<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==4 || $userLogin['userLevel']==5) { ?>
-							<li class="nav-item">
-								<?php if ($userLogin['userLevel']==4) {
-									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/available').'">Prioritas Renovasi <span class="badge badge-dark">'.$jumlahTersedia.'</span></a>';
-								} else {
-									echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->uri_string()=="beranda" || $this->uri->uri_string()=="")?base_url('renovasi/ALL'):(($this->uri->segment(1)=='gedung')?base_url('renovasi/').$this->uri->segment(2):"")).'">'.(($this->uri->uri_string()=='' || $this->uri->uri_string()=='beranda' || $this->uri->segment(2)=='ALL')?"Semua Renovasi":"Renovasi").' <span class="badge badge-dark">'.$jumlah.'</span></a>';
-								}
-								 ?>
+						<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==4 || $userLogin['userLevel']==5) { ?>
+						<li class="nav-item">
+							<?php if ($userLogin['userLevel']==4) {
+								echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.base_url('renovasi/available').'">Prioritas Renovasi <span class="badge badge-dark">'.$jumlahTersedia.'</span></a>';
+							} else {
+								echo '<a class="nav-link'.(($this->uri->segment(1)=='renovasi')?(($this->uri->segment(2)=='pekerjaan')?"":" active"):"").'" href="'.(($this->uri->uri_string()=="beranda" || $this->uri->uri_string()=="")?base_url('renovasi/ALL'):(($this->uri->segment(1)=='gedung')?base_url('renovasi/').$this->uri->segment(2):"")).'">'.(($this->uri->uri_string()=='' || $this->uri->uri_string()=='beranda' || $this->uri->segment(2)=='ALL')?"Semua Renovasi":"Renovasi").' <span class="badge badge-dark">'.$jumlah.'</span></a>';
+							} ?>
 							</li>
 							<?php } elseif ($userLogin['userLevel']==3) { ?>
 							<li class="nav-item">

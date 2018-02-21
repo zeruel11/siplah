@@ -63,33 +63,34 @@
 						</div>
 						<!-- definisi button -->
 						<div class="card-block col-lg-6 text-right">
-						<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2) { ?>
-							<div class="btn-group float-right" role="group">
-								<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-								<?php if ($row['status']!=6): ?>
+							<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
+								<div class="btn-group float-right" role="group">
+									<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+									<?php if ($row['status']!=6): ?>
 									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button" data-toggle="tooltip" data-placement="top" title="Tandai renovasi telah selesai">Selesai Renovasi</a>
-								<?php endif; ?>
-								<a class="btn btn-outline-warning" href="<?= base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
-								<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?= $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
-							</div>
-						<?php } elseif ($userLogin['userLevel']==3) { ?>
-						<div class="btn-group float-right" role="group">
-						<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-							<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3 && $dataRenovasi[$r]['status']!=6){ ?>
-								<a class="btn btn-outline-success mini-btn" href="<?= base_url()."renovasi/setuju/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Setujui renovasi</a>
-								<a class="btn btn-outline-danger mini-btn" href="<?= base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
-							</div>
-							<?php }
-						} elseif($userLogin['userLevel']==4) { ?>
-							<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Ceklis Pekerjaan</a>
-						<?php } else { ?>
-						<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
-							<?php } ?>
+									<?php endif; ?>
+									<a class="btn btn-outline-warning" href="<?= base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>
+									<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalHapus<?= $dataRenovasi[$r]['idProposal'] ?>">Hapus</button>
+								</div>
+							<?php elseif($userLogin['userLevel']==3): ?>
+								<div class="btn-group float-right" role="group">
+									<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+									<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3 && $dataRenovasi[$r]['status']!=6): ?>
+										<button class="btn btn-outline-success mini-btn" role="button" data-toggle="modal" data-target="#modalSetuju<?= $dataRenovasi[$r]['idProposal'] ?>">Setujui renovasi</button>
+										<a class="btn btn-outline-danger mini-btn" href="<?= base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
+									<?php endif ?>
+								</div>
+							<?php elseif($userLogin['userLevel']==4): ?>
+								<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Ceklis Pekerjaan</a>
+							<?php else: ?>
+								<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+							<?php endif ?>
 						</div>
 					</div>
 				</div>
 
 				<?= isset($modal)?$modal[$row['idProposal']]:"" ?>
+				<?= isset($modalSetuju)?$modalSetuju[$row['idProposal']]:"" ?>
 
 				<?php $r++; endforeach ?>
 			<?php else: ?>
@@ -97,10 +98,12 @@
 			<?php endif ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) && $this->uri->segment(2)!='ALL'): ?>
-					<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
-				<?php else: ?>
-					<blockquote class="blockquote text-justify text-info">Untuk menambah/mengajukan renovasi silahkan masuk ke gedung terlebih dahulu.</blockquote>
+				<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5): ?>
+					<?php if ($this->uri->segment(2)!='ALL'): ?>
+						<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
+					<?php else: ?>
+						<blockquote class="blockquote text-justify text-info">Untuk menambah/mengajukan renovasi silahkan masuk ke gedung terlebih dahulu.</blockquote>
+					<?php endif ?>
 				<?php endif ?>
 			</div>
 			<div class="col-lg-3">

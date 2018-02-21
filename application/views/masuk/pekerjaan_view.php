@@ -8,7 +8,7 @@
 		<?php endif ?>
 		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL): ?>
 			<h4 class="card-title">Renovasi: <?= $dataPekerjaan[0]['judulProposal']; ?></h4>
-			<p class="card-text"><?= $dataPekerjaan[0]['deskripsiProposal']; ?></p>
+			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal'][0]) ?></p>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 			<ul class="list-group mt-3">
