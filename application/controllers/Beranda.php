@@ -95,7 +95,7 @@ class Beranda extends CI_Controller
 				if (isset($this->data['userLogin'])) {
 					// $data['pwd'] = $this->session->userdata('pwd');
 					$data['pwd'] = $this->session->flashdata('pwd');
-					$data['modal'] = $this->load->view('masuk/modal/modal_password', $data, TRUE);
+					$data['modal'] = $this->load->view('modal/modal_password', $data, TRUE);
 					if ($data['userLogin']['userLevel']==4) {
 						// $data['listGedung'] = $this->Beranda_model->getListGedung('sarpras');
 						$this->load->view('template/header', $data);
@@ -121,11 +121,11 @@ class Beranda extends CI_Controller
 						foreach ($data['listGedung'] as $row) {
 							$data['idModal'] = $row['idGedung'];
 							$data['dataLuar'] = $this->Beranda_model->getDataGedung($row['idGedung']);
-							$data['modalGedung'][$row['idGedung']] = $this->load->view('masuk/modal/modal_gedung', $data, TRUE);
+							$data['modalGedung'][$row['idGedung']] = $this->load->view('modal/modal_gedung', $data, TRUE);
 							// $dg++;
 						}
 						if ($this->session->flashdata('warn')) {
-							$data['modal'] = $this->load->view('masuk/modal/modal_warning', NULL, TRUE);
+							$data['modal'] = $this->load->view('modal/modal_warning', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);
@@ -487,7 +487,7 @@ class Beranda extends CI_Controller
 
 						foreach ($data['dataRenovasi'] as $row) {
 							$data['idModal'] = $row['idProposal'];
-							$data['modal'][$row['idProposal']] = $this->load->view('masuk/modal/modal_delete', $data, TRUE);
+							$data['modal'][$row['idProposal']] = $this->load->view('modal/modal_delete', $data, TRUE);
 						}
 				}
 
@@ -495,7 +495,7 @@ class Beranda extends CI_Controller
 				$this->load->view('template/navigation', $data);
 				$this->load->view('template/menu', $data);
 				if ($this->session->flashdata('warn')) {
-							$data['modal'] = $this->load->view('masuk/modal/modal_warning', NULL, TRUE);
+							$data['modal_warning'] = $this->load->view('modal/modal_warning', NULL, TRUE);
 				}
 				$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 				$this->load->view('masuk/renovasi_view', $data);
@@ -677,7 +677,7 @@ class Beranda extends CI_Controller
 										$data['dataPekerjaan'][$d]['dateDeleted'] = $date->format('d-m-Y');
 								}
 								$data['idModal'] = $row['idPekerjaan'];
-								$data['modal'][$row['idPekerjaan']] = $this->load->view('masuk/modal/modal_delete', $data, TRUE);
+								$data['modal'][$row['idPekerjaan']] = $this->load->view('modal/modal_delete', $data, TRUE);
 								$d++;
 						}
 				}
@@ -692,7 +692,7 @@ class Beranda extends CI_Controller
 						$this->load->view('template/navigation', $data);
 						$this->load->view('template/menu', $data);
 						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-						$data['modalUnggah'] = $this->load->view('masuk/modal/modal_upload', $data, TRUE);
+						$data['modalUnggah'] = $this->load->view('modal/modal_upload', $data, TRUE);
 						$this->load->view('masuk/pekerjaan_view', $data);
 				}
 		}
@@ -836,11 +836,11 @@ class Beranda extends CI_Controller
 			$data=$this->data;
 			// $this->load->view('template/header');
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
-			// $data['modal'] = $this->load->view('masuk/modal/modal', NULL, TRUE);
-			// $this->load->view('masuk/modal/modal');
+			// $data['modal'] = $this->load->view('modal/modal', NULL, TRUE);
+			// $this->load->view('modal/modal');
 			$this->load->view('template/header', $data);
       $this->load->view('template/navigation', $data);
-      $this->load->view('masuk/modal/modal_upload', $data);
+      $this->load->view('modal/modal_upload', $data);
       $this->load->view('template/footer');
 
 	   	// $spreadsheet = new Spreadsheet();

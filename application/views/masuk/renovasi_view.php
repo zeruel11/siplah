@@ -1,6 +1,6 @@
 	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10 pt-1">
-		<?= isset($modal)?$modal:'' ?>
+		<?= isset($modal_warning)?$modal_warning:'' ?>
 		<?php if (isset($message)): ?>
 			<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -10,10 +10,17 @@
 		<?php if (isset($dataRenovasi) && $dataRenovasi[0]['idProposal']!=null): ?>
 			<?php $r=0; foreach ($dataRenovasi as $row): ?>
 			<?php if ($r==0): ?>
-				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?><a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a></h3>
+				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?>
+					<?php if ($this->uri->segment(2)=='ALL'): ?>
+					<a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a>
+					<?php endif; ?>
+				</h3>
 			<?php elseif ($dataRenovasi[$r]['namaGedung']!=$dataRenovasi[$r-1]['namaGedung']): ?>
-				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?><a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a></h3>
-			<?php endif ?>
+				<h3 class="card-title mt-3">Gedung <?= $row['namaGedung'] ?>
+					<?php if ($this->uri->segment(2)=='ALL'): ?>
+					<a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a>
+					<?php endif ?>
+				</h3>
 				<div class="card mt-2">
 					<div class="row no-gutters">
 						<div class="card-block col-lg-6 w-50">
@@ -115,6 +122,6 @@
 	});
 
 	$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle="tooltip"]').tooltip()
 	})
 	</script>
