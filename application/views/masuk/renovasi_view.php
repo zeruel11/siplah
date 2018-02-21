@@ -77,7 +77,7 @@
 									<a class="btn btn-outline-info small-btn" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
 									<?php if ($dataRenovasi[$r]['status']!=2 && $dataRenovasi[$r]['status']!=3 && $dataRenovasi[$r]['status']!=6): ?>
 										<button class="btn btn-outline-success mini-btn" role="button" data-toggle="modal" data-target="#modalSetuju<?= $dataRenovasi[$r]['idProposal'] ?>">Setujui renovasi</button>
-										<a class="btn btn-outline-danger mini-btn" href="<?= base_url()."renovasi/tolak/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Tolak renovasi</a>
+										<button class="btn btn-outline-danger mini-btn" role="button" data-toggle="modal" data-target="#modalTolak<?= $dataRenovasi[$r]['idProposal'] ?>">Tolak renovasi</button>
 									<?php endif ?>
 								</div>
 							<?php elseif($userLogin['userLevel']==4): ?>
@@ -91,6 +91,7 @@
 
 				<?= isset($modal)?$modal[$row['idProposal']]:"" ?>
 				<?= isset($modalSetuju)?$modalSetuju[$row['idProposal']]:"" ?>
+				<?= isset($modalTolak)?$modalTolak[$row['idProposal']]:"" ?>
 
 				<?php $r++; endforeach ?>
 			<?php else: ?>

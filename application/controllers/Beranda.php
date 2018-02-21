@@ -490,7 +490,8 @@ class Beranda extends CI_Controller
 						foreach ($data['dataRenovasi'] as $row) {
 							$data['idModal'] = $row['idProposal'];
 							$data['modal'][$row['idProposal']] = $this->load->view('modal/modal_delete', $data, TRUE);
-							$data['modalSetuju'][$row['idProposal']] = $this->load->view('modal/modal_dana', $data, TRUE);
+							$data['modalSetuju'][$row['idProposal']] = $this->load->view('modal/modal_setuju', $data, TRUE);
+							$data['modalTolak'][$row['idProposal']] = $this->load->view('modal/modal_tolak', $data, TRUE);
 						}
 				}
 

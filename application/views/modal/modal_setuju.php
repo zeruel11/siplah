@@ -9,10 +9,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			Masukkan alokasi dana: Rp<input type="number" id="alokasiDana" name="alokasiDana" placeholder="1000000" required oninvalid="this.setCustomValidity('Anda perlu memasukkan alokasi dana untuk menyetujui proposal renovasi')" oninput="setCustomValidity('')"></input>
+			Masukkan alokasi dana: Rp<input type="number" id="danaForm" name="danaForm" placeholder="1000000" required oninvalid="this.setCustomValidity('Anda perlu memasukkan alokasi dana untuk menyetujui proposal renovasi')" oninput="setCustomValidity('')"></input>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" value="upload" class="btn btn-primary">Setuju</button>
+				<button type="submit" value="upload" class="btn btn-success">Setuju</button>
 				<button type="button" class="btn btn-secondary" id="cancelModal" data-dismiss="modal">Batal</button>
 			</div>
 		</div>
