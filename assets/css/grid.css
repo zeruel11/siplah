@@ -29,7 +29,7 @@
 @font-face {
     font-family: 'MapkeyIcons';
     src: url("../fonts/MapkeyIcons.eot"); /* IE9 */
-    src: url("../fonts/MapkeyIcons.eot?#iefix") format('embedded-opentype')
+    src: url("../fonts/MapkeyIcons.eot?#iefix") format('embedded-opentype'),
     url('../fonts/MapkeyIcons.woff') format('woff'),
     url('../fonts/MapkeyIcons.ttf') format('truetype'),
     url('../fonts/MapkeyIcons.svg#MapkeyIcons') format('svg');
@@ -109,6 +109,12 @@ main {
 .list-btn{
 	left: 0;
 	right: 0
+}
+.popup-btn{
+	width: 100px;
+	height: 20px;
+	padding: 0px;
+	font-size: 12px;
 }
 
 /**
