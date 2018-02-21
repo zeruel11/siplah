@@ -464,6 +464,7 @@ class Beranda extends CI_Controller
 										$date = new DateTime($row['dateDeleted']);
 										$data['dataRenovasi'][$d]['dateDeleted'] = $date->format('d-m-Y');
 								}
+								$data['dataRenovasi'][$d]['deskripsiProposal'] = preg_split("/\\r\\n\||\\r\||\\n\|/", $row['deskripsiProposal']);
 								$d++;
 						}
 						if ($ged!='ALL') {
@@ -680,6 +681,7 @@ class Beranda extends CI_Controller
 								$data['modal'][$row['idPekerjaan']] = $this->load->view('modal/modal_delete', $data, TRUE);
 								$d++;
 						}
+						$data['dataPekerjaan'][0]['deskripsiProposal'] = preg_split("/\\r\\n\||\\r\||\\n\|/", $result[0]['deskripsiProposal']);
 				}
 				if ($data['userLogin']['userLevel']==4 && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
 						$this->load->view('template/header', $data);

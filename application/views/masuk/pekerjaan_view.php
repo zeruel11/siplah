@@ -32,7 +32,12 @@
 			</div>
 		<?php else: ?>
 			<h4 class="card-text">Proposal <?= $dataPekerjaan[0]['judulProposal'] ?> <strong style="color: red">belum memiliki daftar pekerjaan</strong></h4>
-			<p class="card-text"><?= $dataPekerjaan[0]['deskripsiProposal'] ?></p>
+			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal'][0]) ?></p>
+			<?php if (isset($dataPekerjaan[0]['deskripsiProposal'][1])): ?>
+				<p class="card-text text-danger">Alasan penolakan: <strong><?= $dataPekerjaan[0]['deskripsiProposal'][1] ?></strong></p>
+			<?php else: ?>
+				<p class="card-text text-danger">Alasan penolakan tidak diberikan</p>
+			<?php endif ?>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<?php endif ?>

@@ -21,6 +21,7 @@
 					<a class="btn btn-sm btn-outline-primary ml-2" href="<?= base_url('gedung/').$row['idGedung'] ?>" role="button">Data Gedung</a>
 					<?php endif ?>
 				</h3>
+			<?php endif ?>
 				<div class="card mt-2">
 					<div class="row no-gutters">
 						<div class="card-block col-lg-6 w-50">
@@ -28,7 +29,11 @@
 							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
 								<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>
 							<?php elseif ($row['deskripsiProposal']!=NULL): ?>
-								<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'] ?></p>
+								<?php if ($row['status']!=3): ?>
+									<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'][0] ?></p>
+								<?php else: ?>
+									<p class="card-subtitle text-danger"> -renovasi ditolak- </p>
+								<?php endif ?>
 							<?php else: ?>
 								<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>
 							<?php endif ?>
