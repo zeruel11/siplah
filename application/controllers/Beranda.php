@@ -404,7 +404,11 @@ class Beranda extends CI_Controller
 		 */
 		function setuju($renovasi)
 		{
-				$result = $this->Beranda_model->updateStatusRenovasi($renovasi, 1);
+				$send = array(
+					'status'=>2,
+					'alokasiDana'=>$this->input->post('danaForm')
+				);
+				$result = $this->Beranda_model->updateStatusRenovasi($renovasi, 1, $send);
 				if ($result==1) {
 						$this->session->set_flashdata('message', 'Proposal renovasi telah disetujui');
 				}
@@ -420,6 +424,11 @@ class Beranda extends CI_Controller
 		 */
 		function tolak($renovasi)
 		{
+				$alasan = '';
+				$send = array(
+					'status'=>3,
+					'deskripsiProposal'=>$alasan
+				);
 				$this->Beranda_model->updateStatusRenovasi($renovasi, 0);
 				if ($result==1) {
 						$this->session->set_flashdata('message', 'Proposal renovasi telah ditolak');

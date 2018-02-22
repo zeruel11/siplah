@@ -272,24 +272,19 @@ class Beranda_model extends CI_Model
  * @param  int                  $mode     status update to
  * @return int                         db row affected
  */
-		function updateStatusRenovasi(int $renovasi, int $mode)
+		function updateStatusRenovasi(int $renovasi, int $mode, array $data = NULL)
 		{
 			if ($mode==1) {
-				$data = array(
-					'status'=>2
-				);
 				$this->db->where('idProposal', $renovasi);
 				$this->db->update('proposal', $data);
 			} elseif ($mode==0) {
-				$data = array(
-					'status'=>3
-				);
 				$this->db->where('idProposal', $renovasi);
 				$this->db->update('proposal', $data);
 			} elseif ($mode==2) {
 				$sql = "UPDATE `proposal` SET `status` = '6', `dateDeleted` = CURDATE() WHERE `proposal`.`idProposal` = ".(int)$renovasi;
 				$this->db->query($sql);
 			}
+
 			return $this->db->affected_rows();
 		}
 
