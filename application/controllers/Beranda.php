@@ -851,10 +851,8 @@ class Beranda extends CI_Controller
 			// the "TRUE" argument tells it to return the content, rather than display it immediately
 			// $data['modal'] = $this->load->view('modal/modal', NULL, TRUE);
 			// $this->load->view('modal/modal');
-			$this->load->view('template/header', $data);
-      $this->load->view('template/navigation', $data);
-      $this->load->view('modal/modal_upload', $data);
-      $this->load->view('template/footer');
+			$this->load->view('template/header', $data, FALSE);
+			$this->load->view('test');
 
 	   	// $spreadsheet = new Spreadsheet();
 	   	// $sheet = $spreadsheet->getActiveSheet();
