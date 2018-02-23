@@ -8,7 +8,7 @@
 		<?php endif ?>
 		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL): ?>
 			<h4 class="card-title">Renovasi: <?= $dataPekerjaan[0]['judulProposal']; ?></h4>
-			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal'][0]) ?></p>
+			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal']) ?></p>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 			<ul class="list-group mt-3">
@@ -31,22 +31,24 @@
 				<div class="progress-bar" style="width: <?=$bar?>%" role="progressbar" aria-valuenow="<?=$bar?>" aria-valuemin="0" aria-valuemax="100"><?=$bar?>%</div>
 			</div>
 		<?php else: ?>
-			<h4 class="card-text">Proposal <?= $dataPekerjaan[0]['judulProposal'] ?> <strong style="color: red">belum memiliki daftar pekerjaan</strong></h4>
-			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal'][0]) ?></p>
-			<?php if (isset($dataPekerjaan[0]['deskripsiProposal'][1])): ?>
-				<p class="card-text text-danger">Alasan penolakan: <strong><?= $dataPekerjaan[0]['deskripsiProposal'][1] ?></strong></p>
-			<?php else: ?>
+			<h4 class="card-text">Proposal <?= $dataPekerjaan[0]['judulProposal'] ?><?= ($dataPekerjaan[0]['persetujuan']!=3)?' <strong style="color: red">belum memiliki daftar pekerjaan</strong>':'' ?></h4>
+			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal']) ?></p>
+			<?php if ($dataPekerjaan[0]['persetujuan']==3 && !is_numeric($dataPekerjaan[0]['alokasiDana']) && !is_null($dataPekerjaan[0]['alokasiDana'])): ?>
+				<p class="card-text text-danger">Alasan penolakan: <strong><?= $dataPekerjaan[0]['alokasiDana'] ?></strong></p>
+			<?php elseif ($dataPekerjaan[0]['persetujuan']==3): ?>
 				<p class="card-text text-danger">Alasan penolakan tidak diberikan</p>
 			<?php endif ?>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<?php endif ?>
-		<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
+		<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2) && $dataPekerjaan[0]['persetujuan']==2): ?>
 			<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
 			<!-- <a class="btn btn-outline-success mt-3" href="unggah" role="button">Unggah Pekerjaan</a> -->
 			<span data-toggle="modal" data-target="#modalUnggah">
 				<button type="button" class="btn btn-outline-success mt-3" data-toggle="tooltip" data-placement="right" title="Unggah list pekerjaan dalam bentuk excel">Unggah Pekerjaan</button>
 			</span>
+		<?php else: ?>
+			<br><h5 class="<?= ($dataPekerjaan[0]['persetujuan']==3)?'text-danger':'text-info' ?>">Proposal <?= ($dataPekerjaan[0]['persetujuan']==3)?'tidak':'belum' ?> disetujui oleh Wakil Rektor II</h5>
 		<?php endif ?>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	</div>

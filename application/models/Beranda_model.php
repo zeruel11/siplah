@@ -302,10 +302,11 @@ class Beranda_model extends CI_Model
 
 		function getPekerjaan($kerja, $mode)
 		{
-			$this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, proposal.idProposal, judulProposal, deskripsiProposal, dateCreated, dateDeleted');
+			$this->db->select('idPekerjaan, detailPekerjaan, pekerjaan.status, proposal.idProposal, judulProposal, deskripsiProposal, alokasiDana, dateCreated, dateDeleted');
 			$this->db->from('proposal');
 			$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
 			if ($mode==1) {
+				$this->db->select('proposal.status as persetujuan');
 				$this->db->where('proposal.idProposal', $kerja);
 			} elseif ($mode==2) {
 				$this->db->where('pekerjaan.idPekerjaan', $kerja);

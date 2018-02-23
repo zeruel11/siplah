@@ -9,7 +9,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			Anda dapat menyertakan alasan mengapa renovasi ditolak: <input type="number" id="alasanForm" name="alasanForm" placeholder="Alasan penolakan"></input>
+			Anda dapat menyertakan alasan mengapa renovasi ditolak: <input type="text" id="alasanForm" name="alasanForm" placeholder="Alasan penolakan"></input>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" value="upload" class="btn btn-danger">Tolak</button>

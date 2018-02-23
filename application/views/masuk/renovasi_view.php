@@ -28,12 +28,10 @@
 							<h5 class="card-title"><?= $row['judulProposal']; ?></h5>
 							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
 								<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>
-							<?php elseif ($row['deskripsiProposal']!=NULL): ?>
-								<?php if ($row['status']!=3): ?>
-									<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'][0] ?></p>
-								<?php else: ?>
-									<p class="card-subtitle text-danger"> -renovasi ditolak- </p>
-								<?php endif ?>
+							<?php elseif ($row['deskripsiProposal']!=NULL && $row['status']==3): ?>
+								<p class="card-subtitle text-danger"> -renovasi ditolak- </p>
+							<?php elseif ($row['deskripsiProposal']!=NULL && $row['status']!=3): ?>
+								<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'] ?></p>
 							<?php else: ?>
 								<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>
 							<?php endif ?>
