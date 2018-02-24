@@ -42,18 +42,19 @@
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 		<?php endif ?>
 		<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2) && $dataPekerjaan[0]['persetujuan']==2): ?>
-			<a class="btn btn-outline-success mt-3" href="baru" role="button">Tambah Pekerjaan</a>
+			<a class="btn btn-outline-success mt-3" href="baru" role="button" data-toggle="tooltip" data-placement="bottom" title="Masukkan pekerjaan secara manual">Tambah Pekerjaan</a>
 			<!-- <a class="btn btn-outline-success mt-3" href="unggah" role="button">Unggah Pekerjaan</a> -->
 			<span data-toggle="modal" data-target="#modalUnggah">
 				<button type="button" class="btn btn-outline-success mt-3" data-toggle="tooltip" data-placement="right" title="Unggah list pekerjaan dalam bentuk excel">Unggah Pekerjaan</button>
 			</span>
-		<?php else: ?>
-			<br><h5 class="<?= ($dataPekerjaan[0]['persetujuan']==3)?'text-danger':'text-info' ?>">Proposal <?= ($dataPekerjaan[0]['persetujuan']==3)?'tidak':'belum' ?> disetujui oleh Wakil Rektor II</h5>
+		<?php elseif ($dataPekerjaan[0]['persetujuan']==3 || $dataPekerjaan[0]['persetujuan']==0): ?>
+			<br><strong class="h5 <?= ($dataPekerjaan[0]['persetujuan']==3)?'text-danger':'text-info' ?>">Proposal <?= ($dataPekerjaan[0]['persetujuan']==3)?'tidak':'belum' ?> disetujui oleh Wakil Rektor II</strong>
+		<?php elseif ($dataPekerjaan[0]['persetujuan']==6): ?>
+			<br><strong class="h5 text-success">Renovasi telah selesai</strong>
 		<?php endif ?>
 		<a class="btn btn-outline-secondary float-right mt-3" href="<?= $back ?>" role="button">Kembali</a>
 	</div>
-</div>
-</main>
+
 <?= isset($modalUnggah)?$modalUnggah:"" ?>
 <?= $footer ?>
 

@@ -28,9 +28,7 @@
 							<h5 class="card-title"><?= $row['judulProposal']; ?></h5>
 							<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
 								<p class="card-subtitle text-success"> -Renovasi telah selesai- </p>
-							<?php elseif ($row['deskripsiProposal']!=NULL && $row['status']==3): ?>
-								<p class="card-subtitle text-danger"> -renovasi ditolak- </p>
-							<?php elseif ($row['deskripsiProposal']!=NULL && $row['status']!=3): ?>
+							<?php elseif ($row['deskripsiProposal']!=NULL): ?>
 								<p class="card-subtitle text-muted text-truncate"><?= $row['deskripsiProposal'] ?></p>
 							<?php else: ?>
 								<p class="card-subtitle text-danger"> -proposal tidak memiliki deskripsi- </p>
@@ -43,7 +41,12 @@
 					</div>
 					<div class="row no-gutters pl-1">
 						<div class="card-block col-lg-6 pr-3">
-							<div class="progress">
+							<?php if ($row['status']==3): ?>
+								<strong class="h5 text-danger">- Renovasi ditolak -</strong>
+							<?php elseif ($row['status']==0): ?>
+								<strong class="h5 text-info">- Menunggu persetujuan WR II -</strong>
+							<?php else: ?>
+								<div class="progress">
 								<?php if (isset($row['dateDeleted']) && $row['dateDeleted']!=NULL): ?>
 									<div class="progress-bar progress-bar-striped bg-success" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
 								<?php elseif(isset($row['progress'])) : ?>
@@ -58,12 +61,13 @@
 									<div class="progress-bar progress-bar-striped bg-warning" style="width:100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Pekerjaan Kosong</div>
 								<?php endif ?>
 							</div>
+							<?php endif ?>
 						</div>
 						<!-- definisi button -->
 						<div class="card-block col-lg-6 text-right">
 							<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
 								<div class="btn-group float-right" role="group">
-									<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi & Pekerjaan</a>
+									<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi<?= ($row['status']==6 || $row['status']==3)?'':' & Pekerjaan' ?></a>
 									<?php if ($row['status']!=6): ?>
 									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button" data-toggle="tooltip" data-placement="top" title="Tandai renovasi telah selesai">Selesai Renovasi</a>
 									<?php endif; ?>
@@ -97,21 +101,17 @@
 			<?php endif ?>
 		<div class="row">
 			<div class="col-lg-9">
-				<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5): ?>
-					<?php if ($this->uri->segment(2)!='ALL'): ?>
+					<?php if (($userLogin['userLevel']==1 || $userLogin['userLevel']==2 || $userLogin['userLevel']==5) && $this->uri->segment(2)!='ALL'): ?>
 						<a class="btn btn-outline-success mt-3" href="<?= base_url('ajuan'); ?>" role="button">Tambah Renovasi Baru</a>
-					<?php else: ?>
+					<?php elseif ($this->uri->segment(2)=='ALL'): ?>
 						<blockquote class="blockquote text-justify text-info">Untuk menambah/mengajukan renovasi silahkan masuk ke gedung terlebih dahulu.</blockquote>
 					<?php endif ?>
-				<?php endif ?>
 			</div>
 			<div class="col-lg-3">
 
 			</div>
 		</div>
 	</div>
-</div>
-</main>
 	<?= $footer ?>
 
 	<script>

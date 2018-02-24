@@ -3,7 +3,7 @@
 	<p class="card-text"><?= $dataPekerjaan[0]['deskripsiProposal']; ?></p>
 	<!-- <div class="card-block"> -->
 		<!-- <ul class="list-group list-group-flush"> -->
-		<form name="input" method="post" action="<?= base_url('Beranda/selesaiPekerjaan'); ?>">
+		<form class="mb-2" name="input" method="post" action="<?= base_url('Beranda/selesaiPekerjaan'); ?>">
 			<?php $k=0; foreach ($dataPekerjaan as $row): ?>
 			<li class="list-group-item">
 				<label class="form-check custom-control custom-checkbox">

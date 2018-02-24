@@ -53,9 +53,7 @@ class Beranda_model extends CI_Model
 
 		function jumlahRenovasi($status)
 		{
-			if (is_int($status)) {
-				$this->db->where('idGedung', $status);
-			} elseif ($status=='spr') {
+			if ($status=='spr') {
 				$this->db->select('idGedung');
 				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
 				$this->db->where(array(
@@ -65,7 +63,6 @@ class Beranda_model extends CI_Model
 				$this->db->group_by('idGedung');
 			} elseif ($status!='ALL') {
 				$orStatus = explode("|", $status);
-				// $this->db->where('status', $orStatus[0]);
 				foreach ($orStatus as $whereClause) {
 					$this->db->or_where('status', $whereClause);
 				}
@@ -221,7 +218,7 @@ class Beranda_model extends CI_Model
 						$this->db->or_where('proposal.status', 6);
 						break;
 					case 4:
-						$this->db->where('proposal.status', 2);
+						$this->db->where(array('proposal.status'=>2, 'pekerjaan.status'=>0));
 						break;
 				}
 				$this->db->group_by('idProposal');

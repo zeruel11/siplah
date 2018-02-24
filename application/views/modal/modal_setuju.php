@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" id="next" class="btn btn-success">Setuju</button>
+				<button type="submit" id="submit" class="btn btn-success">Setuju</button>
 				<button type="button" class="btn btn-secondary" id="cancelModal" data-dismiss="modal">Batal</button>
 			</div>
 		</div>
@@ -24,24 +24,6 @@
 </form>
 
 <script type="text/javascript">
-// $("#next").click(function(){
-// 		var form = $("#modalSetuju<?= $idModal ?>");
-// 		form.validate({
-// 			rules: {
-// 				danaForm: {
-// 					required: true,
-// 					number: true
-// 				}
-// 			},
-// 			messages: {
-// 				danaForm: {
-// 					required: '<div class="invalid-feedback">Anda perlu memasukkan alokasi dana renovasi</div>',
-// 					number: "Harap masukkan angka"
-// 				}
-// 			}
-// 		});
-// 	});
-
 $( document ).ready( function () {
 			$( "#modalSetuju<?= $idModal ?>" ).validate( {
 				rules: {
@@ -58,7 +40,7 @@ $( document ).ready( function () {
 				},
 				errorElement: "div",
 				errorPlacement: function ( error, element ) {
-					// Add the `help-block` class to the error element
+					// Add the `invalid-feedback` class to the error element
 					error.addClass( "invalid-feedback" );
 					error.insertAfter( element.parent( "div" ) );
 				},

@@ -126,7 +126,7 @@ class Beranda extends CI_Controller
 							// $dg++;
 						}
 						if ($this->session->flashdata('warn')) {
-							$data['modal'] = $this->load->view('modal/modal_warning', NULL, TRUE);
+							$data['modal_warning'] = $this->load->view('modal/modal_warning', NULL, TRUE);
 						}
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);

@@ -1,6 +1,6 @@
 <body>
 <?php $this->output->enable_profiler(TRUE); ?>
-<?= isset($modal)?$modal:'' ?>
+<?= isset($modal_warning)?$modal_warning:'' ?>
 	<div class="container-fluid mt-2">
 		<div class="row">
 			<div class="col-lg-8">

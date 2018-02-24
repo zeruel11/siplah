@@ -15,9 +15,11 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/grid.css">
+
+	<script src="<?php echo base_url('assets/js/jquery-3.2.1.min.js'); ?>" charset="utf-8"></script>
 </head>
 
-<body>
+<body onload="setFocus()">
 	<div class="container vertical-center">
 		<!-- <div class="card card-container"> -->
 		<form class="form-horizontal mx-auto" role="form" method="POST" action="<?php echo base_url().'index.php/ver_login'; ?>">
@@ -77,5 +79,11 @@
 		<!-- </div> -->
 	</div>
 </body>
+
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#username").focus();
+	});
+</script>
 
 </html>
