@@ -1,5 +1,5 @@
 <!-- Modal Upload -->
-<form lang="en" name="input" id="modalUnggah" enctype="multipart/form-data" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalUpload" method="post" action="<?= base_url('excel/readExcel') ?>">
+<form lang="en" name="input" id="modalUnggah" enctype="multipart/form-data" class="modal animated fade" tabindex="-1" role="dialog" aria-labelledby="modalUpload" method="post" action="<?= base_url('excel/readExcel') ?>" novalidate>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -10,7 +10,7 @@
 			</div>
 			<div class="modal-body">
 				<label class="custom-file col-lg-6" id="customFile">
-					<input type="file" class="custom-file-input" id="excelFileForm" name="excelFileForm" aria-describedby="fileHelp" onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
+					<input type="file" class="form-control custom-file-input" id="excelFileForm" name="excelFileForm" onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
 					<span class="custom-file-control form-control-file"></span>
 				</label>
 			</div>
@@ -25,8 +25,38 @@
 	</div>
 </form>
 
+<script src="<?= base_url('assets/js/additional-methods.min.js') ?>"></script>
 <script type="text/javascript">
+	$( document ).ready( function () {
+			$( "#modalUnggah" ).validate( {
+				rules: {
+					excelFileForm: {
+						required: true,
+						extension: "xls|xlsx|csv"
+					}
+				},
+				messages: {
+					excelFileForm: {
+						required: 'Anda perlu memilih file excel',
+						extension: 'Harap upload file dengan format xls, xlsx, atau csv'
+					}
+				},
+				errorElement: "div",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+					error.insertAfter( element.parent( "label" ) );
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+				}
+			} );
+		});
+
 	$('.custom-file-input').on('change',function(){
-  $(this).next('.form-control-file').addClass("selected");
-})
+  	$(this).next('.form-control-file').addClass("selected");
+	});
 </script>
