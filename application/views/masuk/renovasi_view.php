@@ -68,7 +68,7 @@
 							<?php if ($userLogin['userLevel']==1 || $userLogin['userLevel']==2): ?>
 								<div class="btn-group float-right" role="group">
 									<a class="btn btn-outline-info" href="<?= base_url()."renovasi/pekerjaan/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Info Renovasi<?= ($row['status']==6 || $row['status']==3)?'':' & Pekerjaan' ?></a>
-									<?php if ($row['status']!=6): ?>
+									<?php if ($row['status']!=6 && $row['status']!=0): ?>
 									<a class="btn btn-outline-success" href="<?= base_url('renovasi/selesai/').$dataRenovasi[$r]['idProposal'] ?>" role="button" data-toggle="tooltip" data-placement="top" title="Tandai renovasi telah selesai">Selesai Renovasi</a>
 									<?php endif; ?>
 									<a class="btn btn-outline-warning" href="<?= base_url()."renovasi/ed/".$dataRenovasi[$r]['idProposal'] ?>" role="button">Ubah Data Renovasi</a>

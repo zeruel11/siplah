@@ -542,7 +542,7 @@ class Beranda extends CI_Controller
 				if (!$this->session->userdata('refered_from_renovasi')) {
 					redirect('beranda','refresh');
 				}
-				if (($data['userLogin']['userLevel']!=2 || $data['userLogin']['userLevel']!=1) && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
+				if (($data['userLogin']['userLevel']!=2 && $data['userLogin']['userLevel']!=1) && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
 					$this->session->set_flashdata('warn', 'Anda tidak diperbolehkan mengajukan renovasi pada gedung yang bukan merupakan bagian dari unit Anda');
 					redirect($this->session->userdata['refered_from']['url']);
 				}
@@ -694,12 +694,15 @@ class Beranda extends CI_Controller
 						}
 						// $data['dataPekerjaan'][0]['deskripsiProposal'] = preg_split("/\\r\\n\||\\r\||\\n\|/", $result[0]['deskripsiProposal']);
 				}
-				if ($data['userLogin']['userLevel']==4 && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
-						$this->load->view('template/header', $data);
-						$this->load->view('template/navigation', $data);
-						$this->load->view('template/menu', $data);
-						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-						$this->load->view('masuk/pekerjaan_ceklis', $data);
+				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
+						$this->session->set_flashdata('warn', 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda');
+						redirect($this->session->userdata['refered_from_renovasi']['url']);
+				} elseif ($data['userLogin']['userLevel']==4 && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
+					$this->load->view('template/header', $data);
+					$this->load->view('template/navigation', $data);
+					$this->load->view('template/menu', $data);
+					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+					$this->load->view('masuk/pekerjaan_ceklis', $data);
 				} else {
 						$this->load->view('template/header', $data);
 						$this->load->view('template/navigation', $data);

@@ -8,3 +8,5 @@
 
 - changed map marker icons to use MapKeyIcons with Leaflet Icon Glyph plugin
 - changed to properly use modal on important warning, not just notification
+
+- added user auth to differentiate between unit responsibility
