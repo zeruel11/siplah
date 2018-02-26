@@ -11,6 +11,10 @@ class Ver_login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Login_model');
+		if (!$this->session->userdata('logged_in')) {
+			$this->session->set_flashdata('warn', 'Anda belum melakukan login!');
+			redirect('beranda','refresh');
+		}
 	}
 
 /**
