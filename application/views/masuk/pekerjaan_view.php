@@ -10,7 +10,7 @@
 		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL): ?>
 			<h4 class="card-title">Renovasi: <?= $dataPekerjaan[0]['judulProposal']; ?></h4>
 			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal']) ?></p>
-			<?php if (($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6) && is_numeric($dataPekerjaan[0]['alokasiDana']) && !is_null($dataPekerjaan[0]['alokasiDana'])): ?>
+			<?php if (($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6) && is_numeric($dataPekerjaan[0]['alokasiDana'])): ?>
 				<p class="card-text text-info">Alokasi dana renovasi: <strong>Rp. <?= $dataPekerjaan[0]['alokasiDana'] ?></strong></p>
 			<?php elseif ($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6): ?>
 				<p class="card-text text-warning">Alokasi dana renovasi tidak ditentukan</p>
