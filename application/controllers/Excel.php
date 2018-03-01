@@ -126,9 +126,9 @@ class Excel extends CI_Controller
 
 							$result = $this->Excel_model->importPekerjaan($send);
 							if ($result>0) {
-									$this->session->set_flashdata('message', 'Upload excel berhasil');
+									$this->session->set_flashdata('message', 'Unggah pekerjaan berhasil');
 							} else {
-									$this->session->set_flashdata('message', 'File gagal diproses, mohon coba kembali');
+									$this->session->set_flashdata('message', 'File gagal diproses, mohon coba kembali atau hubungi admin');
 									unlink($new_name);
 							}
 						} else {

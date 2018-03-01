@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
-					<h5 <?= (strpos($this->session->flashdata('warn'), 'login')!==FALSE)?'':'class="text-danger"' ?> id="modalImportant"><?= $this->session->flashdata('warn') ?></h5>
+					<h5 <?= (strpos($this->session->flashdata('warn'), 'login')!==FALSE)?'':'class="text-danger"' ?> id="modalImportant"><?= (isset($warn))?$warn:$this->session->flashdata('warn') ?></h5>
 					<button type="button" class="btn btn-primary float-right" data-dismiss="modal">OK</button>
 				</div>
 			</div>

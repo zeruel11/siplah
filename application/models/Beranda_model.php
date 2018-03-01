@@ -51,22 +51,31 @@ class Beranda_model extends CI_Model
 			return $result->result();
 		}
 
-		function jumlahRenovasi($status)
+		function jumlahRenovasi($status, $gedID = NULL, $ged = NULL)
 		{
-			if ($status=='spr') {
-				$this->db->select('idGedung');
-				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
-				$this->db->where(array(
-					'proposal.status' => '2',
-					'pekerjaan.status' => '0'
-				));
-				$this->db->group_by('idGedung');
-			} elseif ($status!='ALL') {
-				$orStatus = explode("|", $status);
-				foreach ($orStatus as $whereClause) {
-					$this->db->or_where('status', $whereClause);
+			if ($gedID == NULL) {
+				if ($status=='spr') {
+					$this->db->select('idGedung');
+					$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
+					$this->db->where(array(
+						'proposal.status' => '2',
+						'pekerjaan.status' => '0'
+					));
+					$this->db->group_by('idGedung');
+				} elseif ($status!='ALL') {
+					$orStatus = explode("|", $status);
+					foreach ($orStatus as $whereClause) {
+						$this->db->or_where('status', $whereClause);
+					}
 				}
+			} else {
+				$this->db->where('idGedung', $gedID);
 			}
+			if ($ged != NULL) {
+				$this->db->where('pemilikGedung', $ged);
+				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
+			}
+
 			$result = $this->db->get('proposal');
 			return $result->num_rows();
 		}

@@ -11,10 +11,6 @@ class Ver_login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Login_model');
-		if (!$this->session->userdata('logged_in')) {
-			$this->session->set_flashdata('warn', 'Anda belum melakukan login!');
-			redirect('beranda','refresh');
-		}
 	}
 
 /**
@@ -68,6 +64,10 @@ class Ver_login extends CI_Controller {
  */
 	function changepwd($id)
 	{
+		if (!$this->session->userdata('logged_in')) {
+			$this->session->set_flashdata('warn', 'Anda belum melakukan login!');
+			redirect('beranda','refresh');
+		}
 		$data['userLogin'] = $this->session->userdata('logged_in');
 		$data['cancel'] = base_url();
 		// $user = ;

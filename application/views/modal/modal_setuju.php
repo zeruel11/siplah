@@ -35,7 +35,7 @@ $( document ).ready( function () {
 				messages: {
 					danaForm: {
 						required: 'Anda perlu memasukkan alokasi dana renovasi',
-						number: "Harap masukkan angka"
+						number: "Harap masukkan alokasi dana dalam bentuk angka tanpa pemisah"
 					}
 				},
 				errorElement: "div",

@@ -1,5 +1,6 @@
 	<?php $this->output->enable_profiler(TRUE); ?>
 	<div class="card-body col-lg-10">
+		<?= isset($modal_warning)?$modal_warning:'' ?>
 		<?php if (isset($message)): ?>
 			<div class="alert alert-primary fade show animated fadeInUp w-60" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -9,6 +10,11 @@
 		<?php if ($dataPekerjaan[0]['idPekerjaan']!=NULL): ?>
 			<h4 class="card-title">Renovasi: <?= $dataPekerjaan[0]['judulProposal']; ?></h4>
 			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal']) ?></p>
+			<?php if (($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6) && is_numeric($dataPekerjaan[0]['alokasiDana']) && !is_null($dataPekerjaan[0]['alokasiDana'])): ?>
+				<p class="card-text text-info">Alokasi dana renovasi: <strong>Rp. <?= $dataPekerjaan[0]['alokasiDana'] ?></strong></p>
+			<?php elseif ($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6): ?>
+				<p class="card-text text-warning">Alokasi dana renovasi tidak ditentukan</p>
+			<?php endif ?>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>
 			<ul class="list-group mt-3">
@@ -35,8 +41,12 @@
 			<p class="card-text"><?= nl2br($dataPekerjaan[0]['deskripsiProposal']) ?></p>
 			<?php if ($dataPekerjaan[0]['persetujuan']==3 && !is_numeric($dataPekerjaan[0]['alokasiDana']) && !is_null($dataPekerjaan[0]['alokasiDana'])): ?>
 				<p class="card-text text-danger">Alasan penolakan: <strong><?= $dataPekerjaan[0]['alokasiDana'] ?></strong></p>
+			<?php elseif (($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6) && is_numeric($dataPekerjaan[0]['alokasiDana']) && !is_null($dataPekerjaan[0]['alokasiDana'])): ?>
+				<p class="card-text text-info">Alokasi dana renovasi: <strong>Rp. <?= $dataPekerjaan[0]['alokasiDana'] ?></strong></p>
 			<?php elseif ($dataPekerjaan[0]['persetujuan']==3): ?>
 				<p class="card-text text-danger">Alasan penolakan tidak diberikan</p>
+			<?php elseif ($dataPekerjaan[0]['persetujuan']==2 || $dataPekerjaan[0]['persetujuan']==6): ?>
+				<p class="card-text text-warning">Alokasi dana renovasi tidak ditentukan</p>
 			<?php endif ?>
 			<p class="card-subtitle text-muted">Tanggal mulai renovasi: <?= $dataPekerjaan[0]['dateCreated'] ?></p>
 			<p class="card-subtitle text-muted">Tanggal selesai renovasi: <?= ($dataPekerjaan[0]['dateDeleted']!=NULL)?$dataPekerjaan[0]['dateDeleted']:' - ' ?></p>

@@ -21,16 +21,28 @@ class Beranda extends CI_Controller
 				$this->load->library('Encryption');
 				// $this->load->library('breadcrumb');
 				$this->load->library('pagination');
+				if ($this->uri->segment(1)=='beranda' || $this->uri->segment(1)=='gedung' || $this->uri->uri_string()=='') {
+					$this->session->unset_userdata('refered_from_renovasi');
+					$this->session->unset_userdata('refered_from');
+				}
 				if ($this->session->userdata('logged_in')) {
 						$this->data['userLogin'] = $this->session->userdata('logged_in');
 						switch ($this->session->userdata['logged_in']['userLevel']) {
 							case 1:
 							case 2:
+								if (is_numeric($this->uri->segment(2))) {
+									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
+								} elseif ($this->uri->segment(2)=='pekerjaan' && is_numeric($this->uri->segment(3))) {
+									$this->data['jumlah'] = NULL;
+								}	else {
+									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
+								}
+								break;
 							case 5:
 								if (is_numeric($this->uri->segment(2))) {
-									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi((int)$this->uri->segment(2));
+									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
 								} else {
-									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
+									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', NULL, (int)$this->data['userLogin']['userAuth']);
 								}
 								break;
 							case 3:
@@ -694,22 +706,25 @@ class Beranda extends CI_Controller
 						}
 						// $data['dataPekerjaan'][0]['deskripsiProposal'] = preg_split("/\\r\\n\||\\r\||\\n\|/", $result[0]['deskripsiProposal']);
 				}
-				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
-						$this->session->set_flashdata('warn', 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda');
-						redirect($this->session->userdata['refered_from_renovasi']['url']);
-				} elseif ($data['userLogin']['userLevel']==4 && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
+
+				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']==$this->session->userdata['refered_from_renovasi']['id'] && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
 					$this->load->view('template/header', $data);
 					$this->load->view('template/navigation', $data);
 					$this->load->view('template/menu', $data);
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 					$this->load->view('masuk/pekerjaan_ceklis', $data);
 				} else {
-						$this->load->view('template/header', $data);
-						$this->load->view('template/navigation', $data);
-						$this->load->view('template/menu', $data);
-						$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
-						$data['modalUnggah'] = $this->load->view('modal/modal_upload', $data, TRUE);
-						$this->load->view('masuk/pekerjaan_view', $data);
+					if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
+						// $this->session->set_flashdata('warn', 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda');
+						$data['warn'] = 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda';
+						$data['modal_warning'] = $this->load->view('modal/modal_warning', $data, TRUE);
+					}
+					$this->load->view('template/header', $data);
+					$this->load->view('template/navigation', $data);
+					$this->load->view('template/menu', $data);
+					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
+					$data['modalUnggah'] = $this->load->view('modal/modal_upload', $data, TRUE);
+					$this->load->view('masuk/pekerjaan_view', $data);
 				}
 		}
 
