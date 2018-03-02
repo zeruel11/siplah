@@ -43,8 +43,7 @@ class Beranda extends CI_Controller
 									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
 								} elseif ($this->uri->segment(2)=='pekerjaan' && is_numeric($this->uri->segment(3))) {
 									$this->data['jumlah'] = NULL;
-								}
-								else {
+								}	else {
 									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', NULL, (int)$this->data['userLogin']['userAuth']);
 								}
 								break;

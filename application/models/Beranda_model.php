@@ -213,6 +213,8 @@ class Beranda_model extends CI_Model
 					case 1:
 						if ($ged!='ALL') {
 							$this->db->where('gedung.idGedung', $ged);
+						} elseif ($this->session->userdata['logged_in']['userLevel']==5) {
+							$this->db->where('gedung.pemilikGedung', $this->session->userdata['logged_in']['userAuth']);
 						} else {
 							$this->db->where('proposal.idProposal is NOT NULL', NULL, FALSE);
 						}
