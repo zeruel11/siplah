@@ -26,7 +26,8 @@ class Beranda_model extends CI_Model
 				$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
 				$this->db->where(array(
 					'proposal.status' => '2',
-					'pekerjaan.status' => '0'
+					'pekerjaan.status' => '0',
+					'gedung.pemilikGedung' => $this->session->userdata['logged_in']['userAuth']
 				));
 				$this->db->group_by('idGedung');
 			}
@@ -55,7 +56,7 @@ class Beranda_model extends CI_Model
 		{
 			if ($gedID == NULL) {
 				if ($status=='spr') {
-					$this->db->select('idGedung');
+					$this->db->select('proposal.idGedung');
 					$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'right');
 					$this->db->where(array(
 						'proposal.status' => '2',
@@ -227,7 +228,11 @@ class Beranda_model extends CI_Model
 						$this->db->or_where('proposal.status', 6);
 						break;
 					case 4:
-						$this->db->where(array('proposal.status'=>2, 'pekerjaan.status'=>0));
+						$this->db->where(array(
+							'proposal.status'=>2,
+							'pekerjaan.status'=>0,
+							'gedung.pemilikGedung' => $this->session->userdata['logged_in']['userAuth']
+						));
 						break;
 				}
 				$this->db->group_by('idProposal');
@@ -312,7 +317,8 @@ class Beranda_model extends CI_Model
 			$this->db->from('proposal');
 			$this->db->join('pekerjaan', 'pekerjaan.idProposal = proposal.idProposal', 'left');
 			if ($mode==1) {
-				$this->db->select('proposal.status as persetujuan');
+				$this->db->select('proposal.status as persetujuan, gedung.pemilikGedung AS unit');
+				$this->db->join('gedung', 'gedung.idGedung = proposal.idGedung', 'left');
 				$this->db->where('proposal.idProposal', $kerja);
 			} elseif ($mode==2) {
 				$this->db->where('pekerjaan.idPekerjaan', $kerja);

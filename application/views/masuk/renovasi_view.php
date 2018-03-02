@@ -91,7 +91,7 @@
 					</div>
 				</div>
 
-				<?= isset($modal)?$modal[$row['idProposal']]:"" ?>
+				<?= isset($modalHapus)?$modalHapus[$row['idProposal']]:"" ?>
 				<?= isset($modalSetuju)?$modalSetuju[$row['idProposal']]:"" ?>
 				<?= isset($modalTolak)?$modalTolak[$row['idProposal']]:"" ?>
 

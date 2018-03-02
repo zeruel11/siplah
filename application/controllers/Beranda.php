@@ -30,27 +30,31 @@ class Beranda extends CI_Controller
 						switch ($this->session->userdata['logged_in']['userLevel']) {
 							case 1:
 							case 2:
+								// if (is_numeric($this->uri->segment(2))) {
+								// 	$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
+								// } elseif ($this->uri->segment(2)=='pekerjaan' && is_numeric($this->uri->segment(3))) {
+								// 	$this->data['jumlah'] = NULL;
+								// }	else {
+									// $this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
+								// }
+								// break;
+							case 5:
 								if (is_numeric($this->uri->segment(2))) {
 									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
 								} elseif ($this->uri->segment(2)=='pekerjaan' && is_numeric($this->uri->segment(3))) {
 									$this->data['jumlah'] = NULL;
-								}	else {
-									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
 								}
-								break;
-							case 5:
-								if (is_numeric($this->uri->segment(2))) {
-									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', (int)$this->uri->segment(2));
-								} else {
+								else {
 									$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL', NULL, (int)$this->data['userLogin']['userAuth']);
 								}
+								break;
+							case 4:
+								$this->data['jumlah'] = $this->Beranda_model->jumlahRenovasi('ALL');
+								$this->data['jumlahTersedia'] = $this->Beranda_model->jumlahRenovasi('spr', NULL, (int)$this->data['userLogin']['userAuth']);
 								break;
 							case 3:
 								$this->data['jumlahBelum'] = $this->Beranda_model->jumlahRenovasi('0');
 								$this->data['jumlahSetuju'] = $this->Beranda_model->jumlahRenovasi('2|6');
-								break;
-							case 4:
-								$this->data['jumlahTersedia'] = $this->Beranda_model->jumlahRenovasi('spr');
 								break;
 							default:
 								# code...
@@ -499,7 +503,7 @@ class Beranda extends CI_Controller
 								);
 						}
 						$this->session->set_userdata('refered_from', $renovasi);
-						if ($ged!='ALL') {
+						if ($ged!='ALL' && $ged!='available') {
 								$renovasi = array(
 								'id' => $data['dataRenovasi'][0]['pemilikGedung'],
 								'url' => base_url().$this->uri->uri_string()
@@ -509,7 +513,7 @@ class Beranda extends CI_Controller
 
 						foreach ($data['dataRenovasi'] as $row) {
 							$data['idModal'] = $row['idProposal'];
-							$data['modal'][$row['idProposal']] = $this->load->view('modal/modal_delete', $data, TRUE);
+							$data['modalHapus'][$row['idProposal']] = $this->load->view('modal/modal_delete', $data, TRUE);
 							$data['modalSetuju'][$row['idProposal']] = $this->load->view('modal/modal_setuju', $data, TRUE);
 							$data['modalTolak'][$row['idProposal']] = $this->load->view('modal/modal_tolak', $data, TRUE);
 						}
@@ -707,18 +711,18 @@ class Beranda extends CI_Controller
 						// $data['dataPekerjaan'][0]['deskripsiProposal'] = preg_split("/\\r\\n\||\\r\||\\n\|/", $result[0]['deskripsiProposal']);
 				}
 
-				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']==$this->session->userdata['refered_from_renovasi']['id'] && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
+				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']!=$data['dataPekerjaan'][0]['unit'] && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
+						// $this->session->set_flashdata('warn', 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda');
+						$data['warn'] = 'Anda tidak diperbolehkan mengisi ceklis pekerjaan pada renovasi gedung diluar unit Anda';
+						$data['modal_warning'] = $this->load->view('modal/modal_warning', $data, TRUE);
+				}
+				if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']==$data['dataPekerjaan'][0]['unit'] && $data['dataPekerjaan'][0]['dateDeleted']==NULL && $data['dataPekerjaan'][0]['idPekerjaan']!=NULL) {
 					$this->load->view('template/header', $data);
 					$this->load->view('template/navigation', $data);
 					$this->load->view('template/menu', $data);
 					$data['footer'] = $this->load->view('template/footer', NULL, TRUE);
 					$this->load->view('masuk/pekerjaan_ceklis', $data);
 				} else {
-					if ($data['userLogin']['userLevel']==4 && $data['userLogin']['userAuth']!=$this->session->userdata['refered_from_renovasi']['id']) {
-						// $this->session->set_flashdata('warn', 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda');
-						$data['warn'] = 'Anda tidak diperbolehkan melakukan pengecekan pekerjaan pada renovasi gedung diluar unit Anda';
-						$data['modal_warning'] = $this->load->view('modal/modal_warning', $data, TRUE);
-					}
 					$this->load->view('template/header', $data);
 					$this->load->view('template/navigation', $data);
 					$this->load->view('template/menu', $data);
